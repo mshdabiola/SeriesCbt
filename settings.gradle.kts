@@ -13,6 +13,7 @@ dependencyResolutionManagement {
 //    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
+        mavenLocal()
         mavenCentral()
         maven(url = "https://www.jitpack.io")
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
@@ -22,7 +23,7 @@ dependencyResolutionManagement {
         maven(url = "https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
     }
 }
-rootProject.name = "Hydraulic"
+rootProject.name = "SeriesCbt"
 //include(":app")
 //include(":app:baselineprofile")
 include(":modules:database")

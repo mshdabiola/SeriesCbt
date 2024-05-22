@@ -32,11 +32,11 @@ import com.mshdabiola.designsystem.icon.mainIcons
 import com.mshdabiola.designsystem.icon.mainRoute
 import com.mshdabiola.designsystem.icon.settingIcons
 import com.mshdabiola.designsystem.icon.settingRoute
-import hydraulic.modules.ui.generated.resources.Res
-import hydraulic.modules.ui.generated.resources.app_name
-import hydraulic.modules.ui.generated.resources.main
-import hydraulic.modules.ui.generated.resources.main_navigator
-import hydraulic.modules.ui.generated.resources.setting_navigator
+import seriescbt.modules.ui.generated.resources.Res
+import seriescbt.modules.ui.generated.resources.app_name
+import seriescbt.modules.ui.generated.resources.main
+import seriescbt.modules.ui.generated.resources.main_navigator
+import seriescbt.modules.ui.generated.resources.setting_navigator
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
 
