@@ -110,7 +110,10 @@ kotlin {
 
 
             implementation(project(":features:main"))
-            implementation(project(":features:detail"))
+            implementation(project(":features:profile"))
+            implementation(project(":features:stat"))
+            implementation(project(":features:question"))
+            implementation(project(":features:finish"))
             implementation(project(":features:setting"))
 
             // Logger

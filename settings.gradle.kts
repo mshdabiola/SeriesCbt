@@ -50,7 +50,11 @@ include(":composeApp")
 
 
 include(":features:main")
-include(":features:detail")
+include(":features:profile")
+include(":features:stat")
+include(":features:question")
+include(":features:finish")
+
 include(":features:setting")
 
 

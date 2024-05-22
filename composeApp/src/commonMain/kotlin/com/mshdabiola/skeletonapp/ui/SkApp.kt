@@ -10,17 +10,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -28,7 +23,6 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -38,7 +32,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.navOptions
 import com.mshdabiola.analytics.AnalyticsHelper
@@ -48,7 +41,6 @@ import com.mshdabiola.designsystem.component.SkGradientBackground
 import com.mshdabiola.designsystem.theme.GradientColors
 import com.mshdabiola.designsystem.theme.LocalGradientColors
 import com.mshdabiola.designsystem.theme.SkTheme
-import com.mshdabiola.detail.navigation.navigateToDetail
 import com.mshdabiola.main.navigation.MAIN_ROUTE
 import com.mshdabiola.main.navigation.navigateToMain
 import com.mshdabiola.model.Contrast
@@ -121,11 +113,8 @@ fun SkeletonApp() {
                             PermanentNavigationDrawer(
                                 drawerContent = {
                                     CommonNavigation(
-                                        modifier = Modifier
-                                            .width(300.dp)
-                                            .fillMaxHeight(),
-                                        currentNavigation = appState.currentDestination?.route
-                                            ?: "",
+                                        modifier = Modifier.width(300.dp),
+                                        currentNavigation = appState.currentDestination?.route ?: "",
                                         onNavigate = navigator,
                                     )
                                 },
@@ -135,29 +124,8 @@ fun SkeletonApp() {
                                     containerColor = Color.Transparent,
                                     contentWindowInsets = WindowInsets(0, 0, 0, 0),
                                     snackbarHost = { SnackbarHost(snackbarHostState) },
-                                    floatingActionButton = {
-                                        if (appState.currentDestination?.route == MAIN_ROUTE) {
-                                            ExtendedFloatingActionButton(
-                                                modifier = Modifier
-                                                    .windowInsetsPadding(WindowInsets.safeDrawing)
-                                                    .testTag("add"),
-                                                onClick = {
-                                                    appState.navController.navigateToDetail(
-                                                        0,
-                                                    )
-                                                },
-                                            ) {
-                                                Icon(
-                                                    imageVector = Icons.Rounded.Add,
-                                                    contentDescription = "add note",
-                                                )
-//                            Spacer(modifier = )
-                                                Text(text = "Add note")
-                                            }
-                                        }
-                                    },
 
-                                ) { padding ->
+                                    ) { padding ->
 
                                     Column(
                                         Modifier
@@ -198,14 +166,11 @@ fun SkeletonApp() {
                             Row {
                                 if (appState.shouldShowNavRail) {
                                     CommonRail(
-                                        modifier = Modifier
-                                            .width(100.dp)
-                                            .fillMaxHeight(),
-                                        currentNavigation = appState.currentDestination?.route
-                                            ?: "",
+                                        modifier = Modifier.width(100.dp),
+                                        currentNavigation = appState.currentDestination?.route ?: "",
                                         onNavigate = navigator,
 
-                                    )
+                                        )
                                 }
                                 Scaffold(
                                     modifier = Modifier.semanticsCommon {},
@@ -213,27 +178,6 @@ fun SkeletonApp() {
                                     contentColor = MaterialTheme.colorScheme.onBackground,
                                     contentWindowInsets = WindowInsets(0, 0, 0, 0),
                                     snackbarHost = { SnackbarHost(snackbarHostState) },
-                                    floatingActionButton = {
-                                        if (appState.currentDestination?.route == MAIN_ROUTE) {
-                                            ExtendedFloatingActionButton(
-                                                modifier = Modifier
-                                                    .windowInsetsPadding(WindowInsets.safeDrawing)
-                                                    .testTag("add"),
-                                                onClick = {
-                                                    appState.navController.navigateToDetail(
-                                                        0,
-                                                    )
-                                                },
-                                            ) {
-                                                Icon(
-                                                    imageVector = Icons.Rounded.Add,
-                                                    contentDescription = "add note",
-                                                )
-//                            Spacer(modifier = )
-                                                Text(text = "Add note")
-                                            }
-                                        }
-                                    },
                                     bottomBar = {
                                         if (appState.shouldShowBottomBar) {
                                             CommonBar(
@@ -243,7 +187,7 @@ fun SkeletonApp() {
                                         }
                                     },
 
-                                ) { padding ->
+                                    ) { padding ->
 
                                     Column(
                                         Modifier
