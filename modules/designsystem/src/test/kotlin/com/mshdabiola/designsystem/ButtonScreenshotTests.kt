@@ -9,8 +9,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import com.mshdabiola.designsystem.component.SkButton
-import com.mshdabiola.designsystem.icon.SkIcons
+import com.mshdabiola.designsystem.component.CbtButton
+import com.mshdabiola.designsystem.icon.CbtIcons
 import com.mshdabiola.testing.util.captureMultiTheme
 import org.junit.Rule
 import org.junit.Test
@@ -33,7 +33,7 @@ class ButtonScreenshotTests {
     fun niaButton_multipleThemes() {
         composeTestRule.captureMultiTheme("Button") { description ->
             Surface {
-                SkButton(onClick = {}, text = { Text("$description Button") })
+                CbtButton(onClick = {}, text = { Text("$description Button") })
             }
         }
     }
@@ -55,10 +55,10 @@ class ButtonScreenshotTests {
             shouldCompareAndroidTheme = false,
         ) { description ->
             Surface {
-                SkButton(
+                CbtButton(
                     onClick = {},
                     text = { Text("$description Icon Button") },
-                    leadingIcon = { Icon(imageVector = SkIcons.Add, contentDescription = null) },
+                    leadingIcon = { Icon(imageVector = CbtIcons.Add, contentDescription = null) },
                 )
             }
         }

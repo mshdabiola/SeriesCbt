@@ -45,7 +45,7 @@ include(":modules:datastore")
 include(":benchmarks")
 
 
-include(":composeApp")
+include(":cbtApp")
 //include(":shared")
 
 

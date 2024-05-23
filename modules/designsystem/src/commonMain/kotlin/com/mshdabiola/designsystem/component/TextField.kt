@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SkTextField(
+fun CbtTextField(
     modifier: Modifier = Modifier,
     state: TextFieldState,
     placeholder: String? = null,
