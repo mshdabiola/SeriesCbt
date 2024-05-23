@@ -114,3 +114,8 @@ fun ExamUiState.toExam() =
 
 fun Long.check() = if (this == -1L) null else this
 fun Long?.toDefault() = this ?: -1
+
+
+
+fun Long.toMinute() = this.div(60)
+fun Long.toSecond() = this.mod(60)

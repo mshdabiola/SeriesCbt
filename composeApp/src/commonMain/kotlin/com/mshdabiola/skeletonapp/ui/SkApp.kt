@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
@@ -46,11 +47,15 @@ import com.mshdabiola.main.navigation.navigateToMain
 import com.mshdabiola.model.Contrast
 import com.mshdabiola.model.DarkThemeConfig
 import com.mshdabiola.model.ThemeBrand
+import com.mshdabiola.profile.navigation.PROFILE_ROUTE
+import com.mshdabiola.profile.navigation.navigateToProfile
 import com.mshdabiola.setting.navigation.SETTING_ROUTE
 import com.mshdabiola.setting.navigation.navigateToSetting
 import com.mshdabiola.skeletonapp.MainActivityUiState
 import com.mshdabiola.skeletonapp.MainAppViewModel
 import com.mshdabiola.skeletonapp.navigation.SkNavHost
+import com.mshdabiola.stat.navigation.STAT_ROUTE
+import com.mshdabiola.stat.navigation.navigateToStat
 import com.mshdabiola.ui.CommonBar
 import com.mshdabiola.ui.CommonNavigation
 import com.mshdabiola.ui.CommonRail
@@ -74,11 +79,26 @@ fun SkeletonApp() {
 
         when (it) {
             MAIN_ROUTE -> {
-                appState.navController.navigateToMain(navOptions = navOptions { })
+                appState.navController.navigateToMain(navOptions = navOptions {
+                    launchSingleTop
+                    this.restoreState
+                })
             }
 
             SETTING_ROUTE -> {
                 appState.navController.navigateToSetting()
+            }
+            PROFILE_ROUTE->{
+                appState.navController.navigateToProfile(navOptions {
+                    launchSingleTop
+                    restoreState
+                })
+            }
+            STAT_ROUTE->{
+                appState.navController.navigateToStat(navOptions {
+                    launchSingleTop
+                    restoreState
+                })
             }
         }
     }
@@ -113,7 +133,7 @@ fun SkeletonApp() {
                             PermanentNavigationDrawer(
                                 drawerContent = {
                                     CommonNavigation(
-                                        modifier = Modifier.width(300.dp),
+                                        modifier = Modifier.width(300.dp).fillMaxHeight(),
                                         currentNavigation = appState.currentDestination?.route ?: "",
                                         onNavigate = navigator,
                                     )
@@ -166,7 +186,7 @@ fun SkeletonApp() {
                             Row {
                                 if (appState.shouldShowNavRail) {
                                     CommonRail(
-                                        modifier = Modifier.width(100.dp),
+                                        modifier = Modifier.width(100.dp).fillMaxHeight(),
                                         currentNavigation = appState.currentDestination?.route ?: "",
                                         onNavigate = navigator,
 

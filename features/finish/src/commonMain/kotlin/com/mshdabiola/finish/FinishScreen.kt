@@ -38,13 +38,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.mshdabiola.ui.FinishCard
+import com.mshdabiola.designsystem.string.sections
 import com.mshdabiola.ui.InstructionBottomSheet
 import com.mshdabiola.ui.QuestionUi
-import com.mshdabiola.ui.ScoreCard
 import com.mshdabiola.ui.ScreenSize
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
-import com.mshdabiola.ui.getSection
 import com.mshdabiola.ui.semanticsCommon
 import com.mshdabiola.ui.state.ExamType
 import com.mshdabiola.ui.state.InstructionUiState
@@ -177,7 +175,7 @@ internal fun FinishScreen(
                                             lazyState.scrollToItem(3)
                                         }
                                     },
-                                    text = { Text(text = getSection()[section.stringRes]) },
+                                    text = { Text(text = sections[section.stringRes]) },
                                 )
                             }
                         }

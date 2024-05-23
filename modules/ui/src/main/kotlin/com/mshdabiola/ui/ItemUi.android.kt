@@ -11,12 +11,3 @@ internal actual fun EquationUi(
     equation: ItemUiState
 ) {
 }
-
-@Composable
-actual fun ImageUi(
-    modifier: Modifier,
-    path: String,
-    contentDescription: String,
-    contentScale: ContentScale
-) {
-}

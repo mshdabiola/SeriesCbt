@@ -42,9 +42,11 @@ internal expect fun EquationUi(
 )
 
 @Composable
-expect fun ImageUi(
+ fun ImageUi(
     modifier: Modifier = Modifier,
     path: String,
     contentDescription: String,
     contentScale: ContentScale = ContentScale.Fit,
-)
+){
+
+}

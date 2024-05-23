@@ -33,18 +33,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.mshdabiola.ui.ContinueCard
-import com.mshdabiola.ui.OtherCard
-import com.mshdabiola.ui.PlayLogin
+import com.mshdabiola.designsystem.drawable.layer1
+import com.mshdabiola.designsystem.drawable.layer2
+import com.mshdabiola.designsystem.drawable.layer3
+import com.mshdabiola.designsystem.string.examPart
+import com.mshdabiola.designsystem.string.subject
+import com.mshdabiola.designsystem.string.type
 import com.mshdabiola.ui.ScreenSize
-import com.mshdabiola.ui.StartCard
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
-import com.mshdabiola.ui.getExamPart
-import com.mshdabiola.ui.getIconLayer1
-import com.mshdabiola.ui.getIconLayer2
-import com.mshdabiola.ui.getIconLayer3
-import com.mshdabiola.ui.getStringSubject
-import com.mshdabiola.ui.getStringType
 import com.mshdabiola.ui.semanticsCommon
 import com.mshdabiola.ui.state.ExamType
 import org.koin.compose.viewmodel.koinViewModel
@@ -102,9 +98,9 @@ internal fun MainScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Column(verticalArrangement = Arrangement.Center) {
-                        Text(text = getStringSubject())
+                        Text(text = subject)
                         Text(
-                            text = getStringType(),
+                            text = type,
                             style = MaterialTheme.typography.labelMedium,
                         )
                     }
@@ -142,7 +138,7 @@ internal fun MainScreen(
 
                         )
                 }
-                Image(painter = getIconLayer2(), contentDescription = "")
+                Image(painter = layer2, contentDescription = "")
             }
             mainState.currentExam?.let {
                 ContinueCard(
@@ -150,7 +146,7 @@ internal fun MainScreen(
                     progress = finishPercent,
                     enabled = mainState.isSubmit.not(),
                     timeRemain = mainState.totalTime - mainState.currentTime,
-                    part = getExamPart()[mainState.examPart],
+                    part = examPart[mainState.examPart],
                     onClick = {
                         navigateToQuestion(ExamType.YEAR, it.year, 1)
                     },
@@ -167,14 +163,14 @@ internal fun MainScreen(
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                 OtherCard(
                     title = "Random exam",
-                    painter = getIconLayer1(),
+                    painter = layer1,
                     onClick = {
                         navigateToQuestion(ExamType.RANDOM, -1, 1)
                     },
                 )
                 OtherCard(
                     title = "Fast finger",
-                    painter = getIconLayer3(),
+                    painter = layer3,
                     onClick = {
                         navigateToQuestion(ExamType.FAST_FINGER, -1, 1)
                     },
