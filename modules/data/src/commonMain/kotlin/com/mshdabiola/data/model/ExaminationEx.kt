@@ -4,8 +4,7 @@
 
 package com.mshdabiola.data.model
 
-import com.mshdabiola.database.converter.toModel
-import com.mshdabiola.database.converter.toSer
+import com.mshdabiola.database.converter.ContentSer
 import com.mshdabiola.database.model.ExaminationEntity
 import com.mshdabiola.database.model.ExaminationFull
 import com.mshdabiola.database.model.InstructionEntity
@@ -14,12 +13,14 @@ import com.mshdabiola.database.model.QuestionEntity
 import com.mshdabiola.database.model.QuestionFull
 import com.mshdabiola.database.model.SubjectEntity
 import com.mshdabiola.database.model.TopicEntity
+import com.mshdabiola.model.data.Content
 import com.mshdabiola.model.data.Examination
 import com.mshdabiola.model.data.Instruction
 import com.mshdabiola.model.data.Option
 import com.mshdabiola.model.data.Question
 import com.mshdabiola.model.data.Subject
 import com.mshdabiola.model.data.Topic
+import com.mshdabiola.model.data.Type
 
 fun Examination.asExamEntity() = ExaminationEntity(
     id = id,
@@ -45,7 +46,7 @@ fun SubjectEntity.asSub() = Subject(
 
 fun Subject.asEntity() = SubjectEntity(id, title)
 
-fun Instruction.asEntity() = InstructionEntity(id, examId, title, content.map { it.toSer() })
+fun Instruction.asEntity() = InstructionEntity(id, examId, title, content.map { it.toSerCo() })
 
 fun InstructionEntity.asModel() = Instruction(id, examId, title, content.map { it.toModel() })
 
@@ -58,7 +59,7 @@ fun Option.asEntity() = OptionEntity(
     questionId = questionId,
     examId = examId,
     title = title,
-    contents = contents.map { it.toSer() },
+    contents = contents.map { it.toSerCo() },
     isAnswer = isAnswer
 )
 
@@ -73,7 +74,7 @@ fun OptionEntity.asModel() = Option(
 )
 
 fun Question.asModel() = QuestionEntity(
-    id, number, examId, title, contents.map { it.toSer() }, answers.map { it.toSer() }, isTheory, instruction?.id, topic?.id
+    id, number, examId, title, contents.map { it.toSerCo() }, answers.map { it.toSerCo() }, isTheory, instruction?.id, topic?.id
 )
 
 fun QuestionFull.asModel() = Question(
@@ -88,3 +89,6 @@ fun QuestionFull.asModel() = Question(
     instruction = instructionEntity?.asModel(),
     topic = topicEntity?.asModel()
 )
+
+fun ContentSer.toModel()=Content(content,Type.valueOf(type))
+fun Content.toSerCo()=ContentSer(content,type.name)

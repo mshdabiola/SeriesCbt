@@ -18,10 +18,8 @@ kotlin {
                 //   implementation(libs.kermit.log)
 //                implementation(project(":modules:model"))
 //                implementation(project(":modules:database"))
-//                implementation(project(":modules:datastore"))
+                implementation(project(":modules:datastore"))
                 implementation("com.mshdabiola.series:database:0.0.1")
-                implementation("com.mshdabiola.series:datastore:0.0.1")
-                implementation("com.mshdabiola.series:model:0.0.1")
 
                 implementation(project(":modules:network"))
                 implementation(libs.kotlinx.coroutines.core)

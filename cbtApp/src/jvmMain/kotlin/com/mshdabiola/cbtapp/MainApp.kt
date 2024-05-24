@@ -14,7 +14,6 @@ import co.touchlab.kermit.loggerConfigInit
 import co.touchlab.kermit.platformLogWriter
 import com.mshdabiola.designsystem.drawable.defaultAppIcon
 import com.mshdabiola.designsystem.string.appName
-import com.mshdabiola.model.Writer
 import com.mshdabiola.cbtapp.di.appModule
 import com.mshdabiola.cbtapp.ui.CbtApp
 import org.koin.core.context.GlobalContext.startKoin

@@ -9,7 +9,6 @@ import co.touchlab.kermit.Logger
 import co.touchlab.kermit.koin.KermitKoinLogger
 import co.touchlab.kermit.loggerConfigInit
 import co.touchlab.kermit.platformLogWriter
-import com.mshdabiola.model.Writer
 import com.mshdabiola.cbtapp.di.appModule
 import com.mshdabiola.cbtapp.di.jankStatsModule
 import org.koin.android.ext.koin.androidContext

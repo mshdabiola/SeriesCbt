@@ -53,11 +53,8 @@ kotlin {
                implementation(project(":modules:model"))
                 api(libs.androidx.compose.material3.windowSizeClass)
                 api(libs.navigation.compose)
-                api(libs.paging.compose.common)
+           //     api(libs.paging.compose.common)
 
-                api(libs.koin.compose)
-                api(libs.koin.composeVM)
-                api(libs.lifecycle.viewmodel.compose)
 
 
 

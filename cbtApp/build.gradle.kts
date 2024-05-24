@@ -121,6 +121,10 @@ kotlin {
 
             implementation(libs.kermit.koin)
 
+            implementation(libs.koin.compose)
+            implementation(libs.koin.composeVM)
+            implementation(libs.lifecycle.viewmodel.compose)
+
 
         }
 
@@ -151,10 +155,10 @@ android {
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/composeResources")
 
-    namespace = "com.mshdabiola.skeletonapp"
+    namespace = "com.mshdabiola.cbtapp"
 
     defaultConfig {
-        applicationId = "com.mshdabiola.skeletonapp"
+        applicationId = "com.mshdabiola.cbtapp"
         versionCode = 1
         versionName = "0.0.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
