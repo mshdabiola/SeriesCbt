@@ -90,6 +90,8 @@ kotlin {
         val jvmMain by getting
 
         androidMain.dependencies {
+            implementation(libs.kotlinx.coroutines.android)
+
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
         }
@@ -120,11 +122,11 @@ kotlin {
             implementation(libs.kermit)
 
             implementation(libs.kermit.koin)
-
-            implementation(libs.koin.compose)
-            implementation(libs.koin.composeVM)
-            implementation(libs.lifecycle.viewmodel.compose)
-
+//
+//            implementation(libs.koin.compose)
+//            implementation(libs.koin.composeVM)
+//            implementation(libs.lifecycle.viewmodel.compose)
+//
 
         }
 
@@ -142,9 +144,7 @@ kotlin {
                 }
             }
         }
-        configurations.commonMainApi {
-            exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-android")
-        }
+
 
     }
 }
@@ -278,7 +278,9 @@ configurations.all {
         attribute(Attribute.of("ui", String::class.java), "awt")
     }
 }
-
+configurations.commonMainApi {
+    exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-android")
+}
 //compose.experimental {
 //    web.application {}
 //}

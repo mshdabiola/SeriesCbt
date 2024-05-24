@@ -55,6 +55,9 @@ kotlin {
                 api(libs.navigation.compose)
            //     api(libs.paging.compose.common)
 
+                api(libs.koin.composeVM)
+//                api(libs.paging.compose.common)
+//                api(libs.paging.compose.common)
 
 
 
