@@ -124,6 +124,9 @@ kotlin {
             implementation(libs.kermit)
 
             implementation(libs.kermit.koin)
+
+            implementation("com.mshdabiola.series:database:0.0.1")
+
 //
 //            implementation(libs.koin.compose)
 //            implementation(libs.koin.composeVM)

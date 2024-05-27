@@ -1,6 +1,7 @@
 package com.mshdabiola.designsystem.string
 
 import androidx.compose.runtime.Composable
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringArrayResource
 import seriescbt.modules.designsystem.generated.resources.Res
 import seriescbt.modules.designsystem.generated.resources.app_name
@@ -34,3 +35,8 @@ val sections
     @Composable
     get() = stringArrayResource(Res.array.modules_ui_cbt_sections).toTypedArray()
 
+@OptIn(ExperimentalResourceApi::class)
+fun getFileUri(fileName: String)=Res.getUri(fileName)
+
+@OptIn(ExperimentalResourceApi::class)
+suspend fun getByte(fileName: String)=Res.readBytes(fileName)
