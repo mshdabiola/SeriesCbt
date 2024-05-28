@@ -23,9 +23,16 @@ import com.mshdabiola.cbtapp.ui.CbtApp
 import com.mshdabiola.database.Callback
 import com.mshdabiola.database.callback
 import com.mshdabiola.designsystem.string.getByte
+import com.sun.tools.javac.tree.TreeInfo.args
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.bytedeco.javacpp.BytePointer
+import org.bytedeco.leptonica.PIX
+import org.bytedeco.leptonica.global.leptonica.pixDestroy
+import org.bytedeco.leptonica.global.leptonica.pixRead
+import org.bytedeco.tesseract.TessBaseAPI
+import org.bytedeco.tesseract.global.tesseract
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.dsl.module
 import java.io.File
@@ -51,6 +58,7 @@ fun mainApp() {
 }
 
 fun main() {
+    maa()
     val path = File("${System.getProperty("user.home")}/AppData/Local/hydraulic")
     if (path.exists().not()) {
         path.mkdirs()
@@ -144,4 +152,31 @@ fun main() {
         logger.e("crash exceptions", e)
         throw e
     }
+}
+
+
+fun maa(){
+
+
+    val TESSDATA_PREFIX="/home/mshdabiola/Downloads/"
+    val lang="eng"
+    val t = tesseract.TessBaseAPICreate()
+    val rc=tesseract.TessBaseAPIInit3(t,TESSDATA_PREFIX,lang)
+
+
+
+    if(rc != 0){
+        tesseract.TessBaseAPIDelete(t)
+        println("Init failed")
+        System.exit(3)
+    }
+
+    val image = pixRead("/home/mshdabiola/Downloads/IMG_0487.JPG")
+    t.SetImage(image)
+
+    println("text: "+t.GetUTF8Text().string)
+
+    t.End()
+    pixDestroy(image)
+
 }

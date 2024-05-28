@@ -126,6 +126,7 @@ kotlin {
             implementation(libs.kermit.koin)
 
             implementation("com.mshdabiola.series:database:0.0.1")
+            implementation("org.bytedeco:tesseract-platform:5.3.4-1.5.10")
 
 //
 //            implementation(libs.koin.compose)
