@@ -56,14 +56,14 @@ class CbtAppState(
 
     val shouldShowBottomBar: Boolean
         @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact &&
-                cbtRoute.contains(currentDestination?.route)
+            cbtRoute.contains(currentDestination?.route)
     val shouldShowNavRail: Boolean
         @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Medium &&
-                cbtRoute.contains(currentDestination?.route)
+            cbtRoute.contains(currentDestination?.route)
 
     val shouldShowDrawer: Boolean
         @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded &&
-                cbtRoute.contains(currentDestination?.route)
+            cbtRoute.contains(currentDestination?.route)
 
 //    val isOffline = networkMonitor.isOnline
 //        .map(Boolean::not)

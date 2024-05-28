@@ -1,17 +1,11 @@
 package com.mshdabiola.cbtapp
 
-
 import co.touchlab.kermit.Logger
 import com.mshabiola.database.util.Constant
 import com.mshdabiola.database.Security
 import com.mshdabiola.database.generalPath
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
-import java.util.concurrent.Callable
-import kotlin.io.path.inputStream
 
 /**
  * An open helper that will copy & open a pre-populated database if it doesn't exist in internal
@@ -21,29 +15,29 @@ import kotlin.io.path.inputStream
  * https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-master-release/room/runtime/src/main/java/androidx/room/SQLiteCopyOpenHelper.java
  */
 class SQLiteCopyOpenHelper(
-    private val logger :Logger,
-    private val dataFile:File,
-    private val versionFile:File,
+    private val logger: Logger,
+    private val dataFile: File,
+    private val versionFile: File,
 ) {
 
     private var verified = false
 
-    private val key = "abiola"//BuildConfig.store_key
+    private val key = "abiola" // BuildConfig.store_key
 //        if (BuildConfig.DEBUG)
 //        BuildConfig.store_key
 //    else
 //        BuildConfig.store_key
 
-     fun verifyDatabaseFile() {
+    fun verifyDatabaseFile() {
         val databaseName = Constant.databaseName
-        val databaseFilePath = generalPath//context.getDatabasePath(databaseName)
-        val databaseFile =File(databaseFilePath,databaseName)
+        val databaseFilePath = generalPath // context.getDatabasePath(databaseName)
+        val databaseFile = File(databaseFilePath, databaseName)
 //        val lockChannel =
 //            FileOutputStream(File(databaseFilePath, "$databaseName.lck")).channel
         try {
             // Acquire a file lock, this lock works across threads and processes, preventing
             // concurrent copy attempts from occurring.
-          //  lockChannel.tryLock()
+            //  lockChannel.tryLock()
 
             if (!databaseFile.exists()) {
                 try {
@@ -59,7 +53,7 @@ class SQLiteCopyOpenHelper(
             val currentVersion = try {
                 readVersion()
             } catch (e: IOException) {
-                logger.w("Unable to read database version.",e)
+                logger.w("Unable to read database version.", e)
                 return
             }
             val oldVersion =
@@ -89,16 +83,14 @@ class SQLiteCopyOpenHelper(
                 } catch (e: IOException) {
                     // We are more forgiving copying a database on a destructive migration since
                     // there is already a database file that can be opened.
-                    logger.w("Unable to copy database file.",e)
-
+                    logger.w("Unable to copy database file.", e)
                 }
             } else {
-                logger.w("Failed to delete database file ($databaseName) for a copy destructive migration.", )
-
+                logger.w("Failed to delete database file ($databaseName) for a copy destructive migration.")
             }
         } finally {
             try {
-               // lockChannel.close()
+                // lockChannel.close()
             } catch (ignored: IOException) {
             }
         }
@@ -130,7 +122,7 @@ class SQLiteCopyOpenHelper(
 
     @Throws(IOException::class)
     private fun copyDatabaseFile(destinationFile: File) {
-        if (destinationFile.exists().not()){
+        if (destinationFile.exists().not()) {
             destinationFile.parentFile.mkdirs()
             destinationFile.createNewFile()
         }
@@ -139,7 +131,8 @@ class SQLiteCopyOpenHelper(
         versionOutput.write(versionFile.readBytes())
         versionOutput.close()
 
-        File(destinationFile.parent,"${Constant.databaseName}-wal").outputStream().write(byteArrayOf())
+        File(destinationFile.parent, "${Constant.databaseName}-wal").outputStream()
+            .write(byteArrayOf())
         logger.e("finish copying")
 //
 //        // An intermediate file is used so that we never end up with a half-copied database file
@@ -170,7 +163,4 @@ class SQLiteCopyOpenHelper(
 //            throw IOException("Failed to move intermediate file (${intermediateFile.absolutePath}) to destination (${destinationFile.absolutePath}).")
 //        }
     }
-
-
-
 }

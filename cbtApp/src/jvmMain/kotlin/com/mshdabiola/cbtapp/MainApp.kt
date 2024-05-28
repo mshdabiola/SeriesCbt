@@ -1,8 +1,5 @@
 package com.mshdabiola.cbtapp
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -11,22 +8,15 @@ import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import androidx.sqlite.SQLiteConnection
 import co.touchlab.kermit.Logger
 import co.touchlab.kermit.koin.KermitKoinLogger
 import co.touchlab.kermit.loggerConfigInit
 import co.touchlab.kermit.platformLogWriter
-import com.mshdabiola.designsystem.drawable.defaultAppIcon
-import com.mshdabiola.designsystem.string.appName
 import com.mshdabiola.cbtapp.di.appModule
 import com.mshdabiola.cbtapp.ui.CbtApp
-import com.mshdabiola.database.Callback
-import com.mshdabiola.database.callback
-import com.mshdabiola.designsystem.string.getByte
+import com.mshdabiola.designsystem.drawable.defaultAppIcon
+import com.mshdabiola.designsystem.string.appName
 import com.mshdabiola.model.Writer
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.dsl.module
 import java.io.File
@@ -65,8 +55,6 @@ fun main() {
             logger
         }
     }
-
-
 
 //    callback = object : Callback() {
 //        override fun onCreate(connection: SQLiteConnection, path: String) {
@@ -127,7 +115,6 @@ fun main() {
 //        }
 //
 //    }
-
 
     try {
         startKoin {

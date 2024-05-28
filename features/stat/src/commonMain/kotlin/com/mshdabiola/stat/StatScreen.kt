@@ -35,13 +35,11 @@ internal fun MainRoute(
     screenSize: ScreenSize,
     onShowSnackbar: suspend (String, String?) -> Boolean,
 
-
 ) {
     val viewModel: StatViewModel = koinViewModel()
     var userRankList by remember {
         mutableStateOf(emptyList<UserRank>().toImmutableList())
     }
-
 
     StatScreen(
         statState = StatState(),
@@ -61,10 +59,10 @@ internal fun StatScreen(
             TopAppBar(
                 title = { Text(text = "Ranks") },
 
-                )
+            )
         },
 
-        ) { paddingValues ->
+    ) { paddingValues ->
 
         LazyColumn(
             modifier = Modifier
@@ -84,5 +82,5 @@ internal fun StatScreen(
     }
 }
 
-//@Composable
-//expect fun StatScreenPreview()
+// @Composable
+// expect fun StatScreenPreview()

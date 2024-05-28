@@ -6,8 +6,4 @@ package com.mshdabiola.stat
 
 import androidx.lifecycle.ViewModel
 
-class StatViewModel constructor(
-
-    ) : ViewModel() {
-
-}
+class StatViewModel constructor() : ViewModel()

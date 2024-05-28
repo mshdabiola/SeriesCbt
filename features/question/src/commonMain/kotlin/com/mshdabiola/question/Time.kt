@@ -77,5 +77,5 @@ fun TimeCounter(
 }
 
 //
-//@Composable
-//internal expect fun TimeCounterPreview()
+// @Composable
+// internal expect fun TimeCounterPreview()

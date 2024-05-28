@@ -6,8 +6,4 @@ package com.mshdabiola.profile
 
 import androidx.lifecycle.ViewModel
 
-class ProfileViewModel constructor(
-
-    ) : ViewModel(){
-
-}
+class ProfileViewModel constructor() : ViewModel()

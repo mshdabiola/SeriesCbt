@@ -113,7 +113,7 @@ object MarkUpEngine {
             fontSize = TextUnit(0.899f, TextUnitType.Em)
         },
 
-        )
+    )
 
     fun containStyle(text: String): Boolean {
         return text.contains(Regex("\\*[\\w\\W\\s]+\\*[\\w\\W\\s]*\\*e\\*"))
@@ -148,6 +148,6 @@ object MarkUpEngine {
             background = background,
             textDecoration = decoration,
 
-            )
+        )
     }
 }

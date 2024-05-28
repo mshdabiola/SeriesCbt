@@ -28,13 +28,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class QuestionViewModel constructor(
-    examOrdinal: Int, year: Long, val  typeIndex: Int,
+    examOrdinal: Int,
+    year: Long,
+    val typeIndex: Int,
     private val iSubjectRepository: ISubjectRepository,
     private val settingRepository: ISettingRepository,
     private val questionRepository: IQuestionRepository,
     private val iExamRepository: IExaminationRepository,
 
-    ) : ViewModel() {
+) : ViewModel() {
 
     private var type: ExamType = ExamType.values()[examOrdinal]
 
@@ -50,10 +52,7 @@ class QuestionViewModel constructor(
     }
 
     private fun startExam(examType: ExamType, year: Long, typeIndex: Int) {
-
-
         viewModelScope.launch(Dispatchers.IO) {
-
             val list = iExamRepository
                 .getAll()
                 .map {
@@ -66,7 +65,7 @@ class QuestionViewModel constructor(
 
                 val exam = when (type) {
                     ExamType.YEAR -> {
-                       list.single { it.year == year }
+                        list.single { it.year == year }
                     }
 
                     ExamType.FAST_FINGER -> {
@@ -129,8 +128,9 @@ class QuestionViewModel constructor(
                         choose = choose.map { it.toImmutableList() }.toImmutableList(),
                         currentSectionIndex = 0,
                         sections = section.toImmutableList(),
-                        totalTime = time, currentTime = 0,
-                      //  examPart = typeIndex,
+                        totalTime = time,
+                        currentTime = 0,
+                        //  examPart = typeIndex,
                     )
                 }
             } catch (e: Exception) {
@@ -191,7 +191,6 @@ class QuestionViewModel constructor(
                     questions = allQuestions.map { it.toImmutableList() }.toImmutableList(),
                 )
             }
-
         }
     }
 
@@ -275,11 +274,10 @@ class QuestionViewModel constructor(
         }
     }
 
-
     private fun getTitle(examId: Long, no: Long, isTheory: Boolean): String {
-      //  val exam = mainState.value.listOfAllExams.find { it.id == examId }
+        //  val exam = mainState.value.listOfAllExams.find { it.id == examId }
 
-        return "Waec"// ${exam?.year} ${if (isTheory) "Theo" else "Obj"} Q$no"
+        return "Waec" // ${exam?.year} ${if (isTheory) "Theo" else "Obj"} Q$no"
     }
 
     fun changeIndex(index: Int) {

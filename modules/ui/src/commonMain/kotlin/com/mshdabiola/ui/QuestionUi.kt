@@ -95,8 +95,8 @@ fun QuestionHeadUi(
     }
 }
 //
-//@Composable
-//internal expect fun QuestionHeadUiPreview()
+// @Composable
+// internal expect fun QuestionHeadUiPreview()
 //
-//@Composable
-//internal expect fun QuestionUiPreview()
+// @Composable
+// internal expect fun QuestionUiPreview()

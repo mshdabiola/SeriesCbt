@@ -54,16 +54,15 @@ internal fun MainRoute(
     screenSize: ScreenSize,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     navigateToSetting: () -> Unit,
-    navigateToQuestion: (ExamType, Long, Int)->Unit
+    navigateToQuestion: (ExamType, Long, Int) -> Unit,
 ) {
     val viewModel: MainViewModel = koinViewModel()
-
 
     val mainState = viewModel.mainState.collectAsStateWithLifecycleCommon()
     MainScreen(
         mainState = mainState.value,
         onSetting = navigateToSetting,
-        navigateToQuestion=navigateToQuestion
+        navigateToQuestion = navigateToQuestion,
     )
 }
 
@@ -112,7 +111,7 @@ internal fun MainScreen(
                     }
                 },
 
-                )
+            )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { paddingValues ->
@@ -132,11 +131,11 @@ internal fun MainScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "Step right up and test your skills. " +
-                                "Wellcome to Physics test that will challenge and entertain you",
+                            "Wellcome to Physics test that will challenge and entertain you",
                         modifier = Modifier.padding(horizontal = 16.dp),
                         textAlign = TextAlign.Center,
 
-                        )
+                    )
                 }
                 Image(painter = layer2, contentDescription = "")
             }
@@ -180,5 +179,5 @@ internal fun MainScreen(
     }
 }
 //
-//@Composable
-//expect fun MainScreenPreview()
+// @Composable
+// expect fun MainScreenPreview()

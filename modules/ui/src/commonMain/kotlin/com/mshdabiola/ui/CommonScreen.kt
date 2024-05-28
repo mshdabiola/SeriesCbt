@@ -39,18 +39,23 @@ fun CommonScreen(
 
         Scaffold(
             bottomBar = {
-                BottomAppBar(floatingActionButton = {
-                    ExtendedFloatingActionButton(onClick = {
-                        show = true
-                    }) {
-                        Icon(Icons.Default.Add, "add")
-                        Spacer(Modifier.width(8.dp))
-                        Text("Add")
-                    }
-                }, actions = action)
+                BottomAppBar(
+                    floatingActionButton = {
+                        ExtendedFloatingActionButton(
+                            onClick = {
+                                show = true
+                            },
+                        ) {
+                            Icon(Icons.Default.Add, "add")
+                            Spacer(Modifier.width(8.dp))
+                            Text("Add")
+                        }
+                    },
+                    actions = action,
+                )
             },
 
-            ) {
+        ) {
             firstScreen(Modifier.padding(it))
             if (show) {
                 ModalBottomSheet(

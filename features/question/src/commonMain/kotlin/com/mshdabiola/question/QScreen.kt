@@ -67,7 +67,7 @@ internal fun QuestionRoute(
     navigateToFinish: () -> Unit,
     viewModel: QuestionViewModel,
 
-    ) {
+) {
     val mainState = viewModel.mainState.collectAsStateWithLifecycleCommon()
 
     QuestionScreen(
@@ -113,12 +113,12 @@ internal fun QuestionScreen(
                 .flatten()
 
             (
-                    (
-                            allChoose.count {
-                                it > -1
-                            } / allChoose.size.toFloat()
-                            ) * 100
-                    ).toInt()
+                (
+                    allChoose.count {
+                        it > -1
+                    } / allChoose.size.toFloat()
+                    ) * 100
+                ).toInt()
         }
         val states = getState(
             sizes = mainStat
@@ -127,14 +127,17 @@ internal fun QuestionScreen(
                 .toImmutableList(),
         )
 
-        LaunchedEffect(key1 = mainStat.currentTime, block = {
-            mainStat.currentExam?.let {
-                if (mainStat.currentTime == mainStat.totalTime) {
-                    onTimeChanged(mainStat.totalTime)
-                    onFinish()
+        LaunchedEffect(
+            key1 = mainStat.currentTime,
+            block = {
+                mainStat.currentExam?.let {
+                    if (mainStat.currentTime == mainStat.totalTime) {
+                        onTimeChanged(mainStat.totalTime)
+                        onFinish()
+                    }
                 }
-            }
-        })
+            },
+        )
 
         Scaffold(
             modifier = Modifier.semanticsCommon {},
@@ -173,7 +176,7 @@ internal fun QuestionScreen(
                 )
             },
 
-            ) { paddingValues ->
+        ) { paddingValues ->
             Column(
                 Modifier
                     .padding(paddingValues)
@@ -359,5 +362,5 @@ fun getState(sizes: ImmutableList<Int>): ImmutableList<PagerState> {
     }.toImmutableList()
 }
 //
-//@Composable
-//expect fun QuestionScreenPreview()
+// @Composable
+// expect fun QuestionScreenPreview()

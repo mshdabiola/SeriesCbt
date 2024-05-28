@@ -18,7 +18,6 @@ internal class QuestionRepository constructor(
 ) : IQuestionRepository {
     override suspend fun upsert(question: Question): Long {
         return withContext(ioDispatcher) {
-
             val id = questionDao.upsert(question.asModel())
 
             question
@@ -87,5 +86,4 @@ internal class QuestionRepository constructor(
     override suspend fun deleteOption(id: Long) {
         optionDao.delete(id)
     }
-
 }

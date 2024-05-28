@@ -27,8 +27,9 @@ fun NavGraphBuilder.mainScreen(
             screenSize = screenSize,
             onShowSnackbar = onShowSnack,
             navigateToSetting = navigateToSetting,
-            navigateToQuestion = {type,year,objType->
-                navigateToQuestion(type.ordinal,year,objType)}
+            navigateToQuestion = { type, year, objType ->
+                navigateToQuestion(type.ordinal, year, objType)
+            },
         )
     }
 }

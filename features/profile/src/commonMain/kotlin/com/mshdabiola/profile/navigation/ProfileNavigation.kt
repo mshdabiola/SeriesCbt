@@ -9,7 +9,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.mshdabiola.designsystem.icon.cbtRoute
-import com.mshdabiola.designsystem.icon.mainRoute
 import com.mshdabiola.profile.ProfileRoute
 import com.mshdabiola.ui.ScreenSize
 

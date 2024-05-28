@@ -28,7 +28,6 @@ class MainAppViewModel(
     private val _uiState = MutableStateFlow<MainActivityUiState>(Loading)
     val uiState: StateFlow<MainActivityUiState> = _uiState
 
-
     init {
 
 //        viewModelScope.launch {
@@ -43,19 +42,18 @@ class MainAppViewModel(
 //        }
         viewModelScope.launch {
 
-
             val dbTemp = File.createTempFile("data", "db")
             //  if (dbTemp.exists().not()) {
             val byte = getByte("files/data/data.db")
             dbTemp.writeBytes(byte)
-            //}
+            // }
 
             val vTemp = File.createTempFile("version", "text")
             // if (vTemp.exists().not()) {
             val byte2 = getByte("files/data/version.txt")
 
             vTemp.writeBytes(byte2)
-            //}
+            // }
 
             val openHelper = SQLiteCopyOpenHelper(logger, dbTemp, vTemp)
 
@@ -68,11 +66,7 @@ class MainAppViewModel(
                         Success(userdata)
                     }
                 }
-
-
         }
-
-
     }
 }
 

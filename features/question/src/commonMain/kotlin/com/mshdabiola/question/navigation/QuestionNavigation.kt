@@ -20,16 +20,12 @@ import org.koin.core.parameter.parametersOf
 
 const val QUESTION_ROUTE = "question_route"
 
-
 @VisibleForTesting
 internal const val QUESTION_ID_EXAM_TYPE = "examtype"
 internal const val QUESTION_ID_YEAR = "year"
 internal const val QUESTION_ID_INDEX = "index"
 
-
-
-
-fun NavController.navigateToQuestion(examType:Int,year:Long,typeIndex:Int) =
+fun NavController.navigateToQuestion(examType: Int, year: Long, typeIndex: Int) =
     navigate(
         route = "$QUESTION_ROUTE/$examType/$year/$typeIndex",
     )
@@ -51,9 +47,9 @@ fun NavGraphBuilder.questionScreen(
             navArgument(QUESTION_ID_YEAR) {
                 type = NavType.LongType
             },
-            navArgument(QUESTION_ID_INDEX){
-                type= NavType.IntType
-            }
+            navArgument(QUESTION_ID_INDEX) {
+                type = NavType.IntType
+            },
         ),
         enterTransition = {
             slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Left)
@@ -61,25 +57,28 @@ fun NavGraphBuilder.questionScreen(
         exitTransition = {
             slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Right)
         },
-    ) { backStack->
+    ) { backStack ->
 
         val year = backStack.arguments!!.getLong(QUESTION_ID_YEAR)
         val exam = backStack.arguments!!.getInt(QUESTION_ID_EXAM_TYPE)
         val index = backStack.arguments!!.getInt(QUESTION_ID_INDEX)
 
-
-        val viewModel: QuestionViewModel = koinViewModel (parameters = {
-            parametersOf(
-                exam,year,index
-            )
-        })
+        val viewModel: QuestionViewModel = koinViewModel(
+            parameters = {
+                parametersOf(
+                    exam,
+                    year,
+                    index,
+                )
+            },
+        )
 
         QuestionRoute(
             screenSize = screenSize,
             onBack = onBack,
             onShowSnackbar = onShowSnack,
             navigateToFinish = navigateToFinish,
-            viewModel = viewModel
+            viewModel = viewModel,
         )
     }
 }

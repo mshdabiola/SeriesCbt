@@ -6,33 +6,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SnapshotMutationPolicy
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
-import coil3.disk.DiskCache
-import coil3.memory.MemoryCache
 import coil3.request.ImageRequest
 import coil3.svg.SvgDecoder
-import com.mshdabiola.designsystem.string.getByte
-import com.mshdabiola.designsystem.string.getFileUri
 import com.mshdabiola.model.data.Type
 import com.mshdabiola.retex.Latex
 import com.mshdabiola.ui.ImageUtil.getImageFile
 import com.mshdabiola.ui.state.ItemUiState
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.async
 import java.io.File
 
 @Composable
@@ -46,37 +34,34 @@ fun ItemUi(items: ImmutableList<ItemUiState>, examID: Long) {
 
             Type.TEXT -> MarkUpText(modifier = childModifier, text = item.content)
 
-
             Type.IMAGE -> {
-                val path = remember {mutableStateOf("")}
+                val path = remember { mutableStateOf("") }
 
-                LaunchedEffect(Unit){
-                   path.value= getImageFile("$examID/${item.content}").path
+                LaunchedEffect(Unit) {
+                    path.value = getImageFile("$examID/${item.content}").path
                     println("set path ${path.value}")
                 }
                 Box(childModifier, contentAlignment = Alignment.Center) {
                     ImageUi(
-                        Modifier.width(400.dp).aspectRatio(16f/9f),
+                        Modifier.width(400.dp).aspectRatio(16f / 9f),
                         path = path.value,
                         contentDescription = item.content,
                     )
                 }
-
             }
         }
     }
 }
 
-
 @Composable
- fun ImageUi(
+fun ImageUi(
     modifier: Modifier = Modifier,
     path: String,
     contentDescription: String,
     contentScale: ContentScale = ContentScale.Fit,
-){
+) {
     val filePath = File(path)
-    LaunchedEffect(path){
+    LaunchedEffect(path) {
         println("path is $path")
     }
 
@@ -89,11 +74,9 @@ fun ItemUi(items: ImmutableList<ItemUiState>, examID: Long) {
                     .decoderFactory(SvgDecoder.Factory())
                     .build(),
                 contentDescription = contentDescription,
-                contentScale =contentScale
+                contentScale = contentScale,
             )
-
         }
-
 
         else -> {
             AsyncImage(
@@ -102,10 +85,8 @@ fun ItemUi(items: ImmutableList<ItemUiState>, examID: Long) {
                     .data(path)
                     .build(),
                 contentDescription = contentDescription,
-                contentScale =contentScale
+                contentScale = contentScale,
             )
         }
     }
-
-
 }

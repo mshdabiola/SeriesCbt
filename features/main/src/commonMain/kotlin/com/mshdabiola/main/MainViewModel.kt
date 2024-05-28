@@ -22,10 +22,9 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val iExamRepository: IExaminationRepository,
-    private val settingRepository: ISettingRepository
+    private val settingRepository: ISettingRepository,
 
 ) : ViewModel() {
-
 
     private val _mainState =
         MutableStateFlow(MainState(listOfAllExams = emptyList<ExamUiState>().toImmutableList()))
@@ -67,5 +66,4 @@ class MainViewModel(
                 }
         }
     }
-
 }

@@ -1,6 +1,5 @@
 package com.mshdabiola.data.di
 
-import androidx.sqlite.SQLiteConnection
 import com.mshdabiola.analytics.di.analyticsModule
 import com.mshdabiola.data.repository.ExaminationRepository
 import com.mshdabiola.data.repository.IExaminationRepository
@@ -20,8 +19,6 @@ import com.mshdabiola.data.repository.SettingRepository
 import com.mshdabiola.data.repository.SubjectRepository
 import com.mshdabiola.data.repository.TopicRepository
 import com.mshdabiola.data.repository.UserDataRepository
-import com.mshdabiola.database.Callback
-import com.mshdabiola.database.callback
 import com.mshdabiola.database.di.databaseModule
 import com.mshdabiola.database.generalPath
 import com.mshdabiola.datastore.di.datastoreModule
@@ -35,21 +32,19 @@ import org.koin.dsl.module
 val dataModule = module {
     includes(datastoreModule, databaseModule, networkModule, analyticsModule)
     single {
-        generalPath=com.mshdabiola.model.generalPath
+        generalPath = com.mshdabiola.model.generalPath
         println("path is $generalPath")
-        Dispatchers.IO } bind CoroutineDispatcher::class
+        Dispatchers.IO
+    } bind CoroutineDispatcher::class
     singleOf(::RealINetworkRepository) bind INetworkRepository::class
     singleOf(::RealModelRepository) bind IModelRepository::class
     singleOf(::OfflineFirstUserDataRepository) bind UserDataRepository::class
 
     singleOf(::SettingRepository) bind ISettingRepository::class
 
-
-
     singleOf(::SubjectRepository) bind ISubjectRepository::class
     singleOf(::ExaminationRepository) bind IExaminationRepository::class
     singleOf(::TopicRepository) bind ITopicRepository::class
     singleOf(::InstructionRepository) bind IInstructionRepository::class
     singleOf(::QuestionRepository) bind IQuestionRepository::class
-
 }

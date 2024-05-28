@@ -28,7 +28,7 @@ fun Examination.asExamEntity() = ExaminationEntity(
     year = year,
     isObjectiveOnly = isObjectiveOnly,
     duration = duration,
-    updateTime = updateTime
+    updateTime = updateTime,
 )
 
 fun ExaminationFull.asExam() = Examination(
@@ -37,11 +37,12 @@ fun ExaminationFull.asExam() = Examination(
     isObjectiveOnly = examinationEntity.isObjectiveOnly,
     duration = examinationEntity.duration,
     updateTime = examinationEntity.updateTime,
-    subject = subjectEntity.asSub()
+    subject = subjectEntity.asSub(),
 )
 
 fun SubjectEntity.asSub() = Subject(
-    id, title = title
+    id,
+    title = title,
 )
 
 fun Subject.asEntity() = SubjectEntity(id, title)
@@ -60,7 +61,7 @@ fun Option.asEntity() = OptionEntity(
     examId = examId,
     title = title,
     contents = contents.map { it.toSerCo() },
-    isAnswer = isAnswer
+    isAnswer = isAnswer,
 )
 
 fun OptionEntity.asModel() = Option(
@@ -70,11 +71,19 @@ fun OptionEntity.asModel() = Option(
     examId = examId,
     title = title,
     contents = contents.map { it.toModel() },
-    isAnswer = isAnswer
+    isAnswer = isAnswer,
 )
 
 fun Question.asModel() = QuestionEntity(
-    id, number, examId, title, contents.map { it.toSerCo() }, answers.map { it.toSerCo() }, isTheory, instruction?.id, topic?.id
+    id,
+    number,
+    examId,
+    title,
+    contents.map { it.toSerCo() },
+    answers.map { it.toSerCo() },
+    isTheory,
+    instruction?.id,
+    topic?.id,
 )
 
 fun QuestionFull.asModel() = Question(
@@ -82,13 +91,13 @@ fun QuestionFull.asModel() = Question(
     number = questionEntity.number,
     examId = questionEntity.examId,
     title = questionEntity.title,
-    contents = questionEntity.contents.map { it.toModel()},
+    contents = questionEntity.contents.map { it.toModel() },
     answers = questionEntity.answers.map { it.toModel() },
     options = options.map { it.asModel() },
     isTheory = questionEntity.isTheory,
     instruction = instructionEntity?.asModel(),
-    topic = topicEntity?.asModel()
+    topic = topicEntity?.asModel(),
 )
 
-fun ContentSer.toModel()=Content(content,Type.valueOf(type))
-fun Content.toSerCo()=ContentSer(content,type.name)
+fun ContentSer.toModel() = Content(content, Type.valueOf(type))
+fun Content.toSerCo() = ContentSer(content, type.name)

@@ -53,8 +53,8 @@ fun FinishCard(
     }
 }
 //
-//@Composable
-//internal expect fun FinishCardPreview()
+// @Composable
+// internal expect fun FinishCardPreview()
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -83,8 +83,8 @@ fun ScoreCard(scoreUiState: ScoreUiState) {
     }
 }
 //
-//@Composable
-//internal expect fun ScoreCardPreview()
+// @Composable
+// internal expect fun ScoreCardPreview()
 
 @Composable
 fun ScoreItem(

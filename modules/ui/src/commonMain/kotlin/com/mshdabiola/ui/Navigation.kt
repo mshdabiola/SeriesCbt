@@ -44,7 +44,7 @@ fun CommonNavigation(
     showLong: Boolean = true,
     onNavigate: (String) -> Unit = {},
 
-    ) {
+) {
     val color = NavigationDrawerItemDefaults.colors(unselectedContainerColor = Color.Transparent)
 
     Surface(
@@ -52,7 +52,7 @@ fun CommonNavigation(
         color = MaterialTheme.colorScheme.surface, // LocalBackgroundTheme.current.color,
         shape = RoundedCornerShape(0.dp),
 
-        ) {
+    ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = modifier
@@ -134,7 +134,7 @@ fun CommonRail(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
 
-                ) {
+            ) {
                 Text("Main")
                 cbtNavigator
                     .forEachIndexed { index, navigator ->

@@ -25,7 +25,8 @@ class SeriesCbtApplication : Application() {
             this.applicationContext.getDatabasePath(Constant.databaseName).parent?.toString() ?: ""
 
         val logger = Logger(
-            loggerConfigInit(platformLogWriter(),// Writer(this.filesDir)
+            loggerConfigInit(
+                platformLogWriter(), // Writer(this.filesDir)
             ),
             "AndroidLogger",
         )
@@ -40,7 +41,7 @@ class SeriesCbtApplication : Application() {
                 KermitKoinLogger(Logger.withTag("koin")),
             )
             androidContext(this@SeriesCbtApplication)
-            modules(appModule, jankStatsModule,logModule)
+            modules(appModule, jankStatsModule, logModule)
         }
 
 //        if (packageName.contains("debug")) {

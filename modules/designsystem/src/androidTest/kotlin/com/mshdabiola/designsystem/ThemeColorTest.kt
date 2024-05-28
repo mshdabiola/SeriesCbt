@@ -16,11 +16,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
 import com.mshdabiola.designsystem.theme.BackgroundTheme
+import com.mshdabiola.designsystem.theme.CbtTheme
 import com.mshdabiola.designsystem.theme.GradientColors
 import com.mshdabiola.designsystem.theme.LocalBackgroundTheme
 import com.mshdabiola.designsystem.theme.LocalGradientColors
 import com.mshdabiola.designsystem.theme.LocalTintTheme
-import com.mshdabiola.designsystem.theme.CbtTheme
 import com.mshdabiola.designsystem.theme.ThemeColor
 import com.mshdabiola.designsystem.theme.TintTheme
 import com.mshdabiola.model.Contrast

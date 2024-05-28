@@ -27,14 +27,14 @@ internal object QuestionJsonSerializer : OkioSerializer<Map<Long, QuestionSer>> 
                 json.encodeToString(
                     MapSerializer(
                         Long.serializer(),
-                        QuestionSer.serializer()
-                    ), t
-                )
+                        QuestionSer.serializer(),
+                    ),
+                    t,
+                ),
             )
         }
     }
 }
-
 
 internal object InstructionJsonSerializer : OkioSerializer<Map<Long, InstructionSer>> {
 
@@ -51,14 +51,14 @@ internal object InstructionJsonSerializer : OkioSerializer<Map<Long, Instruction
                 json.encodeToString(
                     MapSerializer(
                         Long.serializer(),
-                        InstructionSer.serializer()
-                    ), t
-                )
+                        InstructionSer.serializer(),
+                    ),
+                    t,
+                ),
             )
         }
     }
 }
-
 
 internal object CurrentExamJsonSerializer : OkioSerializer<CurrentExamSer> {
 
@@ -75,7 +75,6 @@ internal object CurrentExamJsonSerializer : OkioSerializer<CurrentExamSer> {
         }
     }
 }
-
 
 internal object UserDataJsonSerializer : OkioSerializer<UserDataSer> {
 

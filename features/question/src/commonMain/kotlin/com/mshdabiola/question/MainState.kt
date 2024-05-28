@@ -2,7 +2,6 @@ package com.mshdabiola.question
 
 import com.mshdabiola.ui.state.ExamUiState
 import com.mshdabiola.ui.state.QuestionUiState
-import com.mshdabiola.ui.state.ScoreUiState
 import com.mshdabiola.ui.state.Section
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

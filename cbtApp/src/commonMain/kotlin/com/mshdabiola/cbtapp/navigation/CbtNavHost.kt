@@ -7,6 +7,7 @@ package com.mshdabiola.cbtapp.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.mshdabiola.cbtapp.ui.CbtAppState
 import com.mshdabiola.finish.navigation.finishScreen
 import com.mshdabiola.finish.navigation.navigateToFinish
 import com.mshdabiola.main.navigation.MAIN_ROUTE
@@ -16,7 +17,6 @@ import com.mshdabiola.question.navigation.navigateToQuestion
 import com.mshdabiola.question.navigation.questionScreen
 import com.mshdabiola.setting.navigation.navigateToSetting
 import com.mshdabiola.setting.navigation.settingScreen
-import com.mshdabiola.cbtapp.ui.CbtAppState
 import com.mshdabiola.stat.navigation.statScreen
 
 @Composable
@@ -42,13 +42,13 @@ fun SkNavHost(
             screenSize = appState.screenSize,
             onShowSnack = onShowSnackbar,
             onBack = navController::popBackStack,
-            navigateToFinish = navController::navigateToFinish
+            navigateToFinish = navController::navigateToFinish,
         )
         finishScreen(
             screenSize = appState.screenSize,
             onShowSnack = onShowSnackbar,
             onBack = navController::popBackStack,
-            navigateToQuestion = navController::navigateToQuestion
+            navigateToQuestion = navController::navigateToQuestion,
         )
 
         statScreen(
@@ -60,7 +60,6 @@ fun SkNavHost(
             screenSize = appState.screenSize,
             onShowSnack = onShowSnackbar,
         )
-
 
         settingScreen(
             screenSize = appState.screenSize,

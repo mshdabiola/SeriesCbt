@@ -49,7 +49,7 @@ internal fun ProfileScreen(
             )
         },
 
-        ) { paddingValues ->
+    ) { paddingValues ->
         Column(
             Modifier
                 .padding(paddingValues)
@@ -72,10 +72,10 @@ internal fun ProfileScreen(
 //                text = latex,
 //            )
 
-           // Latex(text = latex, foregroundColor = Color.Magenta)
+            // Latex(text = latex, foregroundColor = Color.Magenta)
         }
     }
 }
 //
-//@Composable
-//expect fun ProfileScreenPreview()
+// @Composable
+// expect fun ProfileScreenPreview()

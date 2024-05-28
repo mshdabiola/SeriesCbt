@@ -163,7 +163,7 @@ fun StartCard(
                 Button(
                     modifier = Modifier.align(Alignment.End),
                     onClick = {
-                        onClick( typeIndex,exams[yearIndex].year)
+                        onClick(typeIndex, exams[yearIndex].year)
                     },
                     colors = if (isSubmit) ButtonDefaults.buttonColors() else ButtonDefaults.elevatedButtonColors(),
                 ) {

@@ -58,18 +58,18 @@ internal fun FinishRoute(
     screenSize: ScreenSize,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     onBack: () -> Unit,
-    navigateToQuestion: (Int, Long, Int) -> Unit ,
-    viewModel: FinishViewModel
+    navigateToQuestion: (Int, Long, Int) -> Unit,
+    viewModel: FinishViewModel,
 ) {
     val mainState = viewModel.mainState.collectAsStateWithLifecycleCommon()
 
     FinishScreen(
         mainState = mainState.value,
-        back =onBack,
+        back = onBack,
         changeIndex = {},
-        navigateToQuestion ={e,y,t->
+        navigateToQuestion = { e, y, t ->
             onBack()
-            navigateToQuestion(e,y,t)
+            navigateToQuestion(e, y, t)
         },
     )
 }
@@ -107,7 +107,15 @@ internal fun FinishScreen(
                     }
                 },
                 floatingActionButton = {
-                    ExtendedFloatingActionButton(onClick = { navigateToQuestion(ExamType.YEAR.ordinal, mainState.examination.year, mainState.typeIndex) }) {
+                    ExtendedFloatingActionButton(
+                        onClick = {
+                            navigateToQuestion(
+                                ExamType.YEAR.ordinal,
+                                mainState.examination.year,
+                                mainState.typeIndex,
+                            )
+                        },
+                    ) {
                         Icon(imageVector = Icons.Default.Replay, contentDescription = "Share")
                         Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
                         Text(text = "Retry Questions")
@@ -211,5 +219,5 @@ internal fun FinishScreen(
     )
 }
 
-//@Composable
-//expect fun FinishScreenPreview()
+// @Composable
+// expect fun FinishScreenPreview()

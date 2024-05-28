@@ -29,7 +29,6 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -38,11 +37,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.navOptions
 import com.mshdabiola.analytics.AnalyticsHelper
 import com.mshdabiola.analytics.LocalAnalyticsHelper
+import com.mshdabiola.cbtapp.MainActivityUiState
+import com.mshdabiola.cbtapp.MainAppViewModel
+import com.mshdabiola.cbtapp.navigation.SkNavHost
 import com.mshdabiola.designsystem.component.CbtBackground
 import com.mshdabiola.designsystem.component.CbtGradientBackground
+import com.mshdabiola.designsystem.theme.CbtTheme
 import com.mshdabiola.designsystem.theme.GradientColors
 import com.mshdabiola.designsystem.theme.LocalGradientColors
-import com.mshdabiola.designsystem.theme.CbtTheme
 import com.mshdabiola.main.navigation.MAIN_ROUTE
 import com.mshdabiola.main.navigation.navigateToMain
 import com.mshdabiola.model.Contrast
@@ -52,9 +54,6 @@ import com.mshdabiola.profile.navigation.PROFILE_ROUTE
 import com.mshdabiola.profile.navigation.navigateToProfile
 import com.mshdabiola.setting.navigation.SETTING_ROUTE
 import com.mshdabiola.setting.navigation.navigateToSetting
-import com.mshdabiola.cbtapp.MainActivityUiState
-import com.mshdabiola.cbtapp.MainAppViewModel
-import com.mshdabiola.cbtapp.navigation.SkNavHost
 import com.mshdabiola.stat.navigation.STAT_ROUTE
 import com.mshdabiola.stat.navigation.navigateToStat
 import com.mshdabiola.ui.CommonBar
@@ -80,26 +79,34 @@ fun CbtApp() {
 
         when (it) {
             MAIN_ROUTE -> {
-                appState.navController.navigateToMain(navOptions = navOptions {
-                    launchSingleTop
-                    this.restoreState
-                })
+                appState.navController.navigateToMain(
+                    navOptions = navOptions {
+                        launchSingleTop
+                        this.restoreState
+                    },
+                )
             }
 
             SETTING_ROUTE -> {
                 appState.navController.navigateToSetting()
             }
-            PROFILE_ROUTE->{
-                appState.navController.navigateToProfile(navOptions {
-                    launchSingleTop
-                    restoreState
-                })
+
+            PROFILE_ROUTE -> {
+                appState.navController.navigateToProfile(
+                    navOptions {
+                        launchSingleTop
+                        restoreState
+                    },
+                )
             }
-            STAT_ROUTE->{
-                appState.navController.navigateToStat(navOptions {
-                    launchSingleTop
-                    restoreState
-                })
+
+            STAT_ROUTE -> {
+                appState.navController.navigateToStat(
+                    navOptions {
+                        launchSingleTop
+                        restoreState
+                    },
+                )
             }
         }
     }
@@ -135,7 +142,8 @@ fun CbtApp() {
                                 drawerContent = {
                                     CommonNavigation(
                                         modifier = Modifier.width(300.dp).fillMaxHeight(),
-                                        currentNavigation = appState.currentDestination?.route ?: "",
+                                        currentNavigation = appState.currentDestination?.route
+                                            ?: "",
                                         onNavigate = navigator,
                                     )
                                 },
@@ -146,7 +154,7 @@ fun CbtApp() {
                                     contentWindowInsets = WindowInsets(0, 0, 0, 0),
                                     snackbarHost = { SnackbarHost(snackbarHostState) },
 
-                                    ) { padding ->
+                                ) { padding ->
 
                                     Column(
                                         Modifier
@@ -188,10 +196,11 @@ fun CbtApp() {
                                 if (appState.shouldShowNavRail) {
                                     CommonRail(
                                         modifier = Modifier.width(100.dp).fillMaxHeight(),
-                                        currentNavigation = appState.currentDestination?.route ?: "",
+                                        currentNavigation = appState.currentDestination?.route
+                                            ?: "",
                                         onNavigate = navigator,
 
-                                        )
+                                    )
                                 }
                                 Scaffold(
                                     modifier = Modifier.semanticsCommon {},
@@ -208,7 +217,7 @@ fun CbtApp() {
                                         }
                                     },
 
-                                    ) { padding ->
+                                ) { padding ->
 
                                     Column(
                                         Modifier

@@ -23,7 +23,8 @@ actual fun <T> Flow<T>.collectAsStateWithLifecycleCommon(initialValue: T): State
     return this.collectAsStateWithLifecycle(
         lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current,
 
-        initialValue = initialValue)
+        initialValue = initialValue,
+    )
 }
 
 // val ViewModel.viewModelScope: CoroutineScope

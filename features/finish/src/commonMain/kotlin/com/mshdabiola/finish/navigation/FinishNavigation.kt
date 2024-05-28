@@ -13,7 +13,7 @@ import com.mshdabiola.ui.ScreenSize
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
-const val FINISH_ROUTE ="finish_route"
+const val FINISH_ROUTE = "finish_route"
 
 fun NavController.navigateToFinish() = navigate(FINISH_ROUTE)
 
@@ -21,7 +21,7 @@ fun NavController.navigateToFinish() = navigate(FINISH_ROUTE)
 fun NavGraphBuilder.finishScreen(
     onShowSnack: suspend (String, String?) -> Boolean,
     onBack: () -> Unit,
-    navigateToQuestion: (Int, Long, Int) -> Unit ,
+    navigateToQuestion: (Int, Long, Int) -> Unit,
     screenSize: ScreenSize,
 ) {
     composable(route = FINISH_ROUTE) {
@@ -32,7 +32,7 @@ fun NavGraphBuilder.finishScreen(
             onBack = onBack,
             onShowSnackbar = onShowSnack,
             navigateToQuestion = navigateToQuestion,
-            viewModel = viewModel
+            viewModel = viewModel,
         )
     }
 }

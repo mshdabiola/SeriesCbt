@@ -1,4 +1,5 @@
 package com.mshdabiola.designsystem.icon
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Bookmarks

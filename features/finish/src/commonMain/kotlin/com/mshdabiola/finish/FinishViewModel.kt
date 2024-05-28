@@ -28,8 +28,7 @@ class FinishViewModel constructor(
     private val questionRepository: IQuestionRepository,
     private val iExamRepository: IExaminationRepository,
 
-    ) : ViewModel() {
-
+) : ViewModel() {
 
     private val _mainState =
         MutableStateFlow(MainState())
@@ -52,15 +51,13 @@ class FinishViewModel constructor(
             allQuestions.add(questions.filter { it.isTheory.not() })
             allQuestions.add(questions.filter { it.isTheory })
 
-
             val section = allQuestions
                 .map { questionUiStates ->
                     val isTheory = questionUiStates.all { it.isTheory }
                     Section(stringRes = if (isTheory) 1 else 0, false)
                 }
 
-            val choose=current.choose.map { it.toImmutableList() }.toImmutableList()
-
+            val choose = current.choose.map { it.toImmutableList() }.toImmutableList()
 
             _mainState.update {
                 it.copy(
@@ -68,12 +65,11 @@ class FinishViewModel constructor(
                     questions = allQuestions.map { it.toImmutableList() }.toImmutableList(),
                     sections = section.toImmutableList(),
                     choose = choose,
-                    typeIndex = current.examPart
+                    typeIndex = current.examPart,
                 )
             }
 
             markExam()
-
         }
     }
 
@@ -116,6 +112,4 @@ class FinishViewModel constructor(
             )
         }
     }
-
-
 }
