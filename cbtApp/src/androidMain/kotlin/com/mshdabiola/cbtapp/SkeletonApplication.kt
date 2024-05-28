@@ -9,6 +9,7 @@ import co.touchlab.kermit.Logger
 import co.touchlab.kermit.koin.KermitKoinLogger
 import co.touchlab.kermit.loggerConfigInit
 import co.touchlab.kermit.platformLogWriter
+import com.mshabiola.database.util.Constant
 import com.mshdabiola.cbtapp.di.appModule
 import com.mshdabiola.cbtapp.di.jankStatsModule
 import com.mshdabiola.model.parentPath
@@ -20,7 +21,8 @@ class SkeletonApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        parentPath = this.applicationContext.filesDir.path
+        parentPath =
+            this.applicationContext.getDatabasePath(Constant.databaseName).parent?.toString() ?: ""
 
         val logger = Logger(
             loggerConfigInit(platformLogWriter(),// Writer(this.filesDir)

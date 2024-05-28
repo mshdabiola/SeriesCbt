@@ -38,12 +38,12 @@ class SQLiteCopyOpenHelper(
         val databaseName = Constant.databaseName
         val databaseFilePath = generalPath//context.getDatabasePath(databaseName)
         val databaseFile =File(databaseFilePath,databaseName)
-        val lockChannel =
-            FileOutputStream(File(databaseFilePath, "$databaseName.lck")).channel
+//        val lockChannel =
+//            FileOutputStream(File(databaseFilePath, "$databaseName.lck")).channel
         try {
             // Acquire a file lock, this lock works across threads and processes, preventing
             // concurrent copy attempts from occurring.
-            lockChannel.tryLock()
+          //  lockChannel.tryLock()
 
             if (!databaseFile.exists()) {
                 try {
@@ -98,7 +98,7 @@ class SQLiteCopyOpenHelper(
             }
         } finally {
             try {
-                lockChannel.close()
+               // lockChannel.close()
             } catch (ignored: IOException) {
             }
         }
@@ -130,6 +130,10 @@ class SQLiteCopyOpenHelper(
 
     @Throws(IOException::class)
     private fun copyDatabaseFile(destinationFile: File) {
+        if (destinationFile.exists().not()){
+            destinationFile.parentFile.mkdirs()
+            destinationFile.createNewFile()
+        }
         Security.decode(dataFile.inputStream(), destinationFile.outputStream(), key)
         val versionOutput = File(destinationFile.parent, "version.txt").outputStream()
         versionOutput.write(versionFile.readBytes())

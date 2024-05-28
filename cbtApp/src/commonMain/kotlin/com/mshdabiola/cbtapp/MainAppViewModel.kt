@@ -6,34 +6,31 @@ package com.mshdabiola.cbtapp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mshdabiola.data.repository.UserDataRepository
-import com.mshdabiola.model.UserData
+import co.touchlab.kermit.Logger
 import com.mshdabiola.cbtapp.MainActivityUiState.Loading
 import com.mshdabiola.cbtapp.MainActivityUiState.Success
 import com.mshdabiola.data.repository.IExaminationRepository
+import com.mshdabiola.data.repository.UserDataRepository
 import com.mshdabiola.designsystem.string.getByte
-import com.mshdabiola.designsystem.string.getFileUri
-import kotlinx.coroutines.flow.SharingStarted
+import com.mshdabiola.model.UserData
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
 
 class MainAppViewModel(
     userDataRepository: UserDataRepository,
-    private val examinationRepository: IExaminationRepository
+    private val examinationRepository: IExaminationRepository,
+    private val logger: Logger,
 ) : ViewModel() {
-    val uiState: StateFlow<MainActivityUiState> = userDataRepository.userData.map {
-        Success(it)
-    }.stateIn(
-        scope = viewModelScope,
-        initialValue = Loading,
-        started = SharingStarted.WhileSubscribed(5_000),
-    )
+    private val _uiState = MutableStateFlow<MainActivityUiState>(Loading)
+    val uiState: StateFlow<MainActivityUiState> = _uiState
 
-//    init {
+
+    init {
+
 //        viewModelScope.launch {
 //            val all = examinationRepository.getAll().first()
 //            if (all.isEmpty()) {
@@ -44,7 +41,39 @@ class MainAppViewModel(
 //                    .import(files.path,"abiola")
 //            }
 //        }
-//    }
+        viewModelScope.launch {
+
+
+            val dbTemp = File.createTempFile("data", "db")
+            //  if (dbTemp.exists().not()) {
+            val byte = getByte("files/data/data.db")
+            dbTemp.writeBytes(byte)
+            //}
+
+            val vTemp = File.createTempFile("version", "text")
+            // if (vTemp.exists().not()) {
+            val byte2 = getByte("files/data/version.txt")
+
+            vTemp.writeBytes(byte2)
+            //}
+
+            val openHelper = SQLiteCopyOpenHelper(logger, dbTemp, vTemp)
+
+            openHelper.verifyDatabaseFile()
+
+            userDataRepository
+                .userData
+                .collectLatest { userdata ->
+                    _uiState.update {
+                        Success(userdata)
+                    }
+                }
+
+
+        }
+
+
+    }
 }
 
 sealed interface MainActivityUiState {
