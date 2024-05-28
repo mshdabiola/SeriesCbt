@@ -17,7 +17,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
-class SkeletonApplication : Application() {
+class SeriesCbtApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -39,7 +39,7 @@ class SkeletonApplication : Application() {
             logger(
                 KermitKoinLogger(Logger.withTag("koin")),
             )
-            androidContext(this@SkeletonApplication)
+            androidContext(this@SeriesCbtApplication)
             modules(appModule, jankStatsModule,logModule)
         }
 

@@ -34,6 +34,7 @@ import com.mshdabiola.designsystem.icon.mainRoute
 import com.mshdabiola.designsystem.icon.settingIcons
 import com.mshdabiola.designsystem.icon.settingNavigator
 import com.mshdabiola.designsystem.icon.settingRoute
+import com.mshdabiola.designsystem.string.appName
 
 @Composable
 fun CommonNavigation(
@@ -61,7 +62,7 @@ fun CommonNavigation(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.LocalLibrary, "Logo")
                 Text(
-                    "Cbt",
+                    appName,
                     style = MaterialTheme.typography.headlineSmall,
                 )
             }

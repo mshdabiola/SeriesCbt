@@ -23,6 +23,7 @@ import com.mshdabiola.cbtapp.ui.CbtApp
 import com.mshdabiola.database.Callback
 import com.mshdabiola.database.callback
 import com.mshdabiola.designsystem.string.getByte
+import com.mshdabiola.model.Writer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
