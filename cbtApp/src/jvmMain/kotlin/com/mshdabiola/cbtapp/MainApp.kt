@@ -14,6 +14,7 @@ import co.touchlab.kermit.loggerConfigInit
 import co.touchlab.kermit.platformLogWriter
 import com.mshdabiola.cbtapp.di.appModule
 import com.mshdabiola.cbtapp.ui.CbtApp
+import com.mshdabiola.database.generalPath
 import com.mshdabiola.designsystem.drawable.defaultAppIcon
 import com.mshdabiola.designsystem.string.appName
 import com.mshdabiola.model.Writer
@@ -42,6 +43,8 @@ fun mainApp() {
 }
 
 fun main() {
+    generalPath = com.mshdabiola.model.generalPath
+
     val path = File("${System.getProperty("user.home")}/AppData/Local/hydraulic")
     if (path.exists().not()) {
         path.mkdirs()
@@ -55,66 +58,6 @@ fun main() {
             logger
         }
     }
-
-//    callback = object : Callback() {
-//        override fun onCreate(connection: SQLiteConnection, path: String) {
-//            CoroutineScope(Dispatchers.Main).launch {
-//                logger.e("onCreate desktop")
-//
-//                val dbTemp= File.createTempFile("data","db")
-//                //  if (dbTemp.exists().not()) {
-//                val byte= getByte("files/data/data.db")
-//                dbTemp.writeBytes(byte)
-//                //}
-//
-//                val vTemp= File.createTempFile("version","text")
-//                // if (vTemp.exists().not()) {
-//                val byte2= getByte("files/data/version.txt")
-//
-//                vTemp.writeBytes(byte2)
-//                //}
-//
-//                val openHelper=SQLiteCopyOpenHelper(logger,dbTemp,vTemp)
-//
-//                openHelper.verifyDatabaseFile()
-//
-//            }
-//
-//        }
-//
-//        override fun onDestructiveMigration(connection: SQLiteConnection) {
-//            logger.e("onDestructiveMigration desktop")
-//        }
-//
-//        override fun onOpen(connection: SQLiteConnection) {
-//
-//            CoroutineScope(Dispatchers.Main).launch {
-//                logger.e("onOpen desktop")
-//
-//
-//                val dbTemp= File.createTempFile("data","db")
-//                //  if (dbTemp.exists().not()) {
-//                val byte= getByte("files/data/data.db")
-//                dbTemp.writeBytes(byte)
-//                //}
-//
-//                val vTemp= File.createTempFile("version","text")
-//                // if (vTemp.exists().not()) {
-//                val byte2= getByte("files/data/version.txt")
-//
-//                vTemp.writeBytes(byte2)
-//                //}
-//
-//                val openHelper=SQLiteCopyOpenHelper(logger,dbTemp,vTemp)
-//
-//                openHelper.verifyDatabaseFile()
-//
-//
-//            }
-//
-//        }
-//
-//    }
 
     try {
         startKoin {
