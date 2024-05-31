@@ -4,6 +4,7 @@ import androidx.datastore.core.okio.OkioSerializer
 import com.mshdabiola.model.Contrast
 import com.mshdabiola.model.DarkThemeConfig
 import com.mshdabiola.model.ThemeBrand
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
@@ -96,4 +97,12 @@ internal object UserDataJsonSerializer : OkioSerializer<UserDataSer> {
             it.writeUtf8(json.encodeToString(UserDataSer.serializer(), t))
         }
     }
+}
+
+fun String.toContent(): List<ContentSer> {
+    return json.decodeFromString(this)
+}
+
+fun List<ContentSer>.asString(): String {
+    return json.encodeToString(ListSerializer(ContentSer.serializer()), this)
 }

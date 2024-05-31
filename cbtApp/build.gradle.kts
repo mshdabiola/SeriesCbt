@@ -125,7 +125,7 @@ kotlin {
 
             implementation(libs.kermit.koin)
 
-            implementation("com.mshdabiola.series:database:0.0.1")
+            implementation("com.mshdabiola.series:database:0.0.3")
 
 //
 //            implementation(libs.koin.compose)

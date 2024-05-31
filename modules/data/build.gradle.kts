@@ -19,7 +19,7 @@ kotlin {
 //                implementation(project(":modules:model"))
 //                implementation(project(":modules:database"))
                 implementation(project(":modules:datastore"))
-                implementation("com.mshdabiola.series:database:0.0.1")
+                implementation("com.mshdabiola.series:database:0.0.3")
 
                 implementation(project(":modules:network"))
                 implementation(libs.kotlinx.coroutines.core)
