@@ -68,7 +68,7 @@ class AndroidRoomConventionPlugin : Plugin<Project> {
 
                     getByName("commonMain") {
                         this.dependencies {
-                            implementation(project(":modules:model"))
+                            //  implementation(project(":modules:model"))
                             implementation(libs.findLibrary("room.runtime").get())
                             implementation(libs.findLibrary("room.ktx").get())
                             implementation(libs.findLibrary("room.paging").get())

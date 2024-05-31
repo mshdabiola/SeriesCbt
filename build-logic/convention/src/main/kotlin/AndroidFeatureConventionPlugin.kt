@@ -64,6 +64,12 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
 
                             implementation(project(":modules:designsystem"))
                             implementation(project(":modules:analytics"))
+
+
+//                             implementation(libs.findLibrary("koin.compose").get())
+//                             implementation(libs.findLibrary("koin.composeVM").get())
+//                             implementation(libs.findLibrary("lifecycle.viewmodel.compose").get())
+
                         }
 
                     }

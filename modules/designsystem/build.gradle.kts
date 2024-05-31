@@ -50,17 +50,14 @@ kotlin {
                 api(compose.materialIconsExtended)
                 api(compose.components.resources)
                 api(libs.kotlinx.collection.immutable)
-               implementation(project(":modules:model"))
+                implementation(project(":modules:model"))
                 api(libs.androidx.compose.material3.windowSizeClass)
                 api(libs.navigation.compose)
-                api(libs.paging.compose.common)
+                //     api(libs.paging.compose.common)
 
-                api(libs.koin.compose)
                 api(libs.koin.composeVM)
-                api(libs.lifecycle.viewmodel.compose)
-
-
-
+//                api(libs.paging.compose.common)
+//                api(libs.paging.compose.common)
 
 
             }

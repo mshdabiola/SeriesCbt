@@ -66,7 +66,7 @@ android {
         }
     }
 
-    targetProjectPath = ":composeApp"
+    targetProjectPath = ":cbtApp"
     experimentalProperties["android.experimental.self-instrumenting"] = true
 }
 

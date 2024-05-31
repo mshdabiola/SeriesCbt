@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
-
 /*
  *abiola 2024
  */
@@ -23,10 +21,7 @@ dependencies {
     implementation(libs.firebase.analytics)
 }
 kotlin {
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-    }
+
     sourceSets {
 
 

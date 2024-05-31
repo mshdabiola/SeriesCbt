@@ -32,7 +32,7 @@ val unspecified_scheme = ColorFamily(
 )
 
 @Composable
-fun SkTheme(
+fun CbtTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     themeBrand: ThemeBrand = ThemeBrand.DEFAULT,
     themeContrast: Contrast = Contrast.Normal,
@@ -86,7 +86,7 @@ fun SkTheme(
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
-            typography = SkTypography,
+            typography = typography,
             content = content,
         )
     }
