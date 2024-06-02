@@ -12,6 +12,7 @@ import co.touchlab.kermit.platformLogWriter
 import com.mshabiola.database.util.Constant
 import com.mshdabiola.cbtapp.di.appModule
 import com.mshdabiola.cbtapp.di.jankStatsModule
+import com.mshdabiola.database.generalPath
 import com.mshdabiola.model.parentPath
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -23,6 +24,7 @@ class SeriesCbtApplication : Application() {
         super.onCreate()
         parentPath =
             this.applicationContext.getDatabasePath(Constant.databaseName).parent?.toString() ?: ""
+        generalPath = com.mshdabiola.model.generalPath
 
         val logger = Logger(
             loggerConfigInit(
