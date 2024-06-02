@@ -1,3 +1,5 @@
+import java.util.Properties
+
 pluginManagement {
     repositories {
         includeBuild("build-logic")
@@ -7,14 +9,35 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+var project : Properties?=null
+try {
+    project=  File(rootDir, "local.properties").inputStream().use {
+        Properties().apply { load(it) }
+
+    }
+   // println("user ${ project?.getProperty("gpr.password")}")
+
+
+} catch (e: Exception) {
+
+    e.printStackTrace()
+}
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 dependencyResolutionManagement {
 //    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
-        mavenLocal()
+        //  mavenLocal()
+        maven {
+            url = uri("https://maven.pkg.github.com/mshdabiola/series")
+            credentials {
+                username = project?.getProperty("gpr.userid")  ?: System.getenv("USERID")
+                password = project?.getProperty("gpr.password") ?: System.getenv("PASSWORD")
+            }
+        }
         mavenCentral()
+
         maven(url = "https://www.jitpack.io")
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven(url = "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-js-wrappers")
@@ -26,7 +49,7 @@ dependencyResolutionManagement {
 rootProject.name = "SeriesCbt"
 //include(":app")
 //include(":app:baselineprofile")
-include(":modules:database")
+//include(":modules:database")
 include(":modules:designsystem")
 include(":modules:model")
 include(":modules:network")
