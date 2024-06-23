@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:399590754284:android:594c19488959da522c22c9",
         "android_client_info": {
-          "package_name": "com.mshdabiola.cbtapp"
+          "package_name": "com.mshdabiola.cbtapp.play"
         }
       },
       "oauth_client": [],
@@ -28,7 +28,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:399590754284:android:8f862c2de7ce33cf2c22c9",
         "android_client_info": {
-          "package_name": "com.mshdabiola.cbtapp.benchmark"
+          "package_name": "com.mshdabiola.cbtapp.play.benchmark"
         }
       },
       "oauth_client": [],
@@ -47,7 +47,64 @@
       "client_info": {
         "mobilesdk_app_id": "1:399590754284:android:0590a462cd93f38c2c22c9",
         "android_client_info": {
-          "package_name": "com.mshdabiola.cbtapp.debug"
+          "package_name": "com.mshdabiola.cbtapp.play.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCitl1A42XuvqNLaK7AVKz6RR2J2Wa_oPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399590754284:android:594c19488959da522c22c9",
+        "android_client_info": {
+          "package_name": "com.mshdabiola.cbtapp.foss"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCitl1A42XuvqNLaK7AVKz6RR2J2Wa_oPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399590754284:android:8f862c2de7ce33cf2c22c9",
+        "android_client_info": {
+          "package_name": "com.mshdabiola.cbtapp.foss.benchmark"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCitl1A42XuvqNLaK7AVKz6RR2J2Wa_oPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399590754284:android:0590a462cd93f38c2c22c9",
+        "android_client_info": {
+          "package_name": "com.mshdabiola.cbtapp.foss.debug"
         }
       },
       "oauth_client": [],
