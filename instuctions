@@ -1,16 +1,19 @@
- ./gradlew :modules:designsystem:jacocoTestReport
+  ./gradlew :modules:designsystem:jacocoTestReport
 
-    ./gradlew lintDebug; ./gradlew updateReleaseBadging; ./gradlew dependencyGuardBaseline; ./gradlew spotlessApply --init-script gradle/init.gradle.kts --no-configuration-cache; ./gradlew recordRoborazziDebug
+         ./gradlew lintFossReliantDebug; ./gradlew updateFossReliantReleaseBadging; ./gradlew dependencyGuardBaseline; ./gradlew spotlessApply --init-script gradle/init.gradle.kts --no-configuration-cache; ./gradlew recordRoborazziFossReliantDebug
 
-    ./gradlew dependencyGuard; ./gradlew checkDebugBadging; ./gradlew spotlessCheck --init-script gradle/init.gradle.kts --no-configuration-cache; ./gradlew verifyRoborazziDebug
+    +-no-configuration-cache; ./gradlew recordRoborazziGooglePlayDebug
 
-    ./gradlew assembleDebug -PenableComposeCompilerMetrics=true -PenableComposeCompilerReports=true
-    ./gradlew :composeApp:generateReleaseBaselineProfile
+         ./gradlew dependencyGuard; ./gradlew checkReleaseBadging; ./gradlew spotlessCheck --init-script gradle/init.gradle.kts --no-configuration-cache; ./gradlew verifyRoborazziDebug
 
-    ./gradlew wasmJsBrowserRun -t
-    ./gradlew wasmJsBrowserDistribution
 
-    export TOKEN=
-    conveyor make rendered-icons
-    conveyor make site
-    ./gradlew run
+     ./gradlew assembleDebug -PenableComposeCompilerMetrics=true -PenableComposeCompilerReports=true
+     ./gradlew :composeApp:generateReleaseBaselineProfile
+
+     ./gradlew wasmJsBrowserRun -t
+     ./gradlew wasmJsBrowserDistribution
+
+     export TOKEN=
+     conveyor make rendered-icons
+     conveyor make site
+     ./gradlew run
