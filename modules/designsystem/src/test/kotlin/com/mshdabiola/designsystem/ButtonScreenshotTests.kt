@@ -10,7 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.mshdabiola.designsystem.component.CbtButton
-import com.mshdabiola.designsystem.icon.CbtIcons
+import com.mshdabiola.designsystem.icon.SkIcons
 import com.mshdabiola.testing.util.captureMultiTheme
 import org.junit.Rule
 import org.junit.Test
@@ -38,15 +38,6 @@ class ButtonScreenshotTests {
         }
     }
 
-//    @Test
-//    fun niaOutlineButton_multipleThemes() {
-//        composeTestRule.captureMultiTheme("Button", "OutlineButton") { description ->
-//            Surface {
-//                NiaOutlinedButton(onClick = {}, text = { Text("$description OutlineButton") })
-//            }
-//        }
-//    }
-
     @Test
     fun niaButton_leadingIcon_multipleThemes() {
         composeTestRule.captureMultiTheme(
@@ -58,7 +49,7 @@ class ButtonScreenshotTests {
                 CbtButton(
                     onClick = {},
                     text = { Text("$description Icon Button") },
-                    leadingIcon = { Icon(imageVector = CbtIcons.Add, contentDescription = null) },
+                    leadingIcon = { Icon(imageVector = SkIcons.Add, contentDescription = null) },
                 )
             }
         }
