@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mshdabiola.designsystem.drawable.layer1
@@ -161,6 +162,7 @@ internal fun MainScreen(
             )
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                 OtherCard(
+                    modifier = Modifier.testTag("main:random"),
                     title = "Random exam",
                     painter = layer1,
                     onClick = {
@@ -168,6 +170,7 @@ internal fun MainScreen(
                     },
                 )
                 OtherCard(
+                    modifier = Modifier.testTag("main:fast"),
                     title = "Fast finger",
                     painter = layer3,
                     onClick = {

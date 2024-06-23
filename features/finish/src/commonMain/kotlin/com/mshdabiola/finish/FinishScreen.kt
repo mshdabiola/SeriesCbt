@@ -37,6 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.mshdabiola.designsystem.string.sections
 import com.mshdabiola.ui.InstructionBottomSheet
@@ -96,7 +97,7 @@ internal fun FinishScreen(
         bottomBar = {
             BottomAppBar(
                 actions = {
-                    IconButton(onClick = back) {
+                    IconButton(onClick = back, modifier = Modifier.testTag("finish:back")) {
                         Icon(
                             imageVector = Icons.Default.ArrowBackIosNew,
                             contentDescription = "back",
@@ -108,6 +109,7 @@ internal fun FinishScreen(
                 },
                 floatingActionButton = {
                     ExtendedFloatingActionButton(
+                        modifier = Modifier.testTag("finish:retry"),
                         onClick = {
                             navigateToQuestion(
                                 ExamType.YEAR.ordinal,

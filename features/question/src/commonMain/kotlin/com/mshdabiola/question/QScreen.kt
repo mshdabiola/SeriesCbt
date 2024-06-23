@@ -42,6 +42,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.mshdabiola.ui.InstructionBottomSheet
 import com.mshdabiola.ui.QuestionUi
@@ -144,7 +145,8 @@ internal fun QuestionScreen(
             bottomBar = {
                 BottomAppBar(
                     actions = {
-                        IconButton(onClick = back) {
+                        IconButton(onClick = back, modifier = Modifier.testTag("question:back")) {
+
                             Icon(
                                 imageVector = Icons.Default.ArrowBackIosNew,
                                 contentDescription = "back",
@@ -153,6 +155,7 @@ internal fun QuestionScreen(
                     },
                     floatingActionButton = {
                         ExtendedFloatingActionButton(
+                            modifier = Modifier.testTag("question:submit"),
                             onClick = onFinish,
                             containerColor = if (finishPercent == 100) {
                                 correct()

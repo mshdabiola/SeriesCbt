@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.mshdabiola.designsystem.string.examPart
 import com.mshdabiola.ui.image.DropdownMenu
@@ -161,7 +162,9 @@ fun StartCard(
                     )
                 }
                 Button(
-                    modifier = Modifier.align(Alignment.End),
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .testTag("main:start"),
                     onClick = {
                         onClick(typeIndex, exams[yearIndex].year)
                     },
@@ -177,12 +180,13 @@ fun StartCard(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OtherCard(
+    modifier: Modifier=Modifier,
     title: String,
     painter: Painter,
     contentDesc: String = "",
     onClick: () -> Unit = {},
 ) {
-    OutlinedCard(onClick = onClick) {
+    OutlinedCard(onClick = onClick, modifier = modifier) {
         Column(
             Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
