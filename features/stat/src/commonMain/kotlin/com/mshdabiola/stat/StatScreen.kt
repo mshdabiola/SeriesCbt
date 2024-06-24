@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import com.mshdabiola.ui.MoreRankButton
 import com.mshdabiola.ui.ScreenSize
 import com.mshdabiola.ui.UserRankUiState
-import com.mshdabiola.ui.semanticsCommon
 import com.mshdabiola.ui.state.UserRank
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -54,7 +53,7 @@ internal fun StatScreen(
     userRankList: ImmutableList<UserRank>,
 ) {
     Scaffold(
-        modifier = Modifier.semanticsCommon {},
+        modifier = Modifier,
         topBar = {
             TopAppBar(
                 title = { Text(text = "Ranks") },

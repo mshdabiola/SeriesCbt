@@ -8,16 +8,15 @@ plugins {
     id("mshdabiola.android.application")
     id("mshdabiola.android.application.compose")
     id("mshdabiola.android.application.jacoco")
-    id("mshdabiola.android.application.firebase")
-    alias(libs.plugins.androidx.baselineprofile)
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.roborazzi)
+    id("mshdabiola.android.application.flavor")
     alias(libs.plugins.conveyor)
+    alias(libs.plugins.baselineprofile)
+    alias(libs.plugins.roborazzi)
 
 }
 
 group = "com.mshdabiola.cbtapp"
-version = "0.0.1"
+version = "0.0.3"
 
 dependencies {
 
@@ -37,29 +36,60 @@ dependencies {
 
     implementation(libs.koin.android)
 
-    implementation(libs.androidx.metrics)
 
-    debugImplementation(libs.leakcanary.android)
 
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.material3.adaptive)
+    implementation(libs.androidx.compose.material3.adaptive.layout)
+    implementation(libs.androidx.compose.material3.adaptive.navigation)
+//    implementation(libs.androidx.compose.material3.windowSizeClass)
+    implementation(libs.androidx.compose.runtime.tracing)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.tracing.ktx)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.profileinstaller)
+    implementation(libs.androidx.tracing.ktx)
+    implementation(libs.androidx.window.core)
+    implementation(libs.kotlinx.coroutines.guava)
+    implementation(libs.coil.kt)
+
 
     debugImplementation(libs.androidx.compose.ui.testManifest)
 
 
-    testImplementation(project(":modules:testing"))
-    testImplementation(libs.accompanist.testharness)
+    testImplementation(projects.modules.testing)
+    testImplementation(libs.androidx.compose.ui.test)
+    testImplementation(libs.androidx.work.testing)
 
-    testImplementation(libs.robolectric)
-    testImplementation(libs.roborazzi)
+    testFossReliantImplementation(libs.robolectric)
+    testFossReliantImplementation(libs.roborazzi)
+    //testFossReliantImplementation(projects.modules.screenshotTesting)
 
-    androidTestImplementation(project(":modules:testing"))
-    androidTestImplementation(libs.accompanist.testharness)
-    debugImplementation(libs.androidx.monitor)
-    baselineProfile(project(":benchmarks"))
+
+    androidTestImplementation(projects.modules.testing)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.androidx.navigation.testing)
+    androidTestImplementation(libs.androidx.compose.ui.test)
+
+    baselineProfile(projects.benchmarks)
+
+
+    googlePlayImplementation(platform(libs.firebase.bom))
+    googlePlayImplementation(libs.firebase.analytics)
+    googlePlayImplementation(libs.firebase.performance)
+    googlePlayImplementation(libs.firebase.crashlytics)
+
+    googlePlayImplementation(libs.firebase.cloud.messaging)
+    googlePlayImplementation(libs.firebase.remoteconfig)
+    googlePlayImplementation(libs.firebase.message)
+    googlePlayImplementation(libs.firebase.auth)
+
+    googlePlayImplementation(libs.play.game)
+    googlePlayImplementation(libs.play.update)
+    googlePlayImplementation(libs.play.update.kts)
+    googlePlayImplementation(libs.play.review)
+    googlePlayImplementation(libs.play.review.kts)
 }
 
 kotlin {
@@ -90,9 +120,7 @@ kotlin {
         val jvmMain by getting
 
         androidMain.dependencies {
-            implementation(libs.kotlinx.coroutines.android)
-
-            implementation(libs.compose.ui.tooling.preview)
+            //implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.kotlinx.coroutines.android)
 
@@ -100,38 +128,32 @@ kotlin {
         commonMain.dependencies {
 //
             implementation(libs.koin.core)
-            implementation(project(":modules:data"))
+
+            implementation(projects.modules.designsystem)
+            implementation(projects.modules.data)
+            implementation(projects.modules.ui)
+            implementation(projects.modules.model)
+            implementation(projects.modules.analytics)
+            implementation(libs.androidx.compose.material3.adaptive)
 
 
-            implementation(project(":modules:model"))
-            implementation(project(":modules:ui"))
+            implementation(projects.features.main)
+            implementation(projects.features.profile)
+            implementation(projects.features.setting)
+            implementation(projects.features.finish)
+            implementation(projects.features.question)
+            implementation(projects.features.stat)
 
 
-            implementation(project(":modules:designsystem"))
-            implementation(project(":modules:analytics"))
 
 
 
-
-            implementation(project(":features:main"))
-            implementation(project(":features:profile"))
-            implementation(project(":features:stat"))
-            implementation(project(":features:question"))
-            implementation(project(":features:finish"))
-            implementation(project(":features:setting"))
 
             // Logger
             implementation(libs.kermit)
 
             implementation(libs.kermit.koin)
 
-            implementation(libs.database)
-
-//
-//            implementation(libs.koin.compose)
-//            implementation(libs.koin.composeVM)
-//            implementation(libs.lifecycle.viewmodel.compose)
-//
 
         }
 
@@ -149,7 +171,9 @@ kotlin {
                 }
             }
         }
-
+//        configurations.commonMainApi {
+//            exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-android")
+//        }
 
     }
 }
@@ -165,7 +189,7 @@ android {
     defaultConfig {
         applicationId = "com.mshdabiola.cbtapp"
         versionCode = 1
-        versionName = "0.0.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        versionName = "0.0.3" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         // Custom test runner to set up Hilt dependency graph
         testInstrumentationRunner = "com.mshdabiola.testing.TestRunner"
@@ -217,9 +241,6 @@ android {
         }
     }
 
-    dependencies {
-        debugImplementation(libs.compose.ui.tooling)
-    }
 }
 
 compose.desktop {
@@ -296,5 +317,7 @@ baselineProfile {
 }
 
 dependencyGuard {
-    configuration("releaseRuntimeClasspath")
+    configuration("fossReliantReleaseRuntimeClasspath")
+    configuration("googlePlayDebugRuntimeClasspath")
+
 }

@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.mshdabiola.model.data.Type
 import com.mshdabiola.ui.state.OptionUiState
@@ -50,7 +51,10 @@ fun OptionsUi(
     ) {
         optionUiStates.forEachIndexed { index, optionUiState ->
             OptionUi(
-                modifier = Modifier.padding(2.dp).weight(1f),
+                modifier = Modifier
+                    .padding(2.dp)
+                    .weight(1f)
+                    .testTag("question:option"),
                 optionUiState = optionUiState,
                 showAnswer = showAnswer,
                 isChoose = selectedOption == index,

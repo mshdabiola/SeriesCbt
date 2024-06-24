@@ -42,6 +42,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.mshdabiola.ui.InstructionBottomSheet
 import com.mshdabiola.ui.QuestionUi
@@ -49,7 +50,6 @@ import com.mshdabiola.ui.ScreenSize
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
 import com.mshdabiola.ui.correct
 import com.mshdabiola.ui.onCorrect
-import com.mshdabiola.ui.semanticsCommon
 import com.mshdabiola.ui.state.InstructionUiState
 import com.mshdabiola.ui.state.QuestionUiState
 import kotlinx.collections.immutable.ImmutableList
@@ -140,11 +140,11 @@ internal fun QuestionScreen(
         )
 
         Scaffold(
-            modifier = Modifier.semanticsCommon {},
+            modifier = Modifier,
             bottomBar = {
                 BottomAppBar(
                     actions = {
-                        IconButton(onClick = back) {
+                        IconButton(onClick = back, modifier = Modifier.testTag("question:back")) {
                             Icon(
                                 imageVector = Icons.Default.ArrowBackIosNew,
                                 contentDescription = "back",
@@ -153,6 +153,7 @@ internal fun QuestionScreen(
                     },
                     floatingActionButton = {
                         ExtendedFloatingActionButton(
+                            modifier = Modifier.testTag("question:submit"),
                             onClick = onFinish,
                             containerColor = if (finishPercent == 100) {
                                 correct()

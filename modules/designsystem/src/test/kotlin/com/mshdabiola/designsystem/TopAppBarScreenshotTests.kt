@@ -9,12 +9,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.test.DeviceConfigurationOverride
+import androidx.compose.ui.test.FontScale
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onRoot
 import com.github.takahirom.roborazzi.captureRoboImage
-import com.google.accompanist.testharness.TestHarness
 import com.mshdabiola.designsystem.component.CbtTopAppBar
-import com.mshdabiola.designsystem.icon.CbtIcons
+import com.mshdabiola.designsystem.icon.SkIcons
 import com.mshdabiola.designsystem.theme.CbtTheme
 import com.mshdabiola.testing.util.DefaultRoborazziOptions
 import com.mshdabiola.testing.util.captureMultiTheme
@@ -49,7 +50,9 @@ class TopAppBarScreenshotTests() {
             CompositionLocalProvider(
                 LocalInspectionMode provides true,
             ) {
-                TestHarness(fontScale = 2f) {
+                DeviceConfigurationOverride(
+                    DeviceConfigurationOverride.FontScale(2f),
+                ) {
                     CbtTheme {
                         NiaTopAppBarExample()
                     }
@@ -66,10 +69,10 @@ class TopAppBarScreenshotTests() {
     @Composable
     private fun NiaTopAppBarExample() {
         CbtTopAppBar(
-            titleRes = "Testing",
-            navigationIcon = CbtIcons.Search,
+            titleRes = "untitled",
+            navigationIcon = SkIcons.Search,
             navigationIconContentDescription = "Navigation icon",
-            actionIcon = CbtIcons.MoreVert,
+            actionIcon = SkIcons.MoreVert,
             actionIconContentDescription = "Action icon",
         )
     }

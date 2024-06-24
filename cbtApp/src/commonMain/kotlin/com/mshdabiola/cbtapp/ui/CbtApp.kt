@@ -119,10 +119,8 @@ fun CbtApp() {
     CompositionLocalProvider(LocalAnalyticsHelper provides analyticsHelper) {
         CbtTheme(
             darkTheme = darkTheme,
-            themeBrand = chooseTheme(uiState),
-            themeContrast = chooseContrast(uiState),
+
             disableDynamicTheming = shouldDisableDynamicTheming(uiState),
-            useAndroidTheme = shouldUseAndroidTheme(uiState),
         ) {
             CbtBackground {
                 CbtGradientBackground(

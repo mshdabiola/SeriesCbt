@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mshdabiola.designsystem.drawable.layer1
@@ -41,7 +42,6 @@ import com.mshdabiola.designsystem.string.subject
 import com.mshdabiola.designsystem.string.type
 import com.mshdabiola.ui.ScreenSize
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
-import com.mshdabiola.ui.semanticsCommon
 import com.mshdabiola.ui.state.ExamType
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -91,8 +91,7 @@ internal fun MainScreen(
 
     Scaffold(
         modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .semanticsCommon {},
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -161,6 +160,7 @@ internal fun MainScreen(
             )
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                 OtherCard(
+                    modifier = Modifier.testTag("main:random"),
                     title = "Random exam",
                     painter = layer1,
                     onClick = {
@@ -168,6 +168,7 @@ internal fun MainScreen(
                     },
                 )
                 OtherCard(
+                    modifier = Modifier.testTag("main:fast"),
                     title = "Fast finger",
                     painter = layer3,
                     onClick = {

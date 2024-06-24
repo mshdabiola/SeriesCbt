@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mshdabiola.ui.ScreenSize
-import com.mshdabiola.ui.semanticsCommon
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
@@ -42,7 +41,7 @@ internal fun ProfileScreen(
     profileState: ProfileState,
 ) {
     Scaffold(
-        modifier = Modifier.semanticsCommon {},
+        modifier = Modifier,
         topBar = {
             TopAppBar(
                 title = { Text(text = "Profile") },
