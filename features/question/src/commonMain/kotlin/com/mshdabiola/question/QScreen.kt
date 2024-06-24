@@ -50,7 +50,6 @@ import com.mshdabiola.ui.ScreenSize
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
 import com.mshdabiola.ui.correct
 import com.mshdabiola.ui.onCorrect
-import com.mshdabiola.ui.semanticsCommon
 import com.mshdabiola.ui.state.InstructionUiState
 import com.mshdabiola.ui.state.QuestionUiState
 import kotlinx.collections.immutable.ImmutableList
@@ -141,7 +140,7 @@ internal fun QuestionScreen(
         )
 
         Scaffold(
-            modifier = Modifier.semanticsCommon {},
+            modifier = Modifier,
             bottomBar = {
                 BottomAppBar(
                     actions = {

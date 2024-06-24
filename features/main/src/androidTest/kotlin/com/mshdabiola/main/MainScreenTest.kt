@@ -2,14 +2,14 @@
  *abiola 2022
  */
 
-package com.mshdabiola.detail
+package com.mshdabiola.main
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import org.junit.Rule
 import org.junit.Test
 
-class DetailScreenTest {
+class MainScreenTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()

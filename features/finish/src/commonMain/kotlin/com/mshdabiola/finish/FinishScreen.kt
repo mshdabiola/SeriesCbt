@@ -44,7 +44,6 @@ import com.mshdabiola.ui.InstructionBottomSheet
 import com.mshdabiola.ui.QuestionUi
 import com.mshdabiola.ui.ScreenSize
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
-import com.mshdabiola.ui.semanticsCommon
 import com.mshdabiola.ui.state.ExamType
 import com.mshdabiola.ui.state.InstructionUiState
 import com.mshdabiola.ui.state.QuestionUiState
@@ -93,7 +92,7 @@ internal fun FinishScreen(
     }
 
     Scaffold(
-        modifier = Modifier.semanticsCommon {},
+        modifier = Modifier,
         bottomBar = {
             BottomAppBar(
                 actions = {

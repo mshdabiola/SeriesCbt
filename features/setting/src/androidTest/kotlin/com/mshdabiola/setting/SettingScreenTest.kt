@@ -2,7 +2,7 @@
  *abiola 2022
  */
 
-package com.mshdabiola.detail
+package com.mshdabiola.setting
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -10,15 +10,13 @@ import com.mshdabiola.model.Contrast
 import com.mshdabiola.model.DarkThemeConfig
 import com.mshdabiola.model.ThemeBrand
 import com.mshdabiola.model.UserData
-import com.mshdabiola.setting.SettingScreen
-import com.mshdabiola.setting.SettingState
 import org.junit.Rule
 import org.junit.Test
 
 /**
  * UI tests for [SettingScreen] composable.
  */
-class MainScreenTest {
+class SettingScreenTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()

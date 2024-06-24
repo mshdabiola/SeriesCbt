@@ -2,7 +2,7 @@
  *abiola 2022
  */
 
-package com.mshdabiola.detail
+package com.mshdabiola.setting
 
 import com.mshdabiola.setting.SettingViewModel
 import com.mshdabiola.testing.repository.TestUserDataRepository

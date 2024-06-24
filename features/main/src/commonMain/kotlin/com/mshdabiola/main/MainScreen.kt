@@ -42,7 +42,6 @@ import com.mshdabiola.designsystem.string.subject
 import com.mshdabiola.designsystem.string.type
 import com.mshdabiola.ui.ScreenSize
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
-import com.mshdabiola.ui.semanticsCommon
 import com.mshdabiola.ui.state.ExamType
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -93,7 +92,7 @@ internal fun MainScreen(
     Scaffold(
         modifier = Modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .semanticsCommon {},
+            ,
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
