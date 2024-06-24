@@ -54,7 +54,7 @@ fun OptionsUi(
                 modifier = Modifier
                     .padding(2.dp)
                     .weight(1f)
-                    .testTag("question:option$index"),
+                    .testTag("question:option"),
                 optionUiState = optionUiState,
                 showAnswer = showAnswer,
                 isChoose = selectedOption == index,
