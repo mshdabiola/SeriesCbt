@@ -180,7 +180,7 @@ fun StartCard(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OtherCard(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
     title: String,
     painter: Painter,
     contentDesc: String = "",

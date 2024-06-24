@@ -145,7 +145,6 @@ internal fun QuestionScreen(
                 BottomAppBar(
                     actions = {
                         IconButton(onClick = back, modifier = Modifier.testTag("question:back")) {
-
                             Icon(
                                 imageVector = Icons.Default.ArrowBackIosNew,
                                 contentDescription = "back",

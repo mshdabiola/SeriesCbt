@@ -4,7 +4,6 @@
 
 package com.mshdabiola.setting
 
-import com.mshdabiola.setting.SettingViewModel
 import com.mshdabiola.testing.repository.TestUserDataRepository
 import com.mshdabiola.testing.util.MainDispatcherRule
 import kotlinx.coroutines.test.runTest
