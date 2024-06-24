@@ -30,7 +30,7 @@ fun mainApp() {
             position = WindowPosition.Aligned(Alignment.Center),
         )
 
-        val version = "0.0.1"
+        val version = "0.0.3"
         Window(
             onCloseRequest = ::exitApplication,
             title = "$appName v$version",
