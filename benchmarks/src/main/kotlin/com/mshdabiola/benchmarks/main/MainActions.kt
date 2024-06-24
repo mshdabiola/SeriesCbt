@@ -9,8 +9,8 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
 import com.mshdabiola.benchmarks.flingElementDownUp
 
-fun MacrobenchmarkScope.goToDetailScreen() {
-    val savedSelector = By.res("main:add")
+fun MacrobenchmarkScope.goToQuestionScreen() {
+    val savedSelector = By.res("main:start")
 
     device.wait(Until.hasObject(savedSelector), 5000)
 
