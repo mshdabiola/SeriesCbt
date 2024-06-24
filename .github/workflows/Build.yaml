@@ -141,7 +141,7 @@ jobs:
         env:
           USERID: ${{ secrets.USERID }}
           PASSWORD: ${{ secrets.PASSWORD }}
-        run: ./gradlew :composeApp:assembleFossReliant :benchmarks:assembleFossReliant
+        run: ./gradlew assembleFossReliant :benchmarks:assembleFossReliant
           -x pixel6Api33FossReliantNonMinifiedReleaseAndroidTest
           -x pixel6Api33FossReliantNonMinifiedBenchmarkAndroidTest
           -x collectFossReliantNonMinifiedReleaseBaselineProfile
