@@ -16,7 +16,7 @@ plugins {
 }
 
 group = "com.mshdabiola.cbtapp"
-version = "0.0.3"
+version = libs.versions.versionName.get()
 
 dependencies {
 
@@ -188,8 +188,8 @@ android {
 
     defaultConfig {
         applicationId = "com.mshdabiola.cbtapp"
-        versionCode = 1
-        versionName = "0.0.3" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        versionCode = libs.versions.versionCode.get().toIntOrNull()
+        versionName = System.getenv("VERSION_NAME") ?: libs.versions.versionName.get()
 
         // Custom test runner to set up Hilt dependency graph
         testInstrumentationRunner = "com.mshdabiola.testing.TestRunner"
