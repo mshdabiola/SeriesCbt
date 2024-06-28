@@ -27,7 +27,6 @@ class GenerateBaselineProfile {
 
             clickOption()
 
-
             gotoFinishScreen()
             backToMain()
         }
