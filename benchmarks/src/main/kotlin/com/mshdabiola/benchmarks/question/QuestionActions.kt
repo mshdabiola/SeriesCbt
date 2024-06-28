@@ -9,13 +9,12 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Until
 
 fun MacrobenchmarkScope.clickOption() {
-//    val selector = By.res("question:option")
-//
-//    device.wait(Until.hasObject(selector), 5000)
-//
-//    val backButton = device.findObject(selector)
-//    backButton.click()
-    device.waitForIdle()
+    val selector = By.res("question:option")
+
+    device.wait(Until.hasObject(selector), 5000)
+
+    val backButton = device.findObject(selector)
+    backButton.click()
     // Wait until saved title are shown on screen
 }
 
