@@ -16,7 +16,7 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.svg.SvgDecoder
-import com.mshdabiola.model.data.Type
+import com.mshdabiola.generalmodel.Type
 import com.mshdabiola.retex.Latex
 import com.mshdabiola.ui.ImageUtil.getImageFile
 import com.mshdabiola.ui.state.ItemUiState
