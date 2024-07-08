@@ -20,7 +20,7 @@ try {
 
 } catch (e: Exception) {
 
-    e.printStackTrace()
+    //e.printStackTrace()
 }
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
@@ -69,7 +69,7 @@ include(":modules:screenshot-testing")
 include(":benchmarks")
 
 
-include(":cbtApp")
+include(":app")
 //include(":shared")
 
 

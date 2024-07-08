@@ -67,7 +67,7 @@ android {
         }
     }
 
-    targetProjectPath = ":cbtApp"
+    targetProjectPath = ":app"
     experimentalProperties["android.experimental.self-instrumenting"] = true
 }
 

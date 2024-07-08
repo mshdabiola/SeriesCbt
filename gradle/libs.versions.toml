@@ -84,7 +84,7 @@ sqlite = "2.5.0-alpha04"
 kotlinxCollectionImmutable = "0.3.7"
 windowSizeClass = "0.5.0"
 
-database = "0.0.4"
+series = "0.0.5"
 calf = "0.4.0"
 
 versionCode = "3"
@@ -221,7 +221,9 @@ paging-common = { module = "androidx.paging:paging-common", version.ref = "andro
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 #
 
-database = { module = "com.mshdabiola.series:database", version.ref = "database" }
+database = { module = "com.mshdabiola.series:database", version.ref = "series" }
+model = { module = "com.mshdabiola.series:model", version.ref = "series" }
+
 calf-filepicker = { module = "com.mohamedrejeb.calf:calf-file-picker", version.ref = "calf" }
 
 # Dependencies of the included build-logic
