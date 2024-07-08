@@ -69,7 +69,7 @@ include(":modules:screenshot-testing")
 include(":benchmarks")
 
 
-include(":cbtApp")
+include(":app")
 //include(":shared")
 
 
