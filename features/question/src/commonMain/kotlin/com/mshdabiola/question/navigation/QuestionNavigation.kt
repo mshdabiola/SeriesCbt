@@ -14,21 +14,24 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.mshdabiola.question.QuestionRoute
 import com.mshdabiola.question.QuestionViewModel
-import com.mshdabiola.ui.ScreenSize
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.parameter.parametersOf
 
-const val QUESTION_ROUTE = "question_route"
+const val ROUTE = "question_route"
+
 
 @VisibleForTesting
 internal const val QUESTION_ID_EXAM_TYPE = "examtype"
 internal const val QUESTION_ID_YEAR = "year"
 internal const val QUESTION_ID_INDEX = "index"
 
+const val QUESTION_ROUTE = "$ROUTE/{$QUESTION_ID_EXAM_TYPE}/{$QUESTION_ID_YEAR}/{$QUESTION_ID_INDEX}"
+
+
 fun NavController.navigateToQuestion(examType: Int, year: Long, typeIndex: Int) =
     navigate(
-        route = "$QUESTION_ROUTE/$examType/$year/$typeIndex",
+        route = "$ROUTE/$examType/$year/$typeIndex",
     )
 
 @OptIn(KoinExperimentalAPI::class)
@@ -37,11 +40,11 @@ fun NavGraphBuilder.questionScreen(
 
     onShowSnack: suspend (String, String?) -> Boolean,
     onBack: () -> Unit,
-    navigateToFinish: () -> Unit,
+    navigateToFinish: (Int,Long,Int) -> Unit,
 
     ) {
     composable(
-        route = "$QUESTION_ROUTE/{$QUESTION_ID_EXAM_TYPE}/{$QUESTION_ID_YEAR}/{$QUESTION_ID_INDEX}",
+        route = QUESTION_ROUTE,
         arguments = listOf(
             navArgument(QUESTION_ID_EXAM_TYPE) {
                 type = NavType.IntType
@@ -79,7 +82,7 @@ fun NavGraphBuilder.questionScreen(
             modifier = modifier,
             onBack = onBack,
             onShowSnackbar = onShowSnack,
-            navigateToFinish = navigateToFinish,
+            navigateToFinish = { navigateToFinish(exam,year,index) },
             viewModel = viewModel,
         )
     }

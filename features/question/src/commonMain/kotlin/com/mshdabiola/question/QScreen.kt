@@ -23,6 +23,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.CardDefaults
@@ -378,7 +380,7 @@ fun ExamPaper(
                 }
             },
         ) {
-            Icon(Icons.Default.KeyboardArrowLeft, "prev")
+            Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, "prev")
         }
 
         LazyRow(
@@ -413,7 +415,7 @@ fun ExamPaper(
                 }
             },
         ) {
-            Icon(Icons.Default.KeyboardArrowRight, "next")
+            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, "next")
         }
     }
 
