@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -188,115 +189,118 @@ internal fun QuestionScreen(
 //            },
 //
 //        ) { paddingValues ->
-        FlowRow(modifier = modifier) {
-            Column(
-                modifier = Modifier
-                    .weight(0.7f)
-                    .width(600.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                TimeCounter(
-                    modifier = Modifier.padding(top = 4.dp),
-                    currentTime2 = mainStat.currentTime,
-                    total = mainStat.totalTime,
-                    onTimeChanged = onTimeChanged,
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    Modifier,
-                    horizontalArrangement = Arrangement.spacedBy(
-                        4.dp,
-                        Alignment.CenterHorizontally
-                    ),
+        Column (modifier.verticalScroll(rememberScrollState())){
+            FlowRow(modifier = modifier) {
+                Column(
+                    modifier = Modifier
+                        .weight(0.7f)
+                        .width(600.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
+                    TimeCounter(
+                        modifier = Modifier.padding(top = 4.dp),
+                        currentTime2 = mainStat.currentTime,
+                        total = mainStat.totalTime,
+                        onTimeChanged = onTimeChanged,
+                    )
 
-                    if (mainStat.questions.size > 1) {
-                        mainStat.sections.forEachIndexed { index, section ->
-                            ElevatedSuggestionChip(
-                                onClick = { changeIndex(index) },
-                                colors = if (section.isFinished) {
-                                    SuggestionChipDefaults.elevatedSuggestionChipColors(
-                                        containerColor = correct(),
-                                        labelColor = onCorrect(),
-                                    )
-                                } else {
-                                    SuggestionChipDefaults.elevatedSuggestionChipColors()
-                                },
-                                label = {
-                                    Text(com.mshdabiola.designsystem.string.sections[section.stringRes])
-                                },
-                            )
-                        }
-                    }
-                }
-                // AnimatedContent(modifier = Modifier.fillMaxSize(), targetState = mainStat.currentPaper, label = "dd") { paperIndex ->
-                ExamPaper(
-                    questions = mainStat.questions[mainStat.currentSectionIndex],
-                    state = pagerState[mainStat.currentSectionIndex],
-                    choose = mainStat.choose[mainStat.currentSectionIndex],
-                    isAllShowing = isAllShowing,
-                    onShowAllQuetions =  {
-                        isAllShowing=true
-                    },
-                    //  onNextTheory = {},//onNextTheory,
-                    setInstructionUiState = { instructionUiState = it },
-                    onOption = { quIndex, optinId ->
-                        onOption(
-                            mainStat.currentSectionIndex,
-                            quIndex,
-                            optinId,
-                        )
-                    },
-                )
-
-            }
-            Column(
-                Modifier.weight(0.3f),//.height(40.dp),
-                //  horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally)
-            ) {
-                if (isAllShowing) {
-                    TextButton(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        onClick = { isAllShowing = false },
-                    ) {
-                        Text(text = "Hide All Questions")
-                    }
-                    Spacer(Modifier.height(4.dp))
-                    FlowRow(
-                        modifier = Modifier.fillMaxWidth(),
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(
+                        Modifier,
                         horizontalArrangement = Arrangement.spacedBy(
                             4.dp,
-                            Alignment.CenterHorizontally,
-                        ),
-                        verticalArrangement = Arrangement.spacedBy(
-                            4.dp,
-                            Alignment.CenterVertically
+                            Alignment.CenterHorizontally
                         ),
                     ) {
-                        mainStat.choose[mainStat.currentSectionIndex].forEachIndexed { index, i ->
-                            QuestionNumberButton(
-                                number = index,
-                                isChoose = i > -1,
-                                isCurrent = index == pagerState[mainStat.currentSectionIndex].currentPage,
-                                onClick = { //onChooseClick(it)
-                                    coroutineScope.launch {
-                                        pagerState[mainStat.currentSectionIndex].animateScrollToPage(
-                                            index,
-                                        )
-                                    }
-                                },
-                            )
-                        }
 
+                        if (mainStat.questions.size > 1) {
+                            mainStat.sections.forEachIndexed { index, section ->
+                                ElevatedSuggestionChip(
+                                    onClick = { changeIndex(index) },
+                                    colors = if (section.isFinished) {
+                                        SuggestionChipDefaults.elevatedSuggestionChipColors(
+                                            containerColor = correct(),
+                                            labelColor = onCorrect(),
+                                        )
+                                    } else {
+                                        SuggestionChipDefaults.elevatedSuggestionChipColors()
+                                    },
+                                    label = {
+                                        Text(com.mshdabiola.designsystem.string.sections[section.stringRes])
+                                    },
+                                )
+                            }
+                        }
                     }
+                    // AnimatedContent(modifier = Modifier.fillMaxSize(), targetState = mainStat.currentPaper, label = "dd") { paperIndex ->
+                    ExamPaper(
+                        questions = mainStat.questions[mainStat.currentSectionIndex],
+                        state = pagerState[mainStat.currentSectionIndex],
+                        choose = mainStat.choose[mainStat.currentSectionIndex],
+                        isAllShowing = isAllShowing,
+                        onShowAllQuetions =  {
+                            isAllShowing=true
+                        },
+                        //  onNextTheory = {},//onNextTheory,
+                        setInstructionUiState = { instructionUiState = it },
+                        onOption = { quIndex, optinId ->
+                            onOption(
+                                mainStat.currentSectionIndex,
+                                quIndex,
+                                optinId,
+                            )
+                        },
+                    )
+
+                }
+                Column(
+                    Modifier.weight(0.3f),//.height(40.dp),
+                    //  horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally)
+                ) {
+                    if (isAllShowing) {
+                        TextButton(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            onClick = { isAllShowing = false },
+                        ) {
+                            Text(text = "Hide All Questions")
+                        }
+                        Spacer(Modifier.height(4.dp))
+                        FlowRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(
+                                4.dp,
+                                Alignment.CenterHorizontally,
+                            ),
+                            verticalArrangement = Arrangement.spacedBy(
+                                4.dp,
+                                Alignment.CenterVertically
+                            ),
+                        ) {
+                            mainStat.choose[mainStat.currentSectionIndex].forEachIndexed { index, i ->
+                                QuestionNumberButton(
+                                    number = index,
+                                    isChoose = i > -1,
+                                    isCurrent = index == pagerState[mainStat.currentSectionIndex].currentPage,
+                                    onClick = { //onChooseClick(it)
+                                        coroutineScope.launch {
+                                            pagerState[mainStat.currentSectionIndex].animateScrollToPage(
+                                                index,
+                                            )
+                                        }
+                                    },
+                                )
+                            }
+
+                        }
+                    }
+
                 }
 
             }
 
-
         }
+
 
         // }
 
@@ -305,7 +309,7 @@ internal fun QuestionScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ExamPaper(
+fun ColumnScope.ExamPaper(
     questions: ImmutableList<QuestionUiState>,
     state: PagerState,
     choose: ImmutableList<Int>,
@@ -335,7 +339,7 @@ fun ExamPaper(
 
     HorizontalPager(
         modifier = Modifier
-            // .weight(0.8f)
+            .height(300.dp)
             .verticalScroll(state = scrollState),
         state = state,
         verticalAlignment = Alignment.Top,
