@@ -4,6 +4,7 @@
 
 package com.mshdabiola.main.navigation
 
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -17,16 +18,15 @@ val MAIN_ROUTE = cbtRoute[0]
 fun NavController.navigateToMain(navOptions: NavOptions) = navigate(MAIN_ROUTE, navOptions)
 
 fun NavGraphBuilder.mainScreen(
+    modifier: Modifier = Modifier,
+
     onShowSnack: suspend (String, String?) -> Boolean,
-    screenSize: ScreenSize,
     navigateToQuestion: (Int, Long, Int) -> Unit = { _, _, _ -> },
-    navigateToSetting: () -> Unit = {},
 ) {
     composable(route = MAIN_ROUTE) {
         MainRoute(
-            screenSize = screenSize,
+            modifier = modifier,
             onShowSnackbar = onShowSnack,
-            navigateToSetting = navigateToSetting,
             navigateToQuestion = { type, year, objType ->
                 navigateToQuestion(type.ordinal, year, objType)
             },

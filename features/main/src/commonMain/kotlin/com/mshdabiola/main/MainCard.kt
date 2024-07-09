@@ -7,11 +7,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -46,6 +49,7 @@ import kotlinx.collections.immutable.toImmutableList
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ContinueCard(
+    modifier: Modifier=Modifier,
     onClick: () -> Unit = {},
     year: Long,
     timeRemain: Long,
@@ -57,7 +61,7 @@ fun ContinueCard(
     val timeString = remember(timeRemain) {
         String.format("%02d : %02d", timeRemain.toMinute(), timeRemain.toSecond())
     }
-    Card() {
+    Card(modifier = modifier) {
         Column(
             Modifier.padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -113,10 +117,14 @@ fun ContinueCard(
 
 @Composable
 fun StartCard(
+    modifier: Modifier=Modifier,
     onClick: (Int, Long) -> Unit = { _, _ -> },
     exams: ImmutableList<ExamUiState>,
     isSubmit: Boolean,
-) {
+    onRandom:()->Unit={},
+    onFast:()->Unit={},
+
+    ) {
     if (exams.isNotEmpty()) {
         var yearIndex by rememberSaveable {
             mutableStateOf(0)
@@ -133,7 +141,7 @@ fun StartCard(
             }
         }
 
-        Card() {
+        Card(modifier = modifier) {
             Column(
                 Modifier.padding(8.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -171,6 +179,20 @@ fun StartCard(
                     colors = if (isSubmit) ButtonDefaults.buttonColors() else ButtonDefaults.elevatedButtonColors(),
                 ) {
                     Text(text = "Start exam")
+                }
+                Spacer(Modifier.height(8.dp))
+                Row (
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp,Alignment.End)
+                ){
+                    AssistChip(
+                        onClick = { onRandom() },
+                        label = { Text("Random") },
+                    )
+                    AssistChip(
+                        onClick = { onFast() },
+                        label = { Text("Fast Finger") },
+                    )
                 }
             }
         }
