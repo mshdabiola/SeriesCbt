@@ -15,12 +15,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -86,11 +88,16 @@ internal fun MainScreen(
             horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
 //                maxItemsInEachRow = 2,
         ) {
-            Row(
+            FlowRow(
                 Modifier
                     .weight(0.3f),
+                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
             ) {
-                Column(Modifier.weight(1f)) {
+                Column(
+                    Modifier.weight(1f).width(200.dp).heightIn(120.dp,200.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     PlayLogin()
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
@@ -98,6 +105,8 @@ internal fun MainScreen(
                                 "Wellcome to Physics test that will challenge and entertain you",
                         modifier = Modifier.padding(horizontal = 16.dp),
                         textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary,
 
                         )
                 }
