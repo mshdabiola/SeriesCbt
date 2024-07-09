@@ -14,8 +14,23 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
 import com.mshdabiola.designsystem.icon.cbtRoute
-import com.mshdabiola.ui.ScreenSize
+import com.mshdabiola.finish.navigation.FINISH_ROUTE
+import com.mshdabiola.finish.navigation.QUESTION_ID_EXAM_TYPE
+import com.mshdabiola.finish.navigation.QUESTION_ID_INDEX
+import com.mshdabiola.finish.navigation.QUESTION_ID_YEAR
+import com.mshdabiola.finish.navigation.navigateToFinish
+import com.mshdabiola.main.navigation.MAIN_ROUTE
+import com.mshdabiola.main.navigation.navigateToMain
+import com.mshdabiola.profile.navigation.PROFILE_ROUTE
+import com.mshdabiola.profile.navigation.navigateToProfile
+import com.mshdabiola.question.navigation.QUESTION_ROUTE
+import com.mshdabiola.question.navigation.navigateToQuestion
+import com.mshdabiola.setting.navigation.SETTING_ROUTE
+import com.mshdabiola.setting.navigation.navigateToSetting
+import com.mshdabiola.stat.navigation.STAT_ROUTE
+import com.mshdabiola.stat.navigation.navigateToStat
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -47,30 +62,115 @@ class CbtAppState(
     val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
-    val screenSize
-        get() = when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> ScreenSize.COMPACT
-            WindowWidthSizeClass.Medium -> ScreenSize.MEDIUM
-            else -> ScreenSize.EXPANDED
+
+    val showTopBar: Boolean
+        get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
+
+    val fabName: String
+        @Composable get() = when {
+            currentDestination?.route == QUESTION_ROUTE -> "Finish"
+            currentDestination?.route == FINISH_ROUTE -> "Retry"
+            else -> "Fab"
         }
+
+    val isMain: Boolean
+        @Composable get() =
+            cbtRoute.contains(currentDestination?.route)
+    val isQuestion: Boolean
+        @Composable get() =
+            currentDestination?.route == QUESTION_ROUTE
+
+
+
+    val showFab: Boolean
+        @Composable get() = when {
+            currentDestination?.route == QUESTION_ROUTE || currentDestination?.route == FINISH_ROUTE -> true
+            else -> false
+        }
+
+    fun onFabClick() {
+        when (navController.currentDestination?.route) {
+            QUESTION_ROUTE -> {
+                val year = navController.currentBackStackEntry?.arguments!!.getLong(QUESTION_ID_YEAR)
+                val exam = navController.currentBackStackEntry?.arguments!!.getInt(QUESTION_ID_EXAM_TYPE)
+                val index = navController.currentBackStackEntry?.arguments!!.getInt(QUESTION_ID_INDEX)
+
+                println("year $year exam $exam index $index")
+
+    //                navController.currentBackStackEntry
+                navController.popBackStack()
+                navController.navigateToFinish(exam,year,index)
+
+            }
+            FINISH_ROUTE -> {
+                val year = navController.currentBackStackEntry?.arguments!!.getLong(QUESTION_ID_YEAR)
+                val exam = navController.currentBackStackEntry?.arguments!!.getInt(QUESTION_ID_EXAM_TYPE)
+                val index = navController.currentBackStackEntry?.arguments!!.getInt(QUESTION_ID_INDEX)
+
+                println("year $year exam $exam index $index")
+
+                navController.popBackStack()
+                navController.navigateToQuestion(exam,year,index)
+
+
+            }
+            else -> {}
+        }
+    }
 
     val shouldShowBottomBar: Boolean
         @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact &&
-            cbtRoute.contains(currentDestination?.route)
+                cbtRoute.contains(currentDestination?.route)
+
+    val shouldShowGeneralBottomBar: Boolean
+        @Composable get() = windowSizeClass.widthSizeClass < WindowWidthSizeClass.Expanded &&
+                !cbtRoute.contains(currentDestination?.route)
+
     val shouldShowNavRail: Boolean
         @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Medium &&
-            cbtRoute.contains(currentDestination?.route)
+                cbtRoute.contains(currentDestination?.route)
 
     val shouldShowDrawer: Boolean
-        @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded &&
-            cbtRoute.contains(currentDestination?.route)
+        @Composable get() =
+            windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded &&
+                cbtRoute.contains(currentDestination?.route)
 
-//    val isOffline = networkMonitor.isOnline
-//        .map(Boolean::not)
-//        .stateIn(
-//            scope = coroutineScope,
-//            started = SharingStarted.WhileSubscribed(5_000),
-//            initialValue = false,
+    fun onNavigate (route:String)  {
+
+        when (route) {
+            MAIN_ROUTE -> {
+                navController.navigateToMain(
+                    navOptions = navOptions {
+                        launchSingleTop
+                        this.restoreState
+                    },
+                )
+            }
+
+            SETTING_ROUTE -> {
+                navController.navigateToSetting()
+            }
+
+            PROFILE_ROUTE -> {
+                navController.navigateToProfile(
+                    navOptions {
+                        launchSingleTop
+                        restoreState
+                    },
+                )
+            }
+
+            STAT_ROUTE -> {
+                navController.navigateToStat(
+                    navOptions {
+                        launchSingleTop
+                        restoreState
+                    },
+                )
+            }
+        }
+    }
+
 }
 //
 // @Composable

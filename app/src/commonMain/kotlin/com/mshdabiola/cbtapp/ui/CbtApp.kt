@@ -17,6 +17,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -24,8 +32,9 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -34,7 +43,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.navOptions
 import com.mshdabiola.analytics.AnalyticsHelper
 import com.mshdabiola.analytics.LocalAnalyticsHelper
 import com.mshdabiola.cbtapp.MainActivityUiState
@@ -45,28 +53,24 @@ import com.mshdabiola.designsystem.component.CbtGradientBackground
 import com.mshdabiola.designsystem.theme.CbtTheme
 import com.mshdabiola.designsystem.theme.GradientColors
 import com.mshdabiola.designsystem.theme.LocalGradientColors
-import com.mshdabiola.main.navigation.MAIN_ROUTE
-import com.mshdabiola.main.navigation.navigateToMain
 import com.mshdabiola.model.Contrast
 import com.mshdabiola.model.DarkThemeConfig
 import com.mshdabiola.model.ThemeBrand
-import com.mshdabiola.profile.navigation.PROFILE_ROUTE
-import com.mshdabiola.profile.navigation.navigateToProfile
-import com.mshdabiola.setting.navigation.SETTING_ROUTE
-import com.mshdabiola.setting.navigation.navigateToSetting
-import com.mshdabiola.stat.navigation.STAT_ROUTE
-import com.mshdabiola.stat.navigation.navigateToStat
 import com.mshdabiola.ui.CommonBar
 import com.mshdabiola.ui.CommonNavigation
 import com.mshdabiola.ui.CommonRail
 import com.mshdabiola.ui.SplashScreen
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
+import com.mshdabiola.ui.correct
 import com.mshdabiola.ui.semanticsCommon
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class, KoinExperimentalAPI::class)
+@OptIn(
+    ExperimentalMaterial3WindowSizeClassApi::class, KoinExperimentalAPI::class,
+    ExperimentalMaterial3Api::class,
+)
 @Composable
 fun CbtApp() {
     val windowSizeClass = calculateWindowSizeClass()
@@ -74,47 +78,13 @@ fun CbtApp() {
         windowSizeClass = windowSizeClass,
     )
     val shouldShowGradientBackground = false
-    val navigator: (String) -> Unit = {
-        println("navigation $it seting is $SETTING_ROUTE")
 
-        when (it) {
-            MAIN_ROUTE -> {
-                appState.navController.navigateToMain(
-                    navOptions = navOptions {
-                        launchSingleTop
-                        this.restoreState
-                    },
-                )
-            }
-
-            SETTING_ROUTE -> {
-                appState.navController.navigateToSetting()
-            }
-
-            PROFILE_ROUTE -> {
-                appState.navController.navigateToProfile(
-                    navOptions {
-                        launchSingleTop
-                        restoreState
-                    },
-                )
-            }
-
-            STAT_ROUTE -> {
-                appState.navController.navigateToStat(
-                    navOptions {
-                        launchSingleTop
-                        restoreState
-                    },
-                )
-            }
-        }
-    }
 
     val viewModel: MainAppViewModel = koinViewModel()
     val analyticsHelper = koinInject<AnalyticsHelper>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycleCommon()
     val darkTheme = shouldUseDarkTheme(uiState)
+    val isFinish = viewModel.isFinish.collectAsStateWithLifecycleCommon()
 
     CompositionLocalProvider(LocalAnalyticsHelper provides analyticsHelper) {
         CbtTheme(
@@ -135,71 +105,30 @@ fun CbtApp() {
                     } else {
                         val snackbarHostState = remember { SnackbarHostState() }
 
-                        if (appState.shouldShowDrawer) {
+                        Row {
+                            if (appState.shouldShowNavRail) {
+                                CommonRail(
+                                    modifier = Modifier.width(100.dp).fillMaxHeight(),
+                                    currentNavigation = appState.currentDestination?.route
+                                        ?: "",
+                                    onNavigate = appState::onNavigate,
+
+                                    )
+                            }
                             PermanentNavigationDrawer(
                                 drawerContent = {
-                                    CommonNavigation(
-                                        modifier = Modifier.width(300.dp).fillMaxHeight(),
-                                        currentNavigation = appState.currentDestination?.route
-                                            ?: "",
-                                        onNavigate = navigator,
-                                    )
-                                },
-                            ) {
-                                Scaffold(
-                                    modifier = Modifier.semanticsCommon {},
-                                    containerColor = Color.Transparent,
-                                    contentWindowInsets = WindowInsets(0, 0, 0, 0),
-                                    snackbarHost = { SnackbarHost(snackbarHostState) },
-
-                                ) { padding ->
-
-                                    Column(
-                                        Modifier
-                                            .fillMaxSize()
-                                            .padding(padding)
-                                            .consumeWindowInsets(padding)
-                                            .windowInsetsPadding(
-                                                WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal),
-                                            ),
-                                    ) {
-                                        when (appState.windowSizeClass.widthSizeClass) {
-                                            WindowWidthSizeClass.Compact -> {}
-                                            else -> {
-//                                            Row {
-
-//                                                CommonNavigation (
-//                                                    modifier = Modifier.weight(0.3f),
-//                                                    currentNavigation = appState.currentDestination?.route ?:""
-//                                                )
-                                                SkNavHost(
-//                                                    modifier = Modifier.weight(0.7f),
-                                                    appState = appState,
-                                                    onShowSnackbar = { message, action ->
-                                                        snackbarHostState.showSnackbar(
-                                                            message = message,
-                                                            actionLabel = action,
-                                                            duration = SnackbarDuration.Short,
-                                                        ) == SnackbarResult.ActionPerformed
-                                                    },
-                                                )
-//                                            }
-                                            }
-                                        }
+                                    if (appState.shouldShowDrawer) {
+                                        CommonNavigation(
+                                            modifier = Modifier.width(300.dp).fillMaxHeight(),
+                                            currentNavigation = appState.currentDestination?.route
+                                                ?: "",
+                                            onNavigate = appState::onNavigate,
+                                        )
                                     }
-                                }
-                            }
-                        } else {
-                            Row {
-                                if (appState.shouldShowNavRail) {
-                                    CommonRail(
-                                        modifier = Modifier.width(100.dp).fillMaxHeight(),
-                                        currentNavigation = appState.currentDestination?.route
-                                            ?: "",
-                                        onNavigate = navigator,
 
-                                    )
-                                }
+                                },
+
+                                ) {
                                 Scaffold(
                                     modifier = Modifier.semanticsCommon {},
                                     containerColor = Color.Transparent,
@@ -211,11 +140,70 @@ fun CbtApp() {
                                             CommonBar(
                                                 currentNavigation = appState.currentDestination?.route
                                                     ?: "",
-                                            ) { navigator(it) }
+                                            ) { appState.onNavigate(it) }
+                                        }
+                                        if (appState.shouldShowGeneralBottomBar) {
+                                            BottomAppBar(
+                                                floatingActionButton = {
+                                                    if (appState.showFab) {
+                                                        ExtendedFloatingActionButton(
+                                                            containerColor = if (appState.isQuestion && isFinish.value) {
+                                                                correct()
+                                                            } else {
+                                                                FloatingActionButtonDefaults.containerColor
+                                                            },
+                                                            onClick = appState::onFabClick,
+                                                        ) {
+                                                            Text(text = appState.fabName)
+                                                        }
+
+                                                    }
+                                                },
+                                                actions = {
+                                                    IconButton(onClick = { appState.navController.popBackStack() }) {
+                                                        Icon(Icons.Default.ArrowBackIosNew, "back")
+                                                    }
+
+                                                },
+                                            )
+
+                                        }
+                                    },
+                                    floatingActionButton = {
+
+                                        if (appState.showFab && appState.showTopBar) {
+                                            ExtendedFloatingActionButton(
+                                                containerColor = if (appState.isQuestion && isFinish.value) {
+                                                    correct()
+                                                } else {
+                                                    FloatingActionButtonDefaults.containerColor
+                                                },
+                                                onClick = appState::onFabClick,
+                                            ) {
+                                                Text(text = appState.fabName)
+                                            }
+
+                                        }
+                                    },
+                                    topBar = {
+                                        if (appState.showTopBar) {
+                                            TopAppBar(
+                                                navigationIcon = {
+                                                    if (!appState.isMain) {
+                                                        IconButton(onClick = { appState.navController.popBackStack() }) {
+                                                            Icon(
+                                                                Icons.Default.ArrowBackIosNew,
+                                                                "back",
+                                                            )
+                                                        }
+                                                    }
+                                                },
+                                                title = { Text("Series cbt") },
+                                            )
                                         }
                                     },
 
-                                ) { padding ->
+                                    ) { padding ->
 
                                     Column(
                                         Modifier
@@ -242,6 +230,8 @@ fun CbtApp() {
                                 }
                             }
                         }
+
+
                     }
                 }
             }

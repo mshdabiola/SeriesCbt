@@ -10,12 +10,16 @@ import co.touchlab.kermit.Logger
 import com.mshdabiola.cbtapp.MainActivityUiState.Loading
 import com.mshdabiola.cbtapp.MainActivityUiState.Success
 import com.mshdabiola.data.repository.IExaminationRepository
+import com.mshdabiola.data.repository.ISettingRepository
 import com.mshdabiola.data.repository.UserDataRepository
 import com.mshdabiola.designsystem.string.getByte
 import com.mshdabiola.model.UserData
+import com.mshdabiola.ui.toUi
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
@@ -23,23 +27,27 @@ import java.io.File
 class MainAppViewModel(
     userDataRepository: UserDataRepository,
     private val examinationRepository: IExaminationRepository,
+    private val settingRepository: ISettingRepository,
     private val logger: Logger,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<MainActivityUiState>(Loading)
     val uiState: StateFlow<MainActivityUiState> = _uiState
 
-    init {
+    private val _isFinish = MutableStateFlow(false)
+    val isFinish: StateFlow<Boolean> = _isFinish
 
-//        viewModelScope.launch {
-//            val all = examinationRepository.getAll().first()
-//            if (all.isEmpty()) {
-//                val byte= getByte("files/data/data.db")
-//                val files= File.createTempFile("data","db")
-//                files.writeBytes(byte)
-//                examinationRepository
-//                    .import(files.path,"abiola")
-//            }
-//        }
+    init {
+        viewModelScope.launch {
+            settingRepository.currentExam
+                .collectLatest { current ->
+
+                    val chooses = current.choose.flatten().all { it > -1 }
+                    _isFinish.update {
+                        chooses
+                    }
+
+                }
+        }
         viewModelScope.launch {
 
             val dbTemp = File.createTempFile("data", "db")

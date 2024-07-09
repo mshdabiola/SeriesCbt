@@ -4,8 +4,10 @@
 
 package com.mshdabiola.cbtapp.navigation
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import com.mshdabiola.cbtapp.ui.CbtAppState
 import com.mshdabiola.finish.navigation.finishScreen
@@ -33,38 +35,31 @@ fun SkNavHost(
         modifier = modifier,
     ) {
         mainScreen(
-            screenSize = appState.screenSize,
+            modifier = Modifier.padding(16.dp),
             onShowSnack = onShowSnackbar,
-            navigateToSetting = navController::navigateToSetting,
             navigateToQuestion = navController::navigateToQuestion,
         )
         questionScreen(
-            screenSize = appState.screenSize,
+            modifier = Modifier.padding(16.dp),
             onShowSnack = onShowSnackbar,
             onBack = navController::popBackStack,
             navigateToFinish = navController::navigateToFinish,
         )
         finishScreen(
-            screenSize = appState.screenSize,
+            modifier=Modifier.padding(16.dp),
             onShowSnack = onShowSnackbar,
-            onBack = navController::popBackStack,
-            navigateToQuestion = navController::navigateToQuestion,
         )
 
         statScreen(
-            screenSize = appState.screenSize,
             onShowSnack = onShowSnackbar,
         )
 
         profileScreen(
-            screenSize = appState.screenSize,
             onShowSnack = onShowSnackbar,
         )
 
         settingScreen(
-            screenSize = appState.screenSize,
             onShowSnack = onShowSnackbar,
-            onBack = navController::popBackStack,
         )
     }
 }
