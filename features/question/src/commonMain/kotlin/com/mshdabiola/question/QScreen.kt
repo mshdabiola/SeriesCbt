@@ -25,8 +25,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedSuggestionChip
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -320,12 +318,12 @@ fun ExamPaper(
     val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
 
-    val state2 = rememberLazyListState()
-
+    val lazyListState = rememberLazyListState()
+//
     LaunchedEffect(state.currentPage) {
         println("current index ${state.currentPage}")
         val value = if (state.currentPage == 0) 0 else state.currentPage - 1
-        state2.scrollToItem(value)
+        lazyListState.scrollToItem(value)
     }
 
     val number = remember(choose) { choose.size }
@@ -372,7 +370,7 @@ fun ExamPaper(
         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
     ) {
         IconButton(
-            enabled = state2.canScrollBackward,
+            enabled = state.canScrollBackward,
             onClick = {
                 coroutineScope.launch {
                     state.animateScrollToPage(state.currentPage - 1)
@@ -384,7 +382,7 @@ fun ExamPaper(
         }
 
         LazyRow(
-            state = state2,
+            state = lazyListState,
             modifier = Modifier.weight(1f),
             horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
         ) {
@@ -406,7 +404,7 @@ fun ExamPaper(
             }
         }
         IconButton(
-            enabled =state2.canScrollForward ,
+            enabled =state.canScrollForward ,
             onClick = {
                 coroutineScope.launch {
                     // onNextTheory(state.currentPage + 1)
