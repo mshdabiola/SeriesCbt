@@ -43,17 +43,16 @@ import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun SettingRoute(
-    onBack: () -> Unit,
-    screenSize: ScreenSize,
+    modifier: Modifier=Modifier,
+
     onShowSnack: suspend (String, String?) -> Boolean,
     viewModel: SettingViewModel,
 ) {
     val settingState = viewModel.uiState.collectAsStateWithLifecycleCommon()
 
     SettingScreen(
+        modifier = modifier,
         settingState = settingState.value,
-        onBack = onBack,
-        screenSize = screenSize,
         setThemeBrand = viewModel::setThemeBrand,
         setContrast = viewModel::setThemeContrast,
         setDarkThemeConfig = viewModel::setDarkThemeConfig,
@@ -63,35 +62,17 @@ internal fun SettingRoute(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 internal fun SettingScreen(
+    modifier: Modifier=Modifier,
+
     settingState: SettingState,
-    onBack: () -> Unit = {},
-    screenSize: ScreenSize = ScreenSize.COMPACT,
     setThemeBrand: (ThemeBrand) -> Unit = {},
     setDarkThemeConfig: (DarkThemeConfig) -> Unit = {},
     setContrast: (Contrast) -> Unit = {},
 
 ) {
-    Scaffold(
-        modifier = Modifier, // .semantics { this.testTagsAsResourceId = true },
-        topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "back",
-                        )
-                    }
-                },
-                title = {
-                    Text(text = "Setting")
-                },
-            )
-        },
-        containerColor = Color.Transparent,
-    ) { paddingValues ->
+
         Column(
-            Modifier.padding(paddingValues).padding(horizontal = 16.dp),
+            modifier.padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Row(
@@ -163,7 +144,7 @@ internal fun SettingScreen(
                 )
             }
         }
-    }
+
 }
 //
 // @Preview
