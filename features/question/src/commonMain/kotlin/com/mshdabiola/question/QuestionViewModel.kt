@@ -6,6 +6,7 @@ package com.mshdabiola.question
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.touchlab.kermit.Logger
 import com.mshdabiola.data.repository.IExaminationRepository
 import com.mshdabiola.data.repository.IQuestionRepository
 import com.mshdabiola.data.repository.ISettingRepository
@@ -27,10 +28,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class QuestionViewModel constructor(
+class QuestionViewModel(
     examOrdinal: Int,
     year: Long,
     val typeIndex: Int,
+    private val logger: Logger,
     private val iSubjectRepository: ISubjectRepository,
     private val settingRepository: ISettingRepository,
     private val questionRepository: IQuestionRepository,
@@ -103,9 +105,15 @@ class QuestionViewModel constructor(
                 }
 
                 val section = allQuestions
-                    .map { questionUiStates ->
+                    .mapNotNull { questionUiStates ->
                         val isTheory = questionUiStates.all { it.isTheory }
-                        Section(stringRes = if (isTheory) 1 else 0, false)
+                       when{
+                           questionUiStates.isEmpty()->null
+                           isTheory-> Section(stringRes =  1 , false)
+                           !isTheory->Section(stringRes =  0 , false)
+                           else->null
+                       }
+
                     }
 
                 // Timber.e("time ${exam.examTime}")
