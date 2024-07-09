@@ -21,16 +21,17 @@ import org.koin.core.annotation.KoinExperimentalAPI
 
 // import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 internal fun ProfileRoute(
-    screenSize: ScreenSize,
+    modifier: Modifier=Modifier,
     onShowSnackbar: suspend (String, String?) -> Boolean,
 
 ) {
     val viewModel: ProfileViewModel = koinViewModel()
 
     ProfileScreen(
+        modifier = modifier,
         profileState = ProfileState(),
     )
 }
@@ -38,21 +39,12 @@ internal fun ProfileRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ProfileScreen(
+    modifier: Modifier=Modifier,
     profileState: ProfileState,
 ) {
-    Scaffold(
-        modifier = Modifier,
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "Profile") },
-            )
-        },
 
-    ) { paddingValues ->
         Column(
-            Modifier
-                .padding(paddingValues)
-                .padding(horizontal = 8.dp)
+            modifier
                 .verticalScroll(rememberScrollState()),
         ) {
             var latex = "\\begin{array}{l}"
@@ -65,16 +57,7 @@ internal fun ProfileScreen(
             latex += "L = \\int_a^b \\sqrt{ \\left|\\sum_{i,j=1}^ng_{ij}(\\gamma(t))\\left(\\u000crac{d}{dt}x^i\\circ\\gamma(t)\\right)\\left(\\u000crac{d}{dt}x^j\\circ\\gamma(t)\\right)\\right|}\\,dt\\\\"
             latex += "\\begin{array}{rl} s &= \\int_a^b\\left\\|\\u000crac{d}{dt}\\vec{r}\\,(u(t),v(t))\\right\\|\\,dt \\\\ &= \\int_a^b \\sqrt{u'(t)^2\\,\\vec{r}_u\\cdot\\vec{r}_u + 2u'(t)v'(t)\\, \\vec{r}_u\\cdot\\vec{r}_v+ v'(t)^2\\,\\vec{r}_v\\cdot\\vec{r}_v}\\,\\,\\, dt. \\end{array}\\\\"
             latex += "\\end{array}"
-//            LatexView(
-//                modifier =
-//                Modifier.horizontalScroll(rememberScrollState()),
-//                text = latex,
-//            )
 
-            // Latex(text = latex, foregroundColor = Color.Magenta)
         }
-    }
+
 }
-//
-// @Composable
-// expect fun ProfileScreenPreview()
