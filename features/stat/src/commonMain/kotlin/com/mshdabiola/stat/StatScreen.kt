@@ -4,6 +4,7 @@
 
 package com.mshdabiola.stat
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,53 +32,28 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun MainRoute(
-    screenSize: ScreenSize,
+    modifier: Modifier=Modifier,
+
     onShowSnackbar: suspend (String, String?) -> Boolean,
 
 ) {
     val viewModel: StatViewModel = koinViewModel()
-    var userRankList by remember {
-        mutableStateOf(emptyList<UserRank>().toImmutableList())
-    }
+
 
     StatScreen(
+        modifier = modifier,
         statState = StatState(),
-        userRankList = userRankList,
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun StatScreen(
+    modifier: Modifier=Modifier,
     statState: StatState,
-    userRankList: ImmutableList<UserRank>,
 ) {
-    Scaffold(
-        modifier = Modifier,
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "Ranks") },
+    Column (modifier = modifier){
+        Text("Statics")
 
-            )
-        },
-
-    ) { paddingValues ->
-
-        LazyColumn(
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(horizontal = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            items(userRankList) {
-                UserRankUiState(it)
-            }
-            item {
-                if (userRankList.isNotEmpty()) {
-                    MoreRankButton()
-                }
-            }
-        }
     }
 }
 
