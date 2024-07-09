@@ -6,6 +6,7 @@ package com.mshdabiola.question.navigation
 
 import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -32,12 +33,13 @@ fun NavController.navigateToQuestion(examType: Int, year: Long, typeIndex: Int) 
 
 @OptIn(KoinExperimentalAPI::class)
 fun NavGraphBuilder.questionScreen(
+    modifier: Modifier = Modifier,
+
     onShowSnack: suspend (String, String?) -> Boolean,
     onBack: () -> Unit,
     navigateToFinish: () -> Unit,
-    screenSize: ScreenSize,
 
-) {
+    ) {
     composable(
         route = "$QUESTION_ROUTE/{$QUESTION_ID_EXAM_TYPE}/{$QUESTION_ID_YEAR}/{$QUESTION_ID_INDEX}",
         arguments = listOf(
@@ -74,7 +76,7 @@ fun NavGraphBuilder.questionScreen(
         )
 
         QuestionRoute(
-            screenSize = screenSize,
+            modifier = modifier,
             onBack = onBack,
             onShowSnackbar = onShowSnack,
             navigateToFinish = navigateToFinish,
