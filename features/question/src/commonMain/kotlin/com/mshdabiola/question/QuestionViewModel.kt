@@ -10,7 +10,6 @@ import co.touchlab.kermit.Logger
 import com.mshdabiola.data.repository.IExaminationRepository
 import com.mshdabiola.data.repository.IQuestionRepository
 import com.mshdabiola.data.repository.ISettingRepository
-import com.mshdabiola.data.repository.ISubjectRepository
 import com.mshdabiola.model.data.CurrentExam
 import com.mshdabiola.ui.state.ExamType
 import com.mshdabiola.ui.state.QuestionUiState
