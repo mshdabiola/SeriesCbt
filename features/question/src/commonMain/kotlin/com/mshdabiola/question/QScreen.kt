@@ -47,10 +47,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.mshdabiola.designsystem.theme.extendedColorScheme
 import com.mshdabiola.ui.QuestionUi
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
-import com.mshdabiola.ui.correct
-import com.mshdabiola.ui.onCorrect
 import com.mshdabiola.ui.state.InstructionUiState
 import com.mshdabiola.ui.state.QuestionUiState
 import kotlinx.collections.immutable.ImmutableList
@@ -217,8 +216,9 @@ internal fun QuestionScreen(
                                     onClick = { changeIndex(index) },
                                     colors = if (section.isFinished) {
                                         SuggestionChipDefaults.elevatedSuggestionChipColors(
-                                            containerColor = correct(),
-                                            labelColor = onCorrect(),
+                                            containerColor = extendedColorScheme.right.colorContainer,
+                                            labelColor = extendedColorScheme.right.onColorContainer,
+
                                         )
                                     } else {
                                         SuggestionChipDefaults.elevatedSuggestionChipColors()

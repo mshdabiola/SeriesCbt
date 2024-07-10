@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.mshdabiola.designsystem.theme.extendedColorScheme
 import com.mshdabiola.generalmodel.Type
 import com.mshdabiola.ui.state.OptionUiState
 import kotlinx.collections.immutable.ImmutableList
@@ -77,11 +78,14 @@ fun OptionUi(
 ) {
     val color = when {
         optionUiState.isAnswer && showAnswer -> CardDefaults.cardColors(
-            containerColor = correctContainer(),
-            contentColor = onCorrectContainer(),
+            containerColor = extendedColorScheme.right.colorContainer,
+            contentColor = extendedColorScheme.right.onColorContainer,
         )
 
-        isChoose && showAnswer -> CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+        isChoose && showAnswer -> CardDefaults.cardColors(
+            containerColor = extendedColorScheme.wrong.colorContainer,
+            contentColor = extendedColorScheme.wrong.onColorContainer,
+        )
         isChoose -> CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
         showAnswer -> CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
         else -> CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)

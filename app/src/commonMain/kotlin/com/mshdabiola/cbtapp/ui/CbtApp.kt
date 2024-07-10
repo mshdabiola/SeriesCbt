@@ -34,6 +34,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
@@ -53,6 +54,7 @@ import com.mshdabiola.designsystem.component.CbtGradientBackground
 import com.mshdabiola.designsystem.theme.CbtTheme
 import com.mshdabiola.designsystem.theme.GradientColors
 import com.mshdabiola.designsystem.theme.LocalGradientColors
+import com.mshdabiola.designsystem.theme.extendedColorScheme
 import com.mshdabiola.model.Contrast
 import com.mshdabiola.model.DarkThemeConfig
 import com.mshdabiola.model.ThemeBrand
@@ -61,7 +63,6 @@ import com.mshdabiola.ui.CommonNavigation
 import com.mshdabiola.ui.CommonRail
 import com.mshdabiola.ui.SplashScreen
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
-import com.mshdabiola.ui.correct
 import com.mshdabiola.ui.semanticsCommon
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -147,9 +148,14 @@ fun CbtApp() {
                                                     if (appState.showFab) {
                                                         ExtendedFloatingActionButton(
                                                             containerColor = if (appState.isQuestion && isFinish.value) {
-                                                                correct()
+                                                                extendedColorScheme.right.color
                                                             } else {
                                                                 FloatingActionButtonDefaults.containerColor
+                                                            },
+                                                            contentColor = if (appState.isQuestion && isFinish.value) {
+                                                                extendedColorScheme.right.onColor
+                                                            } else {
+                                                                contentColorFor(FloatingActionButtonDefaults.containerColor)
                                                             },
                                                             onClick = appState::onFabClick,
                                                         ) {
@@ -169,9 +175,14 @@ fun CbtApp() {
                                         if (appState.showFab && appState.showTopBar) {
                                             ExtendedFloatingActionButton(
                                                 containerColor = if (appState.isQuestion && isFinish.value) {
-                                                    correct()
+                                                    extendedColorScheme.right.color
                                                 } else {
                                                     FloatingActionButtonDefaults.containerColor
+                                                },
+                                                contentColor = if (appState.isQuestion && isFinish.value) {
+                                                    extendedColorScheme.right.onColor
+                                                } else {
+                                                    contentColorFor(FloatingActionButtonDefaults.containerColor)
                                                 },
                                                 onClick = appState::onFabClick,
                                             ) {
