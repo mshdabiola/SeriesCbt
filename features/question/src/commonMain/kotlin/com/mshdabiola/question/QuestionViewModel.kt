@@ -107,13 +107,12 @@ class QuestionViewModel(
                 val section = allQuestions
                     .mapNotNull { questionUiStates ->
                         val isTheory = questionUiStates.all { it.isTheory }
-                       when{
-                           questionUiStates.isEmpty()->null
-                           isTheory-> Section(stringRes =  1 , false)
-                           !isTheory->Section(stringRes =  0 , false)
-                           else->null
-                       }
-
+                        when {
+                            questionUiStates.isEmpty() -> null
+                            isTheory -> Section(stringRes = 1, false)
+                            !isTheory -> Section(stringRes = 0, false)
+                            else -> null
+                        }
                     }
 
                 // Timber.e("time ${exam.examTime}")

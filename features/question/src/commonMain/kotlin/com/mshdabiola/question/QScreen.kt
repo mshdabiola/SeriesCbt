@@ -68,7 +68,7 @@ internal fun QuestionRoute(
     navigateToFinish: () -> Unit,
     viewModel: QuestionViewModel,
 
-    ) {
+) {
     val mainState = viewModel.mainState.collectAsStateWithLifecycleCommon()
 
     val states = getState(
@@ -78,7 +78,6 @@ internal fun QuestionRoute(
             .map { it.size }
             .toImmutableList(),
     )
-
 
     QuestionScreen(
         modifier = modifier,
@@ -96,11 +95,11 @@ internal fun QuestionRoute(
 //        instructionUiState = instructionUiState,
 //        onDismissRequest = { instructionUiState = null },
 //    )
-
 }
 
 @OptIn(
-    ExperimentalFoundationApi::class, ExperimentalLayoutApi::class,
+    ExperimentalFoundationApi::class,
+    ExperimentalLayoutApi::class,
 )
 @Composable
 internal fun QuestionScreen(
@@ -126,14 +125,13 @@ internal fun QuestionScreen(
                 .flatten()
 
             (
-                    (
-                            allChoose.count {
-                                it > -1
-                            } / allChoose.size.toFloat()
-                            ) * 100
-                    ).toInt()
+                (
+                    allChoose.count {
+                        it > -1
+                    } / allChoose.size.toFloat()
+                    ) * 100
+                ).toInt()
         }
-
 
         LaunchedEffect(
             key1 = mainStat.currentTime,
@@ -189,7 +187,7 @@ internal fun QuestionScreen(
 //            },
 //
 //        ) { paddingValues ->
-        Column (modifier.verticalScroll(rememberScrollState())){
+        Column(modifier.verticalScroll(rememberScrollState())) {
             FlowRow(modifier = modifier) {
                 Column(
                     modifier = Modifier
@@ -210,10 +208,9 @@ internal fun QuestionScreen(
                         Modifier,
                         horizontalArrangement = Arrangement.spacedBy(
                             4.dp,
-                            Alignment.CenterHorizontally
+                            Alignment.CenterHorizontally,
                         ),
                     ) {
-
                         if (mainStat.questions.size > 1) {
                             mainStat.sections.forEachIndexed { index, section ->
                                 ElevatedSuggestionChip(
@@ -239,8 +236,8 @@ internal fun QuestionScreen(
                         state = pagerState[mainStat.currentSectionIndex],
                         choose = mainStat.choose[mainStat.currentSectionIndex],
                         isAllShowing = isAllShowing,
-                        onShowAllQuetions =  {
-                            isAllShowing=true
+                        onShowAllQuetions = {
+                            isAllShowing = true
                         },
                         //  onNextTheory = {},//onNextTheory,
                         setInstructionUiState = { instructionUiState = it },
@@ -252,10 +249,9 @@ internal fun QuestionScreen(
                             )
                         },
                     )
-
                 }
                 Column(
-                    Modifier.weight(0.3f),//.height(40.dp),
+                    Modifier.weight(0.3f), // .height(40.dp),
                     //  horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally)
                 ) {
                     if (isAllShowing) {
@@ -274,7 +270,7 @@ internal fun QuestionScreen(
                             ),
                             verticalArrangement = Arrangement.spacedBy(
                                 4.dp,
-                                Alignment.CenterVertically
+                                Alignment.CenterVertically,
                             ),
                         ) {
                             mainStat.choose[mainStat.currentSectionIndex].forEachIndexed { index, i ->
@@ -282,7 +278,7 @@ internal fun QuestionScreen(
                                     number = index,
                                     isChoose = i > -1,
                                     isCurrent = index == pagerState[mainStat.currentSectionIndex].currentPage,
-                                    onClick = { //onChooseClick(it)
+                                    onClick = { // onChooseClick(it)
                                         coroutineScope.launch {
                                             pagerState[mainStat.currentSectionIndex].animateScrollToPage(
                                                 index,
@@ -291,19 +287,13 @@ internal fun QuestionScreen(
                                     },
                                 )
                             }
-
                         }
                     }
-
                 }
-
             }
-
         }
 
-
         // }
-
     }
 }
 
@@ -391,7 +381,7 @@ fun ColumnScope.ExamPaper(
             horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
         ) {
             items(count = number, key = { it }) {
-                if(!isAllShowing){
+                if (!isAllShowing) {
                     QuestionNumberButton(
                         number = it,
                         isChoose = choose[it] > -1,
@@ -404,11 +394,10 @@ fun ColumnScope.ExamPaper(
                         }
                     }
                 }
-
             }
         }
         IconButton(
-            enabled =state.canScrollForward ,
+            enabled = state.canScrollForward,
             onClick = {
                 coroutineScope.launch {
                     // onNextTheory(state.currentPage + 1)
@@ -422,13 +411,12 @@ fun ColumnScope.ExamPaper(
     }
 
     if (!isAllShowing) {
-        TextButton(onClick = onShowAllQuetions){
+        TextButton(onClick = onShowAllQuetions) {
             Text("Show all questions")
         }
     }
 
     Text("${noAnswer.value} of $number")
-
 }
 
 @OptIn(ExperimentalFoundationApi::class)

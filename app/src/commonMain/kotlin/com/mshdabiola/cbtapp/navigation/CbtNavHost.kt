@@ -17,7 +17,6 @@ import com.mshdabiola.main.navigation.mainScreen
 import com.mshdabiola.profile.navigation.profileScreen
 import com.mshdabiola.question.navigation.navigateToQuestion
 import com.mshdabiola.question.navigation.questionScreen
-import com.mshdabiola.setting.navigation.navigateToSetting
 import com.mshdabiola.setting.navigation.settingScreen
 import com.mshdabiola.stat.navigation.statScreen
 
@@ -46,7 +45,7 @@ fun SkNavHost(
             navigateToFinish = navController::navigateToFinish,
         )
         finishScreen(
-            modifier=Modifier.padding(16.dp),
+            modifier = Modifier.padding(16.dp),
             onShowSnack = onShowSnackbar,
         )
 

@@ -20,14 +20,12 @@ import org.koin.core.parameter.parametersOf
 
 const val ROUTE = "question_route"
 
-
 @VisibleForTesting
 internal const val QUESTION_ID_EXAM_TYPE = "examtype"
 internal const val QUESTION_ID_YEAR = "year"
 internal const val QUESTION_ID_INDEX = "index"
 
 const val QUESTION_ROUTE = "$ROUTE/{$QUESTION_ID_EXAM_TYPE}/{$QUESTION_ID_YEAR}/{$QUESTION_ID_INDEX}"
-
 
 fun NavController.navigateToQuestion(examType: Int, year: Long, typeIndex: Int) =
     navigate(
@@ -40,9 +38,9 @@ fun NavGraphBuilder.questionScreen(
 
     onShowSnack: suspend (String, String?) -> Boolean,
     onBack: () -> Unit,
-    navigateToFinish: (Int,Long,Int) -> Unit,
+    navigateToFinish: (Int, Long, Int) -> Unit,
 
-    ) {
+) {
     composable(
         route = QUESTION_ROUTE,
         arguments = listOf(
@@ -82,7 +80,7 @@ fun NavGraphBuilder.questionScreen(
             modifier = modifier,
             onBack = onBack,
             onShowSnackbar = onShowSnack,
-            navigateToFinish = { navigateToFinish(exam,year,index) },
+            navigateToFinish = { navigateToFinish(exam, year, index) },
             viewModel = viewModel,
         )
     }

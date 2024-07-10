@@ -11,7 +11,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.mshdabiola.designsystem.icon.cbtRoute
 import com.mshdabiola.profile.ProfileRoute
-import com.mshdabiola.ui.ScreenSize
 
 val PROFILE_ROUTE = cbtRoute[1]
 

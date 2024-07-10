@@ -5,20 +5,16 @@
 package com.mshdabiola.main
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mshdabiola.designsystem.drawable.layer2
@@ -43,7 +38,7 @@ import org.koin.core.annotation.KoinExperimentalAPI
 @OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
 internal fun MainRoute(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     navigateToQuestion: (ExamType, Long, Int) -> Unit,
 ) {
@@ -51,7 +46,7 @@ internal fun MainRoute(
 
     val mainState = viewModel.mainState.collectAsStateWithLifecycleCommon()
     MainScreen(
-        modifier=modifier,
+        modifier = modifier,
         mainState = mainState.value,
         navigateToQuestion = navigateToQuestion,
     )
@@ -60,11 +55,10 @@ internal fun MainRoute(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun MainScreen(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
     mainState: MainState,
     navigateToQuestion: (ExamType, Long, Int) -> Unit = { _, _, _ -> },
 ) {
-
     val finishPercent = remember(mainState.choose) {
         var choose = mainState
             .choose
@@ -75,7 +69,6 @@ internal fun MainScreen(
     }
 
     val state = rememberScrollState()
-
 
     Column(
         modifier = modifier
@@ -95,26 +88,25 @@ internal fun MainScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
             ) {
                 Column(
-                    Modifier.weight(1f).width(200.dp).heightIn(120.dp,200.dp),
-                    verticalArrangement = Arrangement.Center
+                    Modifier.weight(1f).width(200.dp).heightIn(120.dp, 200.dp),
+                    verticalArrangement = Arrangement.Center,
                 ) {
                     PlayLogin()
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "Step right up and test your skills. " +
-                                "Wellcome to Physics test that will challenge and entertain you",
+                            "Wellcome to Physics test that will challenge and entertain you",
                         modifier = Modifier.padding(horizontal = 16.dp),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.primary,
 
-                        )
+                    )
                 }
                 Image(painter = layer2, contentDescription = "")
-
             }
 
-            Column (
+            Column(
                 Modifier
                     .width(600.dp)
                     .weight(0.7f),
@@ -122,7 +114,7 @@ internal fun MainScreen(
                     8.dp,
                     Alignment.CenterVertically,
                 ),
-               // horizontalAlignment = Alignment.CenterHorizontally,
+                // horizontalAlignment = Alignment.CenterHorizontally,
 
 //                maxItemsInEachRow = 2,
             ) {
@@ -143,7 +135,7 @@ internal fun MainScreen(
 
                 Column(
                     Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
                 ) {
                     StartCard(
                         exams = mainState.listOfAllExams,
@@ -154,15 +146,10 @@ internal fun MainScreen(
                         onFast = { navigateToQuestion(ExamType.FAST_FINGER, -1, 1) },
                         onRandom = { navigateToQuestion(ExamType.RANDOM, -1, 1) },
                     )
-
-
                 }
             }
         }
-
-
     }
-
 }
 //
 // @Composable

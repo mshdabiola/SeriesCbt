@@ -14,12 +14,9 @@ import com.mshdabiola.data.repository.ISettingRepository
 import com.mshdabiola.data.repository.UserDataRepository
 import com.mshdabiola.designsystem.string.getByte
 import com.mshdabiola.model.UserData
-import com.mshdabiola.ui.toUi
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
@@ -45,7 +42,6 @@ class MainAppViewModel(
                     _isFinish.update {
                         chooses
                     }
-
                 }
         }
         viewModelScope.launch {

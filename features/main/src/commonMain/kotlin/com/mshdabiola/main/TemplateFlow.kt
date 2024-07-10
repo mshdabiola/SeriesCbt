@@ -29,55 +29,53 @@ fun TFlow(modifier: Modifier = Modifier) {
             Modifier.background(Color.Green)
                 .height(200.dp)
                 .widthIn(840.dp)
-                .weight(0.7f)
+                .weight(0.7f),
         ) {
-
         }
         Column(
             Modifier.background(Color.Green)
                 .height(200.dp)
 //                    .widthIn(min = 200.dp)
-                .weight(0.3f)
+                .weight(0.3f),
         ) {
-
         }
         Column(
             Modifier.background(Color.Green)
                 .height(200.dp)
                 .widthIn(min = 600.dp)
-                .weight(0.7f)
+                .weight(0.7f),
         ) {
-
         }
     }
 
-    FlowRow  (modifier = Modifier.fillMaxSize()){
-        FlowRow(modifier = Modifier.weight(0.7f).width(840.dp)){ //desktop
-            Column(modifier = Modifier
-                .weight(0.5f)
-                .width(300.dp)
-                .height(200.dp)
-                .background(Color.Green)){ //tabp
-
+    FlowRow(modifier = Modifier.fillMaxSize()) {
+        FlowRow(modifier = Modifier.weight(0.7f).width(840.dp)) { // desktop
+            Column(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .width(300.dp)
+                    .height(200.dp)
+                    .background(Color.Green),
+            ) { // tabp
             }
-            Column(modifier = Modifier
-                .weight(0.5f)
-                .width(300.dp)
-                .height(200.dp)
-                .background(Color.Blue)){
-
+            Column(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .width(300.dp)
+                    .height(200.dp)
+                    .background(Color.Blue),
+            ) {
             }
-            Column(modifier = Modifier
-                .weight(0.5f)
-                .width(300.dp)
-                .height(200.dp)
-                .background(Color.Red)){
-
+            Column(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .width(300.dp)
+                    .height(200.dp)
+                    .background(Color.Red),
+            ) {
             }
         }
-        Column(modifier = Modifier.weight(0.3f).height(200.dp).background(Color.Black)){ //desktop
-
+        Column(modifier = Modifier.weight(0.3f).height(200.dp).background(Color.Black)) { // desktop
         }
     }
-
 }

@@ -49,7 +49,7 @@ import kotlinx.collections.immutable.toImmutableList
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ContinueCard(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     year: Long,
     timeRemain: Long,
@@ -117,14 +117,14 @@ fun ContinueCard(
 
 @Composable
 fun StartCard(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
     onClick: (Int, Long) -> Unit = { _, _ -> },
     exams: ImmutableList<ExamUiState>,
     isSubmit: Boolean,
-    onRandom:()->Unit={},
-    onFast:()->Unit={},
+    onRandom: () -> Unit = {},
+    onFast: () -> Unit = {},
 
-    ) {
+) {
     if (exams.isNotEmpty()) {
         var yearIndex by rememberSaveable {
             mutableStateOf(0)
@@ -181,10 +181,10 @@ fun StartCard(
                     Text(text = "Start exam")
                 }
                 Spacer(Modifier.height(8.dp))
-                Row (
+                Row(
                     Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp,Alignment.End)
-                ){
+                    horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End),
+                ) {
                     AssistChip(
                         onClick = { onRandom() },
                         label = { Text("Random") },

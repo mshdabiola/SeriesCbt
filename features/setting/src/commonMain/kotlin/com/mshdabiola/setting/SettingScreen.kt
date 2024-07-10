@@ -9,18 +9,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,12 +23,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mshdabiola.model.Contrast
 import com.mshdabiola.model.DarkThemeConfig
 import com.mshdabiola.model.ThemeBrand
-import com.mshdabiola.ui.ScreenSize
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -43,7 +35,7 @@ import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun SettingRoute(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
 
     onShowSnack: suspend (String, String?) -> Boolean,
     viewModel: SettingViewModel,
@@ -62,7 +54,7 @@ internal fun SettingRoute(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 internal fun SettingScreen(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
 
     settingState: SettingState,
     setThemeBrand: (ThemeBrand) -> Unit = {},
@@ -70,81 +62,79 @@ internal fun SettingScreen(
     setContrast: (Contrast) -> Unit = {},
 
 ) {
-
-        Column(
-            modifier.padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+    Column(
+        modifier.padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(0.8f),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(0.8f),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text("Theme")
-                DropdownMenu(
-                    currentIndex = ThemeBrand.entries.indexOf(settingState.userData.themeBrand),
-                    data = ThemeBrand.entries.map { themeBrand ->
-                        themeBrand
-                            .name
-                            .lowercase()
-                            .replaceFirstChar {
-                                it.uppercaseChar()
-                            }
-                    }
-                        .toImmutableList(),
-                    onDataChange = {
-                        setThemeBrand(ThemeBrand.entries[it])
-                    },
-                )
-            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(0.8f),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text("Contrast")
-                DropdownMenu(
-                    currentIndex = Contrast.entries.indexOf(settingState.userData.contrast),
-                    data = Contrast.entries.map { themeBrand ->
-                        themeBrand
-                            .name
-                            .lowercase()
-                            .replaceFirstChar {
-                                it.uppercaseChar()
-                            }
-                    }
-                        .toImmutableList(),
-                    onDataChange = {
-                        setContrast(Contrast.entries[it])
-                    },
-                )
-            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(0.8f),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text("Dark")
-                DropdownMenu(
-                    currentIndex = DarkThemeConfig.entries.indexOf(settingState.userData.darkThemeConfig),
-                    data = DarkThemeConfig.entries.map { themeBrand ->
-                        themeBrand
-                            .name
-                            .lowercase()
-                            .replaceFirstChar {
-                                it.uppercaseChar()
-                            }
-                    }
-                        .toImmutableList(),
-                    onDataChange = {
-                        setDarkThemeConfig(DarkThemeConfig.entries[it])
-                    },
-                )
-            }
+            Text("Theme")
+            DropdownMenu(
+                currentIndex = ThemeBrand.entries.indexOf(settingState.userData.themeBrand),
+                data = ThemeBrand.entries.map { themeBrand ->
+                    themeBrand
+                        .name
+                        .lowercase()
+                        .replaceFirstChar {
+                            it.uppercaseChar()
+                        }
+                }
+                    .toImmutableList(),
+                onDataChange = {
+                    setThemeBrand(ThemeBrand.entries[it])
+                },
+            )
         }
 
+        Row(
+            modifier = Modifier.fillMaxWidth(0.8f),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text("Contrast")
+            DropdownMenu(
+                currentIndex = Contrast.entries.indexOf(settingState.userData.contrast),
+                data = Contrast.entries.map { themeBrand ->
+                    themeBrand
+                        .name
+                        .lowercase()
+                        .replaceFirstChar {
+                            it.uppercaseChar()
+                        }
+                }
+                    .toImmutableList(),
+                onDataChange = {
+                    setContrast(Contrast.entries[it])
+                },
+            )
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(0.8f),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text("Dark")
+            DropdownMenu(
+                currentIndex = DarkThemeConfig.entries.indexOf(settingState.userData.darkThemeConfig),
+                data = DarkThemeConfig.entries.map { themeBrand ->
+                    themeBrand
+                        .name
+                        .lowercase()
+                        .replaceFirstChar {
+                            it.uppercaseChar()
+                        }
+                }
+                    .toImmutableList(),
+                onDataChange = {
+                    setDarkThemeConfig(DarkThemeConfig.entries[it])
+                },
+            )
+        }
+    }
 }
 //
 // @Preview

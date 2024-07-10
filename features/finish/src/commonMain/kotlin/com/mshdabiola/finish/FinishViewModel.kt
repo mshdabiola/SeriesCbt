@@ -52,17 +52,15 @@ class FinishViewModel constructor(
             allQuestions.add(questions.filter { it.isTheory })
 
             val section = allQuestions
-                    .mapNotNull { questionUiStates ->
-                val isTheory = questionUiStates.all { it.isTheory }
-                when{
-                    questionUiStates.isEmpty()->null
-                    isTheory-> Section(stringRes =  1 , false)
-                    !isTheory->Section(stringRes =  0 , false)
-                    else->null
+                .mapNotNull { questionUiStates ->
+                    val isTheory = questionUiStates.all { it.isTheory }
+                    when {
+                        questionUiStates.isEmpty() -> null
+                        isTheory -> Section(stringRes = 1, false)
+                        !isTheory -> Section(stringRes = 0, false)
+                        else -> null
+                    }
                 }
-
-            }
-
 
             val choose = current.choose.map { it.toImmutableList() }.toImmutableList()
 

@@ -23,8 +23,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.SkipNext
-import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.WineBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -100,12 +98,12 @@ internal fun FinishScreen(
         delay(3000)
         val state2 = pagerState[mainState.currentSectionIndex]
         state2.animateScrollToPage(state)
-        state = if (state2.canScrollForward)
+        state = if (state2.canScrollForward) {
             state2.currentPage + 1
-        else
+        } else {
             0
+        }
     }
-
 
 //    Scaffold(
 //        modifier = Modifier,
@@ -143,9 +141,10 @@ internal fun FinishScreen(
 //    ) { paddingValues ->
 
     Column(modifier.verticalScroll(rememberScrollState())) {
-        FlowRow(modifier = modifier,
+        FlowRow(
+            modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Column(
                 modifier = Modifier.weight(0.4f),
@@ -167,7 +166,6 @@ internal fun FinishScreen(
                 }
             }
             Column(modifier = Modifier.weight(0.7f).width(600.dp)) {
-
                 if (mainState.sections.size > 1) {
                     TabRow(selectedTabIndex = currentIndex) {
                         mainState.sections.forEachIndexed { index, section ->
@@ -188,7 +186,7 @@ internal fun FinishScreen(
                 HorizontalPager(
                     modifier = Modifier,
                     // .weight(0.8f)
-                    //.verticalScroll(state = scrollState),
+                    // .verticalScroll(state = scrollState),
                     state = pagerState[mainState.currentSectionIndex],
                     verticalAlignment = Alignment.Top,
                     userScrollEnabled = false,
@@ -215,8 +213,7 @@ internal fun FinishScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
 
-                    )
-                {
+                ) {
                     IconButton(
                         onClick = {
                             coroutineScope.launch {
@@ -228,7 +225,6 @@ internal fun FinishScreen(
                         enabled = pagerState[mainState.currentSectionIndex].canScrollBackward,
                     ) {
                         Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, "previous")
-
                     }
 
                     IconButton(
@@ -244,15 +240,9 @@ internal fun FinishScreen(
                     ) {
                         Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, "previous")
                     }
-
                 }
-
-
             }
-
-
         }
-
     }
 
     // }

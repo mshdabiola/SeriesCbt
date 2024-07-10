@@ -8,7 +8,6 @@ import com.mshdabiola.profile.profileModule
 import com.mshdabiola.question.questionModule
 import com.mshdabiola.setting.settingModule
 import com.mshdabiola.stat.statModule
-import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 

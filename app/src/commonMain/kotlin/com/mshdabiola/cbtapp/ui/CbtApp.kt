@@ -68,7 +68,8 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
 @OptIn(
-    ExperimentalMaterial3WindowSizeClassApi::class, KoinExperimentalAPI::class,
+    ExperimentalMaterial3WindowSizeClassApi::class,
+    KoinExperimentalAPI::class,
     ExperimentalMaterial3Api::class,
 )
 @Composable
@@ -78,7 +79,6 @@ fun CbtApp() {
         windowSizeClass = windowSizeClass,
     )
     val shouldShowGradientBackground = false
-
 
     val viewModel: MainAppViewModel = koinViewModel()
     val analyticsHelper = koinInject<AnalyticsHelper>()
@@ -113,7 +113,7 @@ fun CbtApp() {
                                         ?: "",
                                     onNavigate = appState::onNavigate,
 
-                                    )
+                                )
                             }
                             PermanentNavigationDrawer(
                                 drawerContent = {
@@ -125,10 +125,9 @@ fun CbtApp() {
                                             onNavigate = appState::onNavigate,
                                         )
                                     }
-
                                 },
 
-                                ) {
+                            ) {
                                 Scaffold(
                                     modifier = Modifier.semanticsCommon {},
                                     containerColor = Color.Transparent,
@@ -156,21 +155,17 @@ fun CbtApp() {
                                                         ) {
                                                             Text(text = appState.fabName)
                                                         }
-
                                                     }
                                                 },
                                                 actions = {
                                                     IconButton(onClick = { appState.navController.popBackStack() }) {
                                                         Icon(Icons.Default.ArrowBackIosNew, "back")
                                                     }
-
                                                 },
                                             )
-
                                         }
                                     },
                                     floatingActionButton = {
-
                                         if (appState.showFab && appState.showTopBar) {
                                             ExtendedFloatingActionButton(
                                                 containerColor = if (appState.isQuestion && isFinish.value) {
@@ -182,7 +177,6 @@ fun CbtApp() {
                                             ) {
                                                 Text(text = appState.fabName)
                                             }
-
                                         }
                                     },
                                     topBar = {
@@ -203,7 +197,7 @@ fun CbtApp() {
                                         }
                                     },
 
-                                    ) { padding ->
+                                ) { padding ->
 
                                     Column(
                                         Modifier
@@ -230,8 +224,6 @@ fun CbtApp() {
                                 }
                             }
                         }
-
-
                     }
                 }
             }

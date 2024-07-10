@@ -80,8 +80,6 @@ class CbtAppState(
         @Composable get() =
             currentDestination?.route == QUESTION_ROUTE
 
-
-
     val showFab: Boolean
         @Composable get() = when {
             currentDestination?.route == QUESTION_ROUTE || currentDestination?.route == FINISH_ROUTE -> true
@@ -97,10 +95,9 @@ class CbtAppState(
 
                 println("year $year exam $exam index $index")
 
-    //                navController.currentBackStackEntry
+                //                navController.currentBackStackEntry
                 navController.popBackStack()
-                navController.navigateToFinish(exam,year,index)
-
+                navController.navigateToFinish(exam, year, index)
             }
             FINISH_ROUTE -> {
                 val year = navController.currentBackStackEntry?.arguments!!.getLong(QUESTION_ID_YEAR)
@@ -110,9 +107,7 @@ class CbtAppState(
                 println("year $year exam $exam index $index")
 
                 navController.popBackStack()
-                navController.navigateToQuestion(exam,year,index)
-
-
+                navController.navigateToQuestion(exam, year, index)
             }
             else -> {}
         }
@@ -120,23 +115,22 @@ class CbtAppState(
 
     val shouldShowBottomBar: Boolean
         @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact &&
-                cbtRoute.contains(currentDestination?.route)
+            cbtRoute.contains(currentDestination?.route)
 
     val shouldShowGeneralBottomBar: Boolean
         @Composable get() = windowSizeClass.widthSizeClass < WindowWidthSizeClass.Expanded &&
-                !cbtRoute.contains(currentDestination?.route)
+            !cbtRoute.contains(currentDestination?.route)
 
     val shouldShowNavRail: Boolean
         @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Medium &&
-                cbtRoute.contains(currentDestination?.route)
+            cbtRoute.contains(currentDestination?.route)
 
     val shouldShowDrawer: Boolean
         @Composable get() =
             windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded &&
                 cbtRoute.contains(currentDestination?.route)
 
-    fun onNavigate (route:String)  {
-
+    fun onNavigate(route: String) {
         when (route) {
             MAIN_ROUTE -> {
                 navController.navigateToMain(
@@ -170,7 +164,6 @@ class CbtAppState(
             }
         }
     }
-
 }
 //
 // @Composable
