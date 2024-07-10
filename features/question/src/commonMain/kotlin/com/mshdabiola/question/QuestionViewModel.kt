@@ -33,7 +33,6 @@ class QuestionViewModel(
     year: Long,
     val typeIndex: Int,
     private val logger: Logger,
-    private val iSubjectRepository: ISubjectRepository,
     private val settingRepository: ISettingRepository,
     private val questionRepository: IQuestionRepository,
     private val iExamRepository: IExaminationRepository,
