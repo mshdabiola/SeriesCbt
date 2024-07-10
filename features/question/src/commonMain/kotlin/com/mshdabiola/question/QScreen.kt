@@ -2,39 +2,43 @@ package com.mshdabiola.question
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.Kitesurfing
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedSuggestionChip
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,11 +46,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import com.mshdabiola.ui.InstructionBottomSheet
 import com.mshdabiola.ui.QuestionUi
-import com.mshdabiola.ui.ScreenSize
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
 import com.mshdabiola.ui.correct
 import com.mshdabiola.ui.onCorrect
@@ -58,10 +59,10 @@ import kotlinx.coroutines.launch
 
 // import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun QuestionRoute(
-    screenSize: ScreenSize,
+    modifier: Modifier = Modifier,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     onBack: () -> Unit,
     navigateToFinish: () -> Unit,
@@ -70,9 +71,17 @@ internal fun QuestionRoute(
 ) {
     val mainState = viewModel.mainState.collectAsStateWithLifecycleCommon()
 
+    val states = getState(
+        sizes = mainState
+            .value
+            .questions
+            .map { it.size }
+            .toImmutableList(),
+    )
+
     QuestionScreen(
+        modifier = modifier,
         mainStat = mainState.value,
-        back = onBack,
         onFinish = {
             onBack()
             navigateToFinish()
@@ -80,18 +89,24 @@ internal fun QuestionRoute(
         onOption = viewModel::onOption,
         onTimeChanged = viewModel::onTimeChanged,
         changeIndex = viewModel::changeIndex,
+        pagerState = states,
     )
+//    InstructionBottomSheet(
+//        instructionUiState = instructionUiState,
+//        onDismissRequest = { instructionUiState = null },
+//    )
 }
 
 @OptIn(
     ExperimentalFoundationApi::class,
+    ExperimentalLayoutApi::class,
 )
 @Composable
 internal fun QuestionScreen(
+    modifier: Modifier = Modifier,
     mainStat: MainState,
-    back: () -> Unit = {},
+    pagerState: ImmutableList<PagerState>,
     onFinish: () -> Unit = {},
-    onNextTheory: (Int) -> Unit = {},
     onOption: (Int, Int, Int) -> Unit = { _, _, _ -> }, // paper,question,option
     onTimeChanged: (Long) -> Unit = {},
     changeIndex: (Int) -> Unit = {},
@@ -99,9 +114,6 @@ internal fun QuestionScreen(
     if (mainStat.questions.flatten().isEmpty()) {
         Text(text = "empty")
     } else {
-        var show by remember {
-            mutableStateOf(false)
-        }
         var instructionUiState by remember {
             mutableStateOf<InstructionUiState?>(null)
         }
@@ -120,12 +132,6 @@ internal fun QuestionScreen(
                     ) * 100
                 ).toInt()
         }
-        val states = getState(
-            sizes = mainStat
-                .questions
-                .map { it.size }
-                .toImmutableList(),
-        )
 
         LaunchedEffect(
             key1 = mainStat.currentTime,
@@ -138,134 +144,156 @@ internal fun QuestionScreen(
                 }
             },
         )
+        var isAllShowing by remember() {
+            mutableStateOf(false)
+        }
 
-        Scaffold(
-            modifier = Modifier,
-            bottomBar = {
-                BottomAppBar(
-                    actions = {
-                        IconButton(onClick = back, modifier = Modifier.testTag("question:back")) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowBackIosNew,
-                                contentDescription = "back",
-                            )
-                        }
-                    },
-                    floatingActionButton = {
-                        ExtendedFloatingActionButton(
-                            modifier = Modifier.testTag("question:submit"),
-                            onClick = onFinish,
-                            containerColor = if (finishPercent == 100) {
-                                correct()
-                            } else {
-                                FloatingActionButtonDefaults.containerColor
-                            },
-                            contentColor = if (finishPercent == 100) {
-                                onCorrect()
-                            } else {
-                                contentColorFor(backgroundColor = FloatingActionButtonDefaults.containerColor)
-                            },
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Kitesurfing,
-                                contentDescription = "submit",
-                            )
-                            Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
-                            Text(text = "Submit: $finishPercent%")
-                        }
-                    },
-                )
-            },
-
-        ) { paddingValues ->
-            Column(
-                Modifier
-                    .padding(paddingValues)
-                    .padding(8.dp)
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                TimeCounter(
-                    modifier = Modifier.padding(top = 4.dp),
-                    currentTime2 = mainStat.currentTime,
-                    total = mainStat.totalTime,
-                    onTimeChanged = onTimeChanged,
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // AnimatedContent(modifier = Modifier.fillMaxSize(), targetState = mainStat.currentPaper, label = "dd") { paperIndex ->
-                ExamPaper(
-                    questions = mainStat.questions[mainStat.currentSectionIndex],
-                    state = states[mainStat.currentSectionIndex],
-                    choose = mainStat.choose[mainStat.currentSectionIndex],
-                    onNextTheory = onNextTheory,
-                    onOption = { quIndex, optinId ->
-                        onOption(
-                            mainStat.currentSectionIndex,
-                            quIndex,
-                            optinId,
-                        )
-                    },
-                    setInstructionUiState = { instructionUiState = it },
-                )
-                LazyRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(
-                        16.dp,
-                        Alignment.CenterHorizontally,
-                    ),
-                    verticalAlignment = Alignment.CenterVertically,
+//        Scaffold(
+//            modifier = Modifier,
+//            bottomBar = {
+//                BottomAppBar(
+//                    actions = {
+//                        IconButton(onClick = back, modifier = Modifier.testTag("question:back")) {
+//                            Icon(
+//                                imageVector = Icons.Default.ArrowBackIosNew,
+//                                contentDescription = "back",
+//                            )
+//                        }
+//                    },
+//                    floatingActionButton = {
+//                        ExtendedFloatingActionButton(
+//                            modifier = Modifier.testTag("question:submit"),
+//                            onClick = onFinish,
+//                            containerColor = if (finishPercent == 100) {
+//                                correct()
+//                            } else {
+//                                FloatingActionButtonDefaults.containerColor
+//                            },
+//                            contentColor = if (finishPercent == 100) {
+//                                onCorrect()
+//                            } else {
+//                                contentColorFor(backgroundColor = FloatingActionButtonDefaults.containerColor)
+//                            },
+//                        ) {
+//                            Icon(
+//                                imageVector = Icons.Default.Kitesurfing,
+//                                contentDescription = "submit",
+//                            )
+//                            Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
+//                            Text(text = "Submit: $finishPercent%")
+//                        }
+//                    },
+//                )
+//            },
+//
+//        ) { paddingValues ->
+        Column(modifier.verticalScroll(rememberScrollState())) {
+            FlowRow(modifier = modifier) {
+                Column(
+                    modifier = Modifier
+                        .weight(0.7f)
+                        .width(600.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    item {
-                        TextButton(onClick = { show = true }) {
-                            Text("Show all questions")
+                    TimeCounter(
+                        modifier = Modifier.padding(top = 4.dp),
+                        currentTime2 = mainStat.currentTime,
+                        total = mainStat.totalTime,
+                        onTimeChanged = onTimeChanged,
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(
+                        Modifier,
+                        horizontalArrangement = Arrangement.spacedBy(
+                            4.dp,
+                            Alignment.CenterHorizontally,
+                        ),
+                    ) {
+                        if (mainStat.questions.size > 1) {
+                            mainStat.sections.forEachIndexed { index, section ->
+                                ElevatedSuggestionChip(
+                                    onClick = { changeIndex(index) },
+                                    colors = if (section.isFinished) {
+                                        SuggestionChipDefaults.elevatedSuggestionChipColors(
+                                            containerColor = correct(),
+                                            labelColor = onCorrect(),
+                                        )
+                                    } else {
+                                        SuggestionChipDefaults.elevatedSuggestionChipColors()
+                                    },
+                                    label = {
+                                        Text(com.mshdabiola.designsystem.string.sections[section.stringRes])
+                                    },
+                                )
+                            }
                         }
                     }
-
-                    if (mainStat.questions.size > 1) {
-                        itemsIndexed(mainStat.sections) { index, section ->
-                            ElevatedSuggestionChip(
-                                onClick = { changeIndex(index) },
-                                colors = if (section.isFinished) {
-                                    SuggestionChipDefaults.elevatedSuggestionChipColors(
-                                        containerColor = correct(),
-                                        labelColor = onCorrect(),
-                                    )
-                                } else {
-                                    SuggestionChipDefaults.elevatedSuggestionChipColors()
-                                },
-                                label = {
-                                    Text(com.mshdabiola.designsystem.string.sections[section.stringRes])
-                                },
+                    // AnimatedContent(modifier = Modifier.fillMaxSize(), targetState = mainStat.currentPaper, label = "dd") { paperIndex ->
+                    ExamPaper(
+                        questions = mainStat.questions[mainStat.currentSectionIndex],
+                        state = pagerState[mainStat.currentSectionIndex],
+                        choose = mainStat.choose[mainStat.currentSectionIndex],
+                        isAllShowing = isAllShowing,
+                        onShowAllQuetions = {
+                            isAllShowing = true
+                        },
+                        //  onNextTheory = {},//onNextTheory,
+                        setInstructionUiState = { instructionUiState = it },
+                        onOption = { quIndex, optinId ->
+                            onOption(
+                                mainStat.currentSectionIndex,
+                                quIndex,
+                                optinId,
                             )
+                        },
+                    )
+                }
+                Column(
+                    Modifier.weight(0.3f), // .height(40.dp),
+                    //  horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally)
+                ) {
+                    if (isAllShowing) {
+                        TextButton(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            onClick = { isAllShowing = false },
+                        ) {
+                            Text(text = "Hide All Questions")
+                        }
+                        Spacer(Modifier.height(4.dp))
+                        FlowRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(
+                                4.dp,
+                                Alignment.CenterHorizontally,
+                            ),
+                            verticalArrangement = Arrangement.spacedBy(
+                                4.dp,
+                                Alignment.CenterVertically,
+                            ),
+                        ) {
+                            mainStat.choose[mainStat.currentSectionIndex].forEachIndexed { index, i ->
+                                QuestionNumberButton(
+                                    number = index,
+                                    isChoose = i > -1,
+                                    isCurrent = index == pagerState[mainStat.currentSectionIndex].currentPage,
+                                    onClick = { // onChooseClick(it)
+                                        coroutineScope.launch {
+                                            pagerState[mainStat.currentSectionIndex].animateScrollToPage(
+                                                index,
+                                            )
+                                        }
+                                    },
+                                )
+                            }
                         }
                     }
                 }
-
-                // }
             }
         }
 
-        InstructionBottomSheet(
-            instructionUiState = instructionUiState,
-            onDismissRequest = { instructionUiState = null },
-        )
-        AllQuestionBottomSheet(
-            show = show,
-            chooses = mainStat.choose[mainStat.currentSectionIndex],
-            onChooseClick = {
-                show = false
-                onNextTheory(it)
-                coroutineScope
-                    .launch {
-                        states[mainStat.currentSectionIndex].animateScrollToPage(it)
-                    }
-            },
-            currentNumber = states[mainStat.currentSectionIndex].currentPage,
-            onDismissRequest = { show = false },
-        )
+        // }
     }
 }
 
@@ -275,26 +303,33 @@ fun ColumnScope.ExamPaper(
     questions: ImmutableList<QuestionUiState>,
     state: PagerState,
     choose: ImmutableList<Int>,
-    onNextTheory: (Int) -> Unit = {},
+    // onNextTheory: (Int) -> Unit = {},
     setInstructionUiState: (InstructionUiState?) -> Unit = {},
     onOption: (Int, Int) -> Unit = { _, _ -> },
+    isAllShowing: Boolean,
+    onShowAllQuetions: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
-    LaunchedEffect(key1 = state.currentPage) {
-        try {
-            val question = questions[state.currentPage]
-            if (question.isTheory) {
-                onOption(state.currentPage, 2)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+
+    val lazyListState = rememberLazyListState()
+//
+    LaunchedEffect(state.currentPage) {
+        println("current index ${state.currentPage}")
+        val value = if (state.currentPage == 0) 0 else state.currentPage - 1
+        lazyListState.scrollToItem(value)
+    }
+
+    val number = remember(choose) { choose.size }
+    val noAnswer = remember(choose) {
+        derivedStateOf {
+            choose.count { it > -1 }
         }
     }
 
     HorizontalPager(
         modifier = Modifier
-            .weight(1f)
+            .height(300.dp)
             .verticalScroll(state = scrollState),
         state = state,
         verticalAlignment = Alignment.Top,
@@ -323,34 +358,65 @@ fun ColumnScope.ExamPaper(
     }
 
     Spacer(modifier = Modifier.height(8.dp))
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
+    ) {
+        IconButton(
+            enabled = state.canScrollBackward,
+            onClick = {
+                coroutineScope.launch {
+                    state.animateScrollToPage(state.currentPage - 1)
+                    scrollState.scrollTo(0)
+                }
+            },
+        ) {
+            Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, "prev")
+        }
 
-    QuestionScroll(
-        currentQuestion = state.currentPage,
-        showPrev = state.canScrollBackward,
-        showNext = state.canScrollForward,
-        chooses = choose,
-        onChooseClick = {
-            onNextTheory(it)
-            coroutineScope.launch {
-                state.animateScrollToPage(it)
-                scrollState.scrollTo(0)
+        LazyRow(
+            state = lazyListState,
+            modifier = Modifier.weight(1f),
+            horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
+        ) {
+            items(count = number, key = { it }) {
+                if (!isAllShowing) {
+                    QuestionNumberButton(
+                        number = it,
+                        isChoose = choose[it] > -1,
+                        isCurrent = it == state.currentPage,
+                    ) {
+                        //  onNextTheory(it)
+                        coroutineScope.launch {
+                            state.animateScrollToPage(it)
+                            scrollState.scrollTo(0)
+                        }
+                    }
+                }
             }
-        },
+        }
+        IconButton(
+            enabled = state.canScrollForward,
+            onClick = {
+                coroutineScope.launch {
+                    // onNextTheory(state.currentPage + 1)
+                    state.animateScrollToPage(state.currentPage + 1)
+                    scrollState.scrollTo(0)
+                }
+            },
+        ) {
+            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, "next")
+        }
+    }
 
-        onNext = {
-            coroutineScope.launch {
-                onNextTheory(state.currentPage + 1)
-                state.animateScrollToPage(state.currentPage + 1)
-                scrollState.scrollTo(0)
-            }
-        },
-        onPrev = {
-            coroutineScope.launch {
-                state.animateScrollToPage(state.currentPage - 1)
-                scrollState.scrollTo(0)
-            }
-        },
-    )
+    if (!isAllShowing) {
+        TextButton(onClick = onShowAllQuetions) {
+            Text("Show all questions")
+        }
+    }
+
+    Text("${noAnswer.value} of $number")
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -365,3 +431,31 @@ fun getState(sizes: ImmutableList<Int>): ImmutableList<PagerState> {
 //
 // @Composable
 // expect fun QuestionScreenPreview()
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun QuestionNumberButton(
+    number: Int,
+    isChoose: Boolean,
+    isCurrent: Boolean = false,
+    onClick: () -> Unit = {},
+) {
+    val color = if (isChoose) {
+        MaterialTheme.colorScheme.primaryContainer
+    } else {
+        MaterialTheme.colorScheme.surface
+    }
+    val border = isCurrent || !isChoose
+
+    OutlinedCard(
+        modifier = Modifier.requiredSize(48.dp),
+        shape = CircleShape,
+        colors = CardDefaults.outlinedCardColors(containerColor = color),
+        border = CardDefaults.outlinedCardBorder(border),
+        onClick = onClick,
+    ) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text("${number + 1}")
+        }
+    }
+}

@@ -7,40 +7,27 @@ package com.mshdabiola.main
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.mshdabiola.designsystem.drawable.layer1
 import com.mshdabiola.designsystem.drawable.layer2
-import com.mshdabiola.designsystem.drawable.layer3
 import com.mshdabiola.designsystem.string.examPart
-import com.mshdabiola.designsystem.string.subject
-import com.mshdabiola.designsystem.string.type
-import com.mshdabiola.ui.ScreenSize
 import com.mshdabiola.ui.collectAsStateWithLifecycleCommon
 import com.mshdabiola.ui.state.ExamType
 import org.koin.compose.viewmodel.koinViewModel
@@ -51,32 +38,27 @@ import org.koin.core.annotation.KoinExperimentalAPI
 @OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
 internal fun MainRoute(
-    screenSize: ScreenSize,
+    modifier: Modifier = Modifier,
     onShowSnackbar: suspend (String, String?) -> Boolean,
-    navigateToSetting: () -> Unit,
     navigateToQuestion: (ExamType, Long, Int) -> Unit,
 ) {
     val viewModel: MainViewModel = koinViewModel()
 
     val mainState = viewModel.mainState.collectAsStateWithLifecycleCommon()
     MainScreen(
+        modifier = modifier,
         mainState = mainState.value,
-        onSetting = navigateToSetting,
         navigateToQuestion = navigateToQuestion,
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun MainScreen(
+    modifier: Modifier = Modifier,
     mainState: MainState,
     navigateToQuestion: (ExamType, Long, Int) -> Unit = { _, _, _ -> },
-    onSetting: () -> Unit = {},
 ) {
-    val snackbarHostState = remember {
-        SnackbarHostState()
-    }
-
     val finishPercent = remember(mainState.choose) {
         var choose = mainState
             .choose
@@ -87,45 +69,28 @@ internal fun MainScreen(
     }
 
     val state = rememberScrollState()
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-    Scaffold(
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Column(verticalArrangement = Arrangement.Center) {
-                        Text(text = subject)
-                        Text(
-                            text = type,
-                            style = MaterialTheme.typography.labelMedium,
-                        )
-                    }
-                },
-                scrollBehavior = scrollBehavior,
-                actions = {
-                    IconButton(onClick = onSetting) {
-                        Icon(imageVector = Icons.Default.Settings, contentDescription = "settings")
-                    }
-                },
-
-            )
-        },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-    ) { paddingValues ->
-        Column(
-            Modifier
-                .verticalScroll(state)
-                .padding(paddingValues)
-                .padding(horizontal = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+    Column(
+        modifier = modifier
+            .verticalScroll(state),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        FlowRow(
+            Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+//                maxItemsInEachRow = 2,
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
+            FlowRow(
+                Modifier
+                    .weight(0.3f),
+                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
             ) {
-                Column(Modifier.weight(1f)) {
+                Column(
+                    Modifier.weight(1f).width(200.dp).heightIn(120.dp, 200.dp),
+                    verticalArrangement = Arrangement.Center,
+                ) {
                     PlayLogin()
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
@@ -133,48 +98,55 @@ internal fun MainScreen(
                             "Wellcome to Physics test that will challenge and entertain you",
                         modifier = Modifier.padding(horizontal = 16.dp),
                         textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary,
 
                     )
                 }
                 Image(painter = layer2, contentDescription = "")
             }
-            mainState.currentExam?.let {
-                ContinueCard(
-                    year = it.year,
-                    progress = finishPercent,
-                    enabled = mainState.isSubmit.not(),
-                    timeRemain = mainState.totalTime - mainState.currentTime,
-                    part = examPart[mainState.examPart],
-                    onClick = {
-                        navigateToQuestion(ExamType.YEAR, it.year, 1)
-                    },
-                )
-            }
 
-            StartCard(
-                exams = mainState.listOfAllExams,
-                isSubmit = mainState.isSubmit,
-                onClick = { objIndex, year ->
-                    navigateToQuestion(ExamType.YEAR, year, objIndex)
-                },
-            )
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                OtherCard(
-                    modifier = Modifier.testTag("main:random"),
-                    title = "Random exam",
-                    painter = layer1,
-                    onClick = {
-                        navigateToQuestion(ExamType.RANDOM, -1, 1)
-                    },
-                )
-                OtherCard(
-                    modifier = Modifier.testTag("main:fast"),
-                    title = "Fast finger",
-                    painter = layer3,
-                    onClick = {
-                        navigateToQuestion(ExamType.FAST_FINGER, -1, 1)
-                    },
-                )
+            Column(
+                Modifier
+                    .width(600.dp)
+                    .weight(0.7f),
+                verticalArrangement = Arrangement.spacedBy(
+                    8.dp,
+                    Alignment.CenterVertically,
+                ),
+                // horizontalAlignment = Alignment.CenterHorizontally,
+
+//                maxItemsInEachRow = 2,
+            ) {
+                mainState.currentExam?.let {
+                    ContinueCard(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        year = it.year,
+                        progress = finishPercent,
+                        enabled = mainState.isSubmit.not(),
+                        timeRemain = mainState.totalTime - mainState.currentTime,
+                        part = examPart[mainState.examPart],
+                        onClick = {
+                            navigateToQuestion(ExamType.YEAR, it.year, 1)
+                        },
+                    )
+                }
+
+                Column(
+                    Modifier
+                        .fillMaxWidth(),
+                ) {
+                    StartCard(
+                        exams = mainState.listOfAllExams,
+                        isSubmit = mainState.isSubmit,
+                        onClick = { objIndex, year ->
+                            navigateToQuestion(ExamType.YEAR, year, objIndex)
+                        },
+                        onFast = { navigateToQuestion(ExamType.FAST_FINGER, -1, 1) },
+                        onRandom = { navigateToQuestion(ExamType.RANDOM, -1, 1) },
+                    )
+                }
             }
         }
     }
